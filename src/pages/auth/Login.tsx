@@ -18,6 +18,7 @@ import styled from "@emotion/styled";
 import FormInput from "../../components/FormInput";
 import GoogleLogo from "../../assets/google.svg";
 import GitHubLogo from "../../assets/github.svg";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const LinkItem = styled(Link)`
   text-decoration: none;
@@ -70,7 +71,15 @@ export const LoginPage: FC = () => {
   });
 
   const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
-    console.log(values);
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   return (

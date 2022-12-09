@@ -9,7 +9,8 @@ import GoogleLogo from "../../assets/google.svg";
 import GitHubLogo from "../../assets/github.svg";
 import { LinkItem, OauthMuiLink } from "./Login";
 
-// 👇 SignUp Schema with Zod
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 const signupSchema = object({
   name: string().min(1, "Name is required").max(70),
   email: string().min(1, "Email is required").email("Email is invalid"),
@@ -39,7 +40,19 @@ const SignupPage: FC = () => {
   });
 
   const onSubmitHandler: SubmitHandler<ISignUp> = (values: ISignUp) => {
-    console.log(JSON.stringify(values, null, 4));
+
+    const auth = getAuth();
+    console.log(auth)
+
+    createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user)
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   return (
@@ -194,7 +207,8 @@ const SignupPage: FC = () => {
               <Grid container justifyContent="center">
                 <Stack sx={{ mt: "3rem", textAlign: "center" }}>
                   <Typography sx={{ fontSize: "0.9rem", mb: "1rem" }}>
-                    Already have an account? <LinkItem to="/login">Login</LinkItem>
+                    Already have an account?{" "}
+                    <LinkItem to="/login">Login</LinkItem>
                   </Typography>
                 </Stack>
               </Grid>
