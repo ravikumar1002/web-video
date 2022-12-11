@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./pages/home";
 import SignupPage from "./pages/auth/SignUp";
 import { LoginPage } from "./pages/auth/Login";
+import AuthRoute from "./components/AuthRoute";
+import { HistoryPage } from "./pages/history/History";
 
 initializeApp(config.firebaseConfig);
 
@@ -12,17 +14,41 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <HomePage />,
+      // children: [
+      //   {
+      //     path: "/login",
+      //     element: <LoginPage />,
+      //   },
+      //   {
+      //     path: "/signup",
+      //     element: <SignupPage />,
+      //   },
+      //   {
+      //     path: "/history",
+      //     element: (
+      //       <AuthRoute>
+      //         <HistoryPage />
+      //       </AuthRoute>
+      //     ),
+      //   },
+      // ],
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/signup",
       element: <SignupPage />,
-      children: [
-        {
-          path: "/login",
-          element: <LoginPage />,
-        },
-        {
-          path: "/signup",
-          element: <SignupPage />,
-        },
-      ],
+    },
+    {
+      path: "/history",
+      element: (
+        <AuthRoute>
+          <HistoryPage />
+        </AuthRoute>
+      ),
     },
   ]);
 

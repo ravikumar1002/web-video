@@ -11,7 +11,7 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import { FC } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
 import { literal, object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
@@ -48,7 +48,7 @@ export const OauthMuiLink = styled(MuiLink)`
   }
 `;
 
-const LoginSchema = Object({
+const LoginSchema = object({
   email: string().min(1, "Email is required").email("Email is invalid"),
   password: string()
     .min(1, "Password is required")
@@ -60,6 +60,9 @@ const LoginSchema = Object({
 type ILogin = TypeOf<typeof LoginSchema>;
 
 export const LoginPage: FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const defaultValues: ILogin = {
     email: "",
     password: "",
@@ -75,6 +78,7 @@ export const LoginPage: FC = () => {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
+        navigate("/")
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -229,6 +233,14 @@ export const LoginPage: FC = () => {
                   </Box>
                 </Grid>
               </Grid>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Stack sx={{ mt: "3rem", textAlign: "center" }}>
+                <Typography sx={{ fontSize: "0.9rem", mb: "1rem" }}>
+                  Need an account?
+                  <LinkItem to="/signup">Sign up here</LinkItem>
+                </Typography>
+              </Stack>
             </Grid>
           </FormProvider>
         </Grid>

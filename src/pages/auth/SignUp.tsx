@@ -8,7 +8,7 @@ import FormInput from "../../components/FormInput";
 import GoogleLogo from "../../assets/google.svg";
 import GitHubLogo from "../../assets/github.svg";
 import { LinkItem, OauthMuiLink } from "./Login";
-
+import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const signupSchema = object({
@@ -27,6 +27,8 @@ const signupSchema = object({
 type ISignUp = TypeOf<typeof signupSchema>;
 
 const SignupPage: FC = () => {
+  const navigate = useNavigate();
+
   const defaultValues: ISignUp = {
     name: "",
     email: "",
@@ -40,14 +42,12 @@ const SignupPage: FC = () => {
   });
 
   const onSubmitHandler: SubmitHandler<ISignUp> = (values: ISignUp) => {
-
     const auth = getAuth();
-    console.log(auth)
 
     createUserWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user)
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
