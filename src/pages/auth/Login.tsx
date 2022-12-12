@@ -11,7 +11,7 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import { FC } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { literal, object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
@@ -78,7 +78,7 @@ export const LoginPage: FC = () => {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        navigate("/")
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
