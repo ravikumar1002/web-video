@@ -26,7 +26,7 @@ const signupSchema = object({
 
 type ISignUp = TypeOf<typeof signupSchema>;
 
-const SignupPage: FC = () => {
+export const SignupPage: FC = () => {
   const navigate = useNavigate();
 
   const defaultValues: ISignUp = {
@@ -219,5 +219,3 @@ const SignupPage: FC = () => {
     </Container>
   );
 };
-
-export default SignupPage;
