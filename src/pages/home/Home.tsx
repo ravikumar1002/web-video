@@ -35,6 +35,28 @@ export const videoData = [
     viewCount: 0,
     url: "https://youtu.be/IU2ttJ73h2Y",
   },
+  {
+    _id: "IU2ttJ73h2Y",
+    title: "Lift Karadey - Adnan Sami",
+    category: "Song",
+    description:
+      "Presenting ‘Lift Karade’ music video sung & composed by Adnan Sami.",
+    creator: "SonyMusicIndiaVEVO",
+    uploadDate: "19-03-2022",
+    viewCount: 0,
+    url: "https://youtu.be/IU2ttJ73h2Y",
+  },
+  {
+    _id: "IU2ttJ73h2Y",
+    title: "Lift Karadey - Adnan Sami",
+    category: "Song",
+    description:
+      "Presenting ‘Lift Karade’ music video sung & composed by Adnan Sami.",
+    creator: "SonyMusicIndiaVEVO",
+    uploadDate: "19-03-2022",
+    viewCount: 0,
+    url: "https://youtu.be/IU2ttJ73h2Y",
+  },
 ];
 
 export const HomePage = () => {
@@ -63,13 +85,18 @@ export const HomePage = () => {
         Go to History
       </button>
 
-      <div style={{ display: "flex", gap: "2rem" }}>
+      <div style={{ display: "flex", gap: "2rem" , flexWrap:"wrap"}}>
         {videoData.map((video) => {
           console.log(video);
           return (
             <Link
               to={"/history"}
-              onClick={() => {
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                position:"relative",
+              }}
+              onClick={(e) => {
                 console.info("I'm a button.");
               }}
             >
