@@ -1,5 +1,5 @@
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 
 export const videoData = [
@@ -63,12 +63,19 @@ export const HomePage = () => {
         Go to History
       </button>
 
-      <div style={{display: "flex", gap: "2rem",}}>
+      <div style={{ display: "flex", gap: "2rem" }}>
         {videoData.map((video) => {
-          console.log(video)
-          return(
-            <VideoCard key={video._id} video={video}/>
-          )
+          console.log(video);
+          return (
+            <Link
+              to={"/history"}
+              onClick={() => {
+                console.info("I'm a button.");
+              }}
+            >
+              <VideoCard key={video._id} video={video} />
+            </Link>
+          );
         })}
       </div>
     </div>
