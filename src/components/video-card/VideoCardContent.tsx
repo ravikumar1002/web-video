@@ -1,12 +1,11 @@
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import GoogleLogo from "../../assets/google.svg";
 import Box from "@mui/material/Box";
 import { VideoMenu } from "./VideoMenu";
+import { Link } from "react-router-dom";
+
 export const VideoCardContent = () => {
   return (
     <>
@@ -14,16 +13,26 @@ export const VideoCardContent = () => {
         sx={{
           display: "flex",
           gap: "0.5rem",
-          padding: "8px",
+          padding: "0",
           "&:last-child": { pb: 1 },
         }}
       >
-        <div style={{ padding: "0.5rem 0.25rem" }}>
-          <Avatar
-            alt="Creator"
-            src={GoogleLogo}
-            sx={{ width: 24, height: 24 }}
-          />
+        <div>
+          <Link
+            to={"/history"}
+            style={{
+              padding: "0.5rem 0.25rem",
+              textDecoration: "none",
+              color: "inherit",
+              display: "inline-block",
+            }}
+          >
+            <Avatar
+              alt="Creator"
+              src={GoogleLogo}
+              sx={{ width: 24, height: 24 }}
+            />
+          </Link>
         </div>
         <div style={{ width: "100%" }}>
           <Box
@@ -34,13 +43,22 @@ export const VideoCardContent = () => {
               alignItems: "center",
             }}
           >
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ fontWeight: "600", maxHeight: "4rem", flexGrow: 1 }}
+            <Link
+              to={"/history"}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                flexGrow: "2",
+              }}
             >
-              Title of Video
-            </Typography>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ fontWeight: "600", maxHeight: "4rem", flexGrow: 1 }}
+              >
+                Title of Video
+              </Typography>
+            </Link>
             <VideoMenu />
           </Box>
 

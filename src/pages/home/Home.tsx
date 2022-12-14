@@ -1,6 +1,7 @@
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
+import { VideoMenu } from "../../components/video-card/VideoMenu";
 
 export const videoData = [
   {
@@ -36,7 +37,7 @@ export const videoData = [
     url: "https://youtu.be/IU2ttJ73h2Y",
   },
   {
-    _id: "IU2ttJ73h2Y",
+    _id: "IU2ttJ73h2Y2",
     title: "Lift Karadey - Adnan Sami",
     category: "Song",
     description:
@@ -47,7 +48,7 @@ export const videoData = [
     url: "https://youtu.be/IU2ttJ73h2Y",
   },
   {
-    _id: "IU2ttJ73h2Y",
+    _id: "IU2ttJ73h2Y3",
     title: "Lift Karadey - Adnan Sami",
     category: "Song",
     description:
@@ -81,27 +82,20 @@ export const HomePage = () => {
           navigate("/history");
         }}
       >
-        {" "}
         Go to History
       </button>
 
-      <div style={{ display: "flex", gap: "2rem" , flexWrap:"wrap"}}>
+      <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
         {videoData.map((video) => {
-          console.log(video);
           return (
-            <Link
-              to={"/history"}
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-                position:"relative",
-              }}
+            <div
+              key={video._id}
               onClick={(e) => {
-                console.info("I'm a button.");
+                navigate("/history");
               }}
             >
-              <VideoCard key={video._id} video={video} />
-            </Link>
+              <VideoCard video={video} />
+            </div>
           );
         })}
       </div>

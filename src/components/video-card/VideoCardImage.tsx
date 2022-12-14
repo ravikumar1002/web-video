@@ -8,7 +8,6 @@ interface IVideoCardImageProps {
 
 export const VideoCardImage = (props: IVideoCardImageProps) => {
 
-    console.log(props)
   return (
     <>
       <CardMedia
