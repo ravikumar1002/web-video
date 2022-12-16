@@ -2,17 +2,20 @@ import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { VideoMenu } from "../../components/video-card/VideoMenu";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import appConfigs from "../../config/appConfigs";
 
-export const videoData = [
+export const videoData1 = [
   {
-    _id: "yQEondeGvKo",
+    _id: "NO_ZdJjMtdI",
     title: "STRANGER THINGS Season 4",
     category: "Trailer",
     description: "STRANGER THINGS Season 4 Trailer (NEW, 2022)",
     creator: "Netflix",
     uploadDate: "12-04-2022",
     viewCount: 0,
-    url: "https://youtu.be/yQEondeGvKo",
+    url: "https://youtu.be/NO_ZdJjMtdI",
   },
   {
     _id: "-FrqlHlUgz4",
@@ -60,9 +63,48 @@ export const videoData = [
   },
 ];
 
+export interface IVideoData {
+  _id: string;
+  title: string;
+  category: string;
+  description: string;
+  creator: string;
+  uploadDate: string;
+  viewCount: number;
+  url: string;
+}
+
 export const HomePage = () => {
+  const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
+  const videosFromServerr = async () =>
+    await axios
+      .get(
+        `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=20&regionCode=US&key=${appConfigs.youtube.apiKey}`
+      )
+      .then((data) => {
+        console.log(data)
+        // const filterVideoData =  data.data.items.map(videoData => {
+        //     return{
+        //       _id: videoData.id,
+        //       title: string,
+        //       category: string,
+        //       description: string,
+        //       creator: string,
+        //       uploadDate: string,
+        //       viewCount: number,
+        //       url: string,
+        //     }
+        // })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   const auth = getAuth();
   const navigate = useNavigate();
+  useEffect(() => {
+    videosFromServerr();
+  }, []);
 
   return (
     <div>
@@ -86,7 +128,7 @@ export const HomePage = () => {
       </button>
 
       <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-        {videoData.map((video) => {
+        {videoData1.map((video) => {
           return (
             <div
               key={video._id}

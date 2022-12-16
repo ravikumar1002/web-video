@@ -11,8 +11,8 @@ import Stack from "@mui/material/Stack";
 
 export const VideoMenu = () => {
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement>(null);
-  const container = React.useRef<HTMLButtonElement>(null);
+  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
+  const container = React.useRef<HTMLUListElement | null>(null);
 
   const handleToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpen((prevOpen) => !prevOpen);
