@@ -5,6 +5,8 @@ import { VideoMenu } from "../../components/video-card/VideoMenu";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import appConfigs from "../../config/appConfigs";
+import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
+import { IVideosDto } from "../../dto/videos";
 
 export const videoData1 = [
   {
@@ -77,29 +79,14 @@ export interface IVideoData {
 export const HomePage = () => {
   const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
   const videosFromServerr = async () =>
-    await axios
-      .get(
-        `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=20&regionCode=US&key=${appConfigs.youtube.apiKey}`
-      )
-      .then((data) => {
-        console.log(data)
-        // const filterVideoData =  data.data.items.map(videoData => {
-        //     return{
-        //       _id: videoData.id,
-        //       title: string,
-        //       category: string,
-        //       description: string,
-        //       creator: string,
-        //       uploadDate: string,
-        //       viewCount: number,
-        //       url: string,
-        //     }
-        // })
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    GetYoutubeDataAsJSON<IVideosDto>("/videos", {
+      params: {
+        part: "snippet",
+        contentDetails: "statistics",
+        chart: "mostPopular",
+        maxResults: 20,
+      },
+    });
   const auth = getAuth();
   const navigate = useNavigate();
   useEffect(() => {
