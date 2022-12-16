@@ -13,8 +13,9 @@ import { WatchLaterPage } from "./pages/watch_later";
 import { PlaylistsPage } from "./pages/playlists";
 
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
+import firebaseConfigs from "./config/firebase";
 
-initializeApp(config.firebaseConfig);
+initializeApp(firebaseConfigs);
 
 function App() {
   const router = createBrowserRouter([

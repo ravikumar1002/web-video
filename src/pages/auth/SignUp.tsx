@@ -24,24 +24,24 @@ const signupSchema = object({
   message: "Passwords do not match",
 });
 
-type ISignUp = TypeOf<typeof signupSchema>;
+type ISignUpSchema = TypeOf<typeof signupSchema>;
 
 export const SignupPage: FC = () => {
   const navigate = useNavigate();
 
-  const defaultValues: ISignUp = {
+  const defaultValues: ISignUpSchema = {
     name: "",
     email: "",
     password: "",
     passwordConfirm: "",
   };
 
-  const methods = useForm<ISignUp>({
+  const methods = useForm<ISignUpSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues,
   });
 
-  const onSubmitHandler: SubmitHandler<ISignUp> = (values: ISignUp) => {
+  const onSubmitHandler: SubmitHandler<ISignUpSchema> = (values: ISignUpSchema) => {
     const auth = getAuth();
 
     createUserWithEmailAndPassword(auth, values.email, values.password)
