@@ -18,7 +18,9 @@ import styled from "@emotion/styled";
 import FormInput from "../../components/FormInput";
 import GoogleLogo from "../../assets/google.svg";
 import GitHubLogo from "../../assets/github.svg";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { loginThunk } from "../../thunk/authThunk";
+import { FieldValues } from "react-hook-form/dist/types/fields";
+import { useAppDispatch } from "../../store/reduxHook";
 
 export const LinkItem = styled(Link)`
   text-decoration: none;
@@ -62,6 +64,7 @@ type ILogin = TypeOf<typeof LoginSchema>;
 export const LoginPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const defaultValues: ILogin = {
     email: "",
@@ -74,16 +77,8 @@ export const LoginPage: FC = () => {
   });
 
   const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    dispatch(loginThunk(values));
+    navigate(location?.state?.from?.pathname || "/", { replace: true });
   };
 
   return (
