@@ -2,11 +2,13 @@ import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { VideoMenu } from "../../components/video-card/VideoMenu";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import appConfigs from "../../config/appConfigs";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { IVideosDto } from "../../dto/videos";
+import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
+import { videosThunk } from "../../thunk/VideosThunk";
+import { string } from "zod";
 
 export const videoData1 = [
   {
@@ -66,7 +68,7 @@ export const videoData1 = [
 ];
 
 export interface IVideoData {
-  _id: string;
+  id: string;
   title: string;
   category: string;
   description: string;
@@ -78,19 +80,12 @@ export interface IVideoData {
 
 export const HomePage = () => {
   const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
-  const videosFromServerr = async () =>
-    GetYoutubeDataAsJSON<IVideosDto>("/videos", {
-      params: {
-        part: "snippet",
-        contentDetails: "statistics",
-        chart: "mostPopular",
-        maxResults: 20,
-      },
-    });
+  const dispatch = useAppDispatch();
+  const { videos } = useAppSelector((state) => state.videos);
   const auth = getAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    videosFromServerr();
+    dispatch(videosThunk());
   }, []);
 
   return (
@@ -115,15 +110,26 @@ export const HomePage = () => {
       </button>
 
       <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-        {videoData1.map((video) => {
+        {videos.map((videoData) => {
+          const editVideoData = {
+            id: videoData.id,
+            title: videoData.snippet.title,
+            category: videoData.snippet.categoryId,
+            description: videoData.snippet.description,
+            creator: videoData.snippet.channelTitle,
+            uploadDate: videoData.snippet.publishedAt,
+            viewCount: 123,
+            url: `https://youtu.be/${videoData.id}`,
+          };
+          console.log(videoData, "videoData", editVideoData);
           return (
             <div
-              key={video._id}
+              key={editVideoData.id}
               onClick={(e) => {
                 navigate("/history");
               }}
             >
-              <VideoCard video={video} />
+              <VideoCard video={editVideoData} />
             </div>
           );
         })}

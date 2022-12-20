@@ -24,8 +24,8 @@ const authSlice = createSlice({
             })
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
-                console.log(action.payload.providerData[0])
-                state.authUser = action.payload.providerData[0];
+                console.log(action.payload?.providerData[0])
+                state.authUser = action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })
             .addCase(loginThunk.rejected, (state, action) => {
@@ -36,8 +36,8 @@ const authSlice = createSlice({
             })
             .addCase(signupThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
-                console.log(action.payload.providerData[0])
-                state.authUser = action.payload.providerData[0];
+                console.log(action.payload?.providerData[0])
+                state.authUser = action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })
             .addCase(signupThunk.rejected, (state, action) => {

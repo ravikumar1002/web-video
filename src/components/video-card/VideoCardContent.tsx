@@ -5,8 +5,30 @@ import GoogleLogo from "../../assets/google.svg";
 import Box from "@mui/material/Box";
 import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
+import { useDateFormat } from "../../hooks/useDateFormat";
+import { IVideoCardData } from "./VIdeoCard";
 
-export const VideoCardContent = () => {
+interface IVideoContentData {
+  videoContentData: IVideoCardData;
+}
+
+export const VideoCardContent = (props: IVideoContentData) => {
+  const {
+    id,
+    title,
+    category,
+    description,
+    creator,
+    uploadDate,
+    viewCount,
+    url,
+  } = props.videoContentData;
+
+  const getLimitWordTitle = (title: string) => {
+    console.log(title.length);
+
+    return title.length > 40 ? `${title.slice(0, 40)}...` : title;
+  };
   return (
     <>
       <CardContent
@@ -14,6 +36,7 @@ export const VideoCardContent = () => {
           display: "flex",
           gap: "0.5rem",
           padding: "0",
+          paddingTop: "0.5rem",
           "&:last-child": { pb: 1 },
         }}
       >
@@ -52,11 +75,16 @@ export const VideoCardContent = () => {
               }}
             >
               <Typography
-                variant="h6"
+                variant="body1"
                 component="div"
-                sx={{ fontWeight: "600", maxHeight: "4rem", flexGrow: 1 }}
+                sx={{
+                  fontWeight: "600",
+                  maxHeight: "4rem",
+                  flexGrow: 1,
+                  // wordBreak: "break-all",
+                }}
               >
-                Title of Video
+                {getLimitWordTitle(title)}
               </Typography>
             </Link>
             <VideoMenu />
@@ -64,15 +92,15 @@ export const VideoCardContent = () => {
 
           <div>
             <Typography
-              variant="body2"
+              variant="caption"
               component="div"
-              sx={{ cursor: "default", fontWeight: "500" }}
+              sx={{ cursor: "default", fontWeight: "600", color: "#6d6d6d" }}
             >
-              Creator
+              {creator}
             </Typography>
             <div>
               <Typography
-                variant="body2"
+                variant="caption"
                 component="span"
                 sx={{ cursor: "default", fontWeight: "500" }}
               >
@@ -84,7 +112,7 @@ export const VideoCardContent = () => {
                 component="span"
                 sx={{ cursor: "default", fontWeight: "500" }}
               >
-                Upload Date
+                {useDateFormat(uploadDate)}
               </Typography>
             </div>
           </div>
