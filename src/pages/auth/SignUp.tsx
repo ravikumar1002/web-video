@@ -8,8 +8,9 @@ import FormInput from "../../components/FormInput";
 import GoogleLogo from "../../assets/google.svg";
 import GitHubLogo from "../../assets/github.svg";
 import { LinkItem, OauthMuiLink } from "./Login";
-import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate, useLocation } from "react-router-dom";
+import { signupThunk } from "../../thunk/authThunk";
+import { useAppDispatch } from "../../store/reduxHook";
 
 const signupSchema = object({
   name: string().min(1, "Name is required").max(70),
@@ -27,7 +28,9 @@ const signupSchema = object({
 type ISignUpSchema = TypeOf<typeof signupSchema>;
 
 export const SignupPage: FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const defaultValues: ISignUpSchema = {
     name: "",
@@ -41,18 +44,11 @@ export const SignupPage: FC = () => {
     defaultValues,
   });
 
-  const onSubmitHandler: SubmitHandler<ISignUpSchema> = (values: ISignUpSchema) => {
-    const auth = getAuth();
-
-    createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+  const onSubmitHandler: SubmitHandler<ISignUpSchema> = (
+    values: ISignUpSchema
+  ) => {
+    dispatch(signupThunk(values));
+    navigate(location?.state?.from?.pathname || "/", { replace: true });
   };
 
   return (

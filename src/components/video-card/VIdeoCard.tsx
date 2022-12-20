@@ -3,8 +3,8 @@ import { VideoCardContent } from "./VideoCardContent";
 
 import { VideoCardImage } from "./VideoCardImage";
 
-interface IVideoCardData {
-  _id: string;
+export interface IVideoCardData {
+  id: string;
   title: string;
   category: string;
   description: string;
@@ -14,13 +14,13 @@ interface IVideoCardData {
   url: string;
 }
 
-interface IVideoCardProps {
+export interface IVideoCardProps {
   video: IVideoCardData;
 }
 
 export const VideoCard = (props: IVideoCardProps) => {
   const {
-    _id,
+    id,
     title,
     category,
     description,
@@ -29,14 +29,15 @@ export const VideoCard = (props: IVideoCardProps) => {
     viewCount,
     url,
   } = props.video;
+  console.log(id, "image");
 
   return (
-    <Card sx={{ maxWidth: 300}} >
+    <Card sx={{ maxWidth: 300 }}>
       <div>
-        <VideoCardImage imgHeight={190} imgAlt={title} imgId={_id} />
+        <VideoCardImage imgHeight={190} imgAlt={title} imgId={id} />
       </div>
       <div>
-        <VideoCardContent/>
+        <VideoCardContent videoContentData={props.video} />
       </div>
     </Card>
   );
