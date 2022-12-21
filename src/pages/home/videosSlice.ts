@@ -26,7 +26,6 @@ const videosSlice = createSlice({
             })
             .addCase(videosThunk.fulfilled, (state, action) => {
                 state.videosStatus = "fulfilled";
-                console.log(action.payload)
                 state.videos = action.payload?.items;
                 state.nextPageToken = action.payload?.nextPageToken
             })

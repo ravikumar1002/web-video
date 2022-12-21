@@ -31,7 +31,6 @@ export const VideoCard = (props: IVideoCardProps) => {
     viewCount,
     url,
   } = props.video;
-  console.log(id, "image");
 
   return (
     <Card sx={{ maxWidth: 300 }}>

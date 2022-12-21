@@ -26,11 +26,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
     url,
   } = props.videoContentData;
 
-  const getLimitWordTitle = (title: string) => {
-    console.log(title.length);
-
-    return title.length > 40 ? `${title.slice(0, 40)}...` : title;
-  };
+  const getLimitWordTitle = (title: string) =>
+    title.length > 40 ? `${title.slice(0, 40)}...` : title;
   return (
     <>
       <CardContent

@@ -121,7 +121,6 @@ export const HomePage = () => {
             viewCount: 123,
             url: `https://youtu.be/${videoData.id}`,
           } as IVideoData;
-          console.log(videoData, "videoData", editVideoData);
           return (
             <div
               key={editVideoData.id}

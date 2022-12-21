@@ -86,7 +86,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
         sx={{
           zIndex: "10",
         }}
-        onClick={(e) => {}}
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -139,7 +138,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   >
                     Add to Playlist
                   </MenuItem>
-                  <p>asdf</p>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
