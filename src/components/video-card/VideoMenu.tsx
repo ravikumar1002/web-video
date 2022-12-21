@@ -7,13 +7,20 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import Stack from "@mui/material/Stack";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../App";
+import { IVideosDto } from "../../dto/videos";
+import { getAuth } from "firebase/auth";
+interface ICardMenuProps {
+  videoDetails: IVideosDto;
+}
 
-export const VideoMenu = () => {
+export const VideoMenu = (props: ICardMenuProps) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
   const container = React.useRef<HTMLUListElement | null>(null);
-
+  const auth = getAuth();
+  const user = auth.currentUser;
   const handleToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -28,16 +35,6 @@ export const VideoMenu = () => {
     setOpen(false);
   };
 
-  //   const handleListKeyDown = (event: React.KeyboardEvent) => {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //     if (event.key === "Tab") {
-  //       setOpen(false);
-  //     } else if (event.key === "Escape") {
-  //       setOpen(false);
-  //     }
-  //   };
-
   const handleClickOutside = (e: Event | React.SyntheticEvent) => {
     if (
       container?.current &&
@@ -50,6 +47,18 @@ export const VideoMenu = () => {
   React.useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
   }, [open]);
+
+  const addDataInFirebase = async (storageValue: object, ...args: any) => {
+    console.log(user?.providerData[0].uid);
+    try {
+      const docRef = await addDoc(collection(db, ...args), {
+        ...storageValue,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   return (
     <div
@@ -74,7 +83,6 @@ export const VideoMenu = () => {
         role={undefined}
         placement="bottom-start"
         transition
-        // disablePortal
         sx={{
           zIndex: "10",
         }}
@@ -96,15 +104,41 @@ export const VideoMenu = () => {
                   aria-labelledby="composition-button"
                   ref={container}
                   className="container"
-                  //   onKeyDown={handleListKeyDown}
                 >
                   <MenuItem
-                    onClick={() => console.log("ddddddddddddddddddddddddd")}
+                    onClick={(e) => {
+                      addDataInFirebase(
+                        props.videoDetails,
+                        "User",
+                        `${user?.providerData[0].uid}`,
+                        "Liked"
+                      );
+                      handleClose(e);
+                    }}
                   >
-                    Profile
+                    Liked
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={(e) => {
+                      addDataInFirebase(
+                        props.videoDetails,
+                        "User",
+                        `${user?.providerData[0].uid}`,
+                        "watch later"
+                      );
+                      handleClose(e);
+                    }}
+                  >
+                    save to watch later
+                  </MenuItem>
+                  <MenuItem
+                    onClick={(e) => {
+                      addDataInFirebase(props.videoDetails, "Liked");
+                      handleClose(e);
+                    }}
+                  >
+                    Add to Playlist
+                  </MenuItem>
                   <p>asdf</p>
                 </MenuList>
               </ClickAwayListener>

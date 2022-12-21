@@ -79,7 +79,7 @@ export interface IVideoData {
 }
 
 export const HomePage = () => {
-  const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
+  // const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
   const dispatch = useAppDispatch();
   const { videos } = useAppSelector((state) => state.videos);
   const auth = getAuth();
@@ -120,7 +120,7 @@ export const HomePage = () => {
             uploadDate: videoData.snippet.publishedAt,
             viewCount: 123,
             url: `https://youtu.be/${videoData.id}`,
-          };
+          } as IVideoData;
           console.log(videoData, "videoData", editVideoData);
           return (
             <div
@@ -129,7 +129,7 @@ export const HomePage = () => {
                 navigate("/history");
               }}
             >
-              <VideoCard video={editVideoData} />
+              <VideoCard video={editVideoData} apiVideoData={videoData} />
             </div>
           );
         })}

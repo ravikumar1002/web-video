@@ -1,21 +1,21 @@
 // import "./App.css";
 import { initializeApp } from "firebase/app";
-import { config } from "./config/config";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./pages/home";
 import AuthRoute from "./components/AuthRoute";
-
 import { LoginPage, SignupPage } from "./pages/auth";
 import { HistoryPage } from "./pages/history";
 import { UploadPage } from "./pages/upload";
 import { LikedPage } from "./pages/liked";
 import { WatchLaterPage } from "./pages/watch_later";
 import { PlaylistsPage } from "./pages/playlists";
-
+import { getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
 
-initializeApp(firebaseConfigs);
+const app = initializeApp(firebaseConfigs);
+
+export const db = getFirestore(app);
 
 function App() {
   const router = createBrowserRouter([
