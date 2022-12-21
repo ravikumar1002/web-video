@@ -7,9 +7,11 @@ import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
 import { useDateFormat } from "../../hooks/useDateFormat";
 import { IVideoCardData } from "./VIdeoCard";
+import { IVideosDto } from "../../dto/videos";
 
 interface IVideoContentData {
   videoContentData: IVideoCardData;
+  videoDetails: IVideosDto;
 }
 
 export const VideoCardContent = (props: IVideoContentData) => {
@@ -24,11 +26,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
     url,
   } = props.videoContentData;
 
-  const getLimitWordTitle = (title: string) => {
-    console.log(title.length);
-
-    return title.length > 40 ? `${title.slice(0, 40)}...` : title;
-  };
+  const getLimitWordTitle = (title: string) =>
+    title.length > 40 ? `${title.slice(0, 40)}...` : title;
   return (
     <>
       <CardContent
@@ -87,7 +86,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
                 {getLimitWordTitle(title)}
               </Typography>
             </Link>
-            <VideoMenu />
+            <VideoMenu videoDetails={props.videoDetails} />
           </Box>
 
           <div>

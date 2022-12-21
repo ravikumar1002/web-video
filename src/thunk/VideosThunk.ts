@@ -14,7 +14,6 @@ export const videosThunk = createAsyncThunk(
                     maxResults: 20,
                 },
             });
-            console.log(response)
             return response;
         } catch (error: any) {
             const errorCode = error.code;

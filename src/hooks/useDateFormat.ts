@@ -4,6 +4,5 @@ export const useDateFormat = (date: string) => {
     const day = newDate.getDate()
     const month = newDate.getMonth()
     const year = newDate.getFullYear()
-    console.log(day, month, year)
     return `${day}-${month}-${year}`
 }

@@ -15,6 +15,7 @@ export const VideoCardImage = (props: IVideoCardImageProps) => {
         height={props.imgHeight}
         image={`https://i.ytimg.com/vi/${props.imgId}/maxresdefault.jpg`}
         alt={props.imgAlt}
+        title= {props.imgAlt}
       />
     </>
   );
