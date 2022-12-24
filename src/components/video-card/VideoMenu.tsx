@@ -9,10 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
-import { IVideosDto } from "../../dto/videos";
+import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
 interface ICardMenuProps {
-  videoDetails: IVideosDto;
+  videoDetails: IVideoDto;
 }
 
 export const VideoMenu = (props: ICardMenuProps) => {
@@ -49,7 +49,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
   }, [open]);
 
   const addDataInFirebase = async (storageValue: object, ...args: any) => {
-    console.log(user?.providerData[0].uid);
     try {
       const docRef = await addDoc(collection(db, ...args), {
         ...storageValue,

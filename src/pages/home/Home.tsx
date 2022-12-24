@@ -9,63 +9,9 @@ import { IVideosDto } from "../../dto/videos";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
 import { string } from "zod";
-
-export const videoData1 = [
-  {
-    _id: "NO_ZdJjMtdI",
-    title: "STRANGER THINGS Season 4",
-    category: "Trailer",
-    description: "STRANGER THINGS Season 4 Trailer (NEW, 2022)",
-    creator: "Netflix",
-    uploadDate: "12-04-2022",
-    viewCount: 0,
-    url: "https://youtu.be/NO_ZdJjMtdI",
-  },
-  {
-    _id: "-FrqlHlUgz4",
-    title: "Dasvi ",
-    category: "Trailer",
-    description:
-      "From counting votes to counting the days left for his 10th grade exams. Will Gangaram pass with flying colours?",
-    creator: "Netflix India",
-    uploadDate: "23-03-2022",
-    viewCount: 0,
-    url: "https://youtu.be/-FrqlHlUgz4",
-  },
-  {
-    _id: "IU2ttJ73h2Y",
-    title: "Lift Karadey - Adnan Sami",
-    category: "Song",
-    description:
-      "Presenting ‘Lift Karade’ music video sung & composed by Adnan Sami.",
-    creator: "SonyMusicIndiaVEVO",
-    uploadDate: "19-03-2022",
-    viewCount: 0,
-    url: "https://youtu.be/IU2ttJ73h2Y",
-  },
-  {
-    _id: "IU2ttJ73h2Y2",
-    title: "Lift Karadey - Adnan Sami",
-    category: "Song",
-    description:
-      "Presenting ‘Lift Karade’ music video sung & composed by Adnan Sami.",
-    creator: "SonyMusicIndiaVEVO",
-    uploadDate: "19-03-2022",
-    viewCount: 0,
-    url: "https://youtu.be/IU2ttJ73h2Y",
-  },
-  {
-    _id: "IU2ttJ73h2Y3",
-    title: "Lift Karadey - Adnan Sami",
-    category: "Song",
-    description:
-      "Presenting ‘Lift Karade’ music video sung & composed by Adnan Sami.",
-    creator: "SonyMusicIndiaVEVO",
-    uploadDate: "19-03-2022",
-    viewCount: 0,
-    url: "https://youtu.be/IU2ttJ73h2Y",
-  },
-];
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../App";
+import { PlaylistsPage } from "../playlists";
 
 export interface IVideoData {
   id: string;
@@ -79,11 +25,19 @@ export interface IVideoData {
 }
 
 export const HomePage = () => {
-  // const [videoData2, setVideoData] = useState<IVideoData[] | undefined>([]);
   const dispatch = useAppDispatch();
   const { videos } = useAppSelector((state) => state.videos);
   const auth = getAuth();
   const navigate = useNavigate();
+
+  const docRef = doc(db, "User", "Liked");
+  const docSnap = async () => {
+    const res = await getDoc(docRef);
+    console.log(res.data(), "res");
+    return res.data();
+  };
+  console.log(docSnap());
+
   useEffect(() => {
     dispatch(videosThunk());
   }, []);
@@ -108,6 +62,8 @@ export const HomePage = () => {
       >
         Go to History
       </button>
+      
+      <PlaylistsPage />
 
       <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
         {videos.map((videoData) => {
@@ -121,6 +77,7 @@ export const HomePage = () => {
             viewCount: 123,
             url: `https://youtu.be/${videoData.id}`,
           } as IVideoData;
+
           return (
             <div
               key={editVideoData.id}

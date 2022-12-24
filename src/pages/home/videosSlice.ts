@@ -1,10 +1,11 @@
 
 import { createSlice } from "@reduxjs/toolkit";
+import { IVideoDto } from "../../dto/videos";
 import { loginThunk, signupThunk } from "../../thunk/authThunk";
 import { videosThunk } from "../../thunk/VideosThunk";
 
 interface IAppState {
-    videos: object[],
+    videos: IVideoDto[],
     videosStatus: string,
     nextPageToken: string | null,
 }

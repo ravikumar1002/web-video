@@ -56,7 +56,7 @@ function App() {
       ),
     },
     {
-      path: "/Playlists",
+      path: "/playlists",
       element: (
         <AuthRoute>
           <SideNavDrawer>
