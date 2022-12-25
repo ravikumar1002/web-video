@@ -12,6 +12,7 @@ import { PlaylistsPage } from "./pages/playlists";
 import { getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
+import { SinglePlayListPage } from "./pages/playlists/SinglePlaylistPage";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -61,6 +62,16 @@ function App() {
         <AuthRoute>
           <SideNavDrawer>
             <PlaylistsPage />
+          </SideNavDrawer>
+        </AuthRoute>
+      ),
+    },
+    {
+      path: "/playlists/:playlistid",
+      element: (
+        <AuthRoute>
+          <SideNavDrawer>
+            <SinglePlayListPage />
           </SideNavDrawer>
         </AuthRoute>
       ),

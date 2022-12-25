@@ -17,7 +17,7 @@ export const PlaylistsFolderCard = () => {
       }}
     >
       <Link
-        to={"/playlists"}
+        to={"/playlists/12345"}
         style={{
           textDecoration: "none",
           color: "inherit",
@@ -46,7 +46,7 @@ export const PlaylistsFolderCard = () => {
         }}
       >
         <Link
-          to={"/playlists"}
+          to={"/playlists/12345"}
           style={{
             textDecoration: "none",
             color: "inherit",

@@ -5,6 +5,9 @@ export const PlaylistsPage = () => {
     <div>
       <h2>Playlists</h2>
       <PlaylistsFolderCard />
+      <PlaylistsFolderCard />
+      <PlaylistsFolderCard />
+      <PlaylistsFolderCard />
     </div>
   );
 };
