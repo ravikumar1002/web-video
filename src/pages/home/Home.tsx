@@ -62,8 +62,6 @@ export const HomePage = () => {
       >
         Go to History
       </button>
-      
-      <PlaylistsPage />
 
       <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
         {videos.map((videoData) => {

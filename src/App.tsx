@@ -29,6 +29,14 @@ function App() {
       ),
     },
     {
+      path: "/",
+      element: (
+        <SideNavDrawer>
+          <HomePage />
+        </SideNavDrawer>
+      ),
+    },
+    {
       path: "/login",
       element: <LoginPage />,
     },
