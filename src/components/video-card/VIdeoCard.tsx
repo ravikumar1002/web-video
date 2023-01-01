@@ -1,5 +1,5 @@
 import Card from "@mui/material/Card";
-import { IVideosDto } from "../../dto/videos";
+import { IVideoDto } from "../../dto/videos";
 import { VideoCardContent } from "./VideoCardContent";
 
 import { VideoCardImage } from "./VideoCardImage";
@@ -17,7 +17,7 @@ export interface IVideoCardData {
 
 export interface IVideoCardProps {
   video: IVideoCardData;
-  apiVideoData: IVideosDto;
+  apiVideoData: IVideoDto;
 }
 
 export const VideoCard = (props: IVideoCardProps) => {

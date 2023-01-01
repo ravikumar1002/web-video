@@ -7,11 +7,11 @@ import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
 import { useDateFormat } from "../../hooks/useDateFormat";
 import { IVideoCardData } from "./VIdeoCard";
-import { IVideosDto } from "../../dto/videos";
+import { IVideoDto } from "../../dto/videos";
 
 interface IVideoContentData {
   videoContentData: IVideoCardData;
-  videoDetails: IVideosDto;
+  videoDetails: IVideoDto;
 }
 
 export const VideoCardContent = (props: IVideoContentData) => {
@@ -41,7 +41,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
       >
         <div>
           <Link
-            to={"/history"}
+            to={`${id}`}
             style={{
               padding: "0.5rem 0.25rem",
               textDecoration: "none",

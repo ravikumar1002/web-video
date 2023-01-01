@@ -125,7 +125,7 @@ export const HomePage = () => {
             <div
               key={editVideoData.id}
               onClick={(e) => {
-                navigate("/history");
+                navigate(`/${editVideoData.id}`);
               }}
             >
               <VideoCard video={editVideoData} apiVideoData={videoData} />
