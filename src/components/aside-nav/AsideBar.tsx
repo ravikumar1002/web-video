@@ -46,8 +46,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
     textDecoration: "none",
   };
 
-  const getActiveStyle = ({ isActive }) =>
-    isActive ? activeStyle : deactiveStyle;
+  const getActiveStyle = ({ isActive }) => isActive ? activeStyle : deactiveStyle;
 
   return (
     <Box sx={{ display: "flex" }}>

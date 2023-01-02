@@ -6,8 +6,9 @@ import PlaylistsLogo from "./playlist.svg";
 import UploadLogo from "./upload.svg"
 import BackArrow from "./back-arrow.svg"
 import HistoryLogo from "./history.svg"
+import GoogleLogo from "./google.svg"
 
-export { MenuLogo, ClockLogo, HeartLogo, HomeLogo, PlaylistsLogo, UploadLogo, BackArrow, HistoryLogo }
+export { MenuLogo, ClockLogo, HeartLogo, HomeLogo, PlaylistsLogo, UploadLogo, BackArrow, HistoryLogo, GoogleLogo }
 
 
 
