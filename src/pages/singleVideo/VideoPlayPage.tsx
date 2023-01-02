@@ -26,7 +26,6 @@ export const VideoPlayPage = () => {
     });
     setCurrentVideo(videoData.items[0]);
     setCurrentCreator(creatorData.items[0]);
-    console.log(creatorData, "details", videoData.items[0].snippet.channelId);
   };
 
   useEffect(() => {

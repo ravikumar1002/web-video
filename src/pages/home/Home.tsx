@@ -29,7 +29,6 @@ export const HomePage = () => {
     const res = await getDoc(docRef);
     return res.data();
   };
-  console.log(docSnap());
 
   useEffect(() => {
     dispatch(videosThunk());
