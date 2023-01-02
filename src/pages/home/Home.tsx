@@ -1,17 +1,11 @@
 import { getAuth, signOut } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
-import { VideoMenu } from "../../components/video-card/VideoMenu";
-import { useEffect, useState } from "react";
-import appConfigs from "../../config/appConfigs";
-import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
-import { IVideosDto } from "../../dto/videos";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
-import { string } from "zod";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
-import { PlaylistsPage } from "../playlists";
 
 export interface IVideoData {
   id: string;
@@ -33,7 +27,6 @@ export const HomePage = () => {
   const docRef = doc(db, "User", "Liked");
   const docSnap = async () => {
     const res = await getDoc(docRef);
-    console.log(res.data(), "res");
     return res.data();
   };
   console.log(docSnap());

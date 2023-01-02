@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import {
+  Button,
+  CardActionArea,
+  CardActions,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import { DeleteLogo } from "../../../../assets";
 
 export const PlaylistsFolderCard = () => {
@@ -32,10 +35,7 @@ export const PlaylistsFolderCard = () => {
             alt={"Nothing"}
             title={"nothing"}
           />
-          <div className="playlist-card-count-section" style={{
-
-          }}>
-          </div>
+          <div className="playlist-card-count-section" style={{}}></div>
         </CardActionArea>
       </Link>
 

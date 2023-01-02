@@ -8,8 +8,9 @@ import BackArrow from "./back-arrow.svg"
 import HistoryLogo from "./history.svg"
 import GoogleLogo from "./google.svg"
 import DeleteLogo from "./delete-button.svg"
+import GitHubLogo from "./github.svg"
 
-export { MenuLogo, ClockLogo, HeartLogo, HomeLogo, PlaylistsLogo, UploadLogo, BackArrow, HistoryLogo, DeleteLogo, GoogleLogo }
+export { MenuLogo, ClockLogo, HeartLogo, HomeLogo, PlaylistsLogo, UploadLogo, BackArrow, HistoryLogo, DeleteLogo, GoogleLogo, GitHubLogo }
 
 
 

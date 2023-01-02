@@ -1,8 +1,10 @@
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
+import {
+  CardContent,
+  Typography,
+  Avatar,
+  Box,
+} from "@mui/material";
 import GoogleLogo from "../../assets/google.svg";
-import Box from "@mui/material/Box";
 import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
 import { useDateFormat } from "../../hooks/useDateFormat";

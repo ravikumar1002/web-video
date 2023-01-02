@@ -11,9 +11,6 @@ import {
   ClickAwayListener,
   TextField,
   Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
 } from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
