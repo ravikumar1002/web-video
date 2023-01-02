@@ -136,7 +136,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         props.videoDetails,
                         "User",
                         `${user?.providerData[0].uid}`,
-                        "watch later"
+                        "watch-later"
                       );
                       handleMenuClose(e);
                     }}

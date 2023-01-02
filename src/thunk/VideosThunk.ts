@@ -8,8 +8,7 @@ export const videosThunk = createAsyncThunk(
         try {
             const response = await GetYoutubeDataAsJSON<IVideosDto>("/videos", {
                 params: {
-                    part: "snippet",
-                    contentDetails: "statistics",
+                    part: "snippet, contentDetails,statistics",
                     chart: "mostPopular",
                     maxResults: 20,
                 },

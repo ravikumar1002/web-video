@@ -1,4 +1,5 @@
-import * as React from "react";
+// import * as React from "react";
+import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,9 +21,8 @@ interface ISideNavDrawerProps {
 }
 
 export const SideNavDrawer = (props: ISideNavDrawerProps) => {
-  const theme = useTheme();
   const { children } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -46,7 +46,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
     textDecoration: "none",
   };
 
-  const getActiveStyle = ({ isActive }) =>
+  const getActiveStyle = ({ isActive }: { isActive: Boolean }) =>
     isActive ? activeStyle : deactiveStyle;
 
   return (

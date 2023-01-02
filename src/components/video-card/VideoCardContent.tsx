@@ -41,7 +41,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
       >
         <div>
           <Link
-            to={"/history"}
+            to={`${id}`}
             style={{
               padding: "0.5rem 0.25rem",
               textDecoration: "none",

@@ -12,6 +12,7 @@ import { PlaylistsPage } from "./pages/playlists";
 import { getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
+import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
 import { SinglePlayListPage } from "./pages/playlists/SinglePlaylistPage";
 
 const app = initializeApp(firebaseConfigs);
@@ -43,6 +44,14 @@ function App() {
     {
       path: "/signup",
       element: <SignupPage />,
+    },
+    {
+      path: "/:videoid",
+      element: (
+          <SideNavDrawer>
+            <VideoPlayPage />
+          </SideNavDrawer>
+      ),
     },
     {
       path: "/history",
