@@ -11,6 +11,10 @@ import {
   ClickAwayListener,
   TextField,
   Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Box,
 } from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
@@ -73,7 +77,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
   return (
     <div
       onClick={(e) => {
-        e.preventDefault();
         e.stopPropagation();
       }}
     >
@@ -160,14 +163,22 @@ export const VideoMenu = (props: ICardMenuProps) => {
         openModal={openModal}
       >
         <div>
-          {/* <label htmlFor="playlistName">
-            <input type="checkbox" name="playlistName" id="playlistName"  onClick={() => {
-              console.log("input clicked")
-            }}/>
-            <span>Playlist name</span>
-          </label> */}
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Label"
+            />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Label"
+            />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Label"
+            />
+          </FormGroup>
         </div>
-        <div
+        <Box
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -181,19 +192,21 @@ export const VideoMenu = (props: ICardMenuProps) => {
             id="outlined-basic"
             label="Playlist Name"
             variant="outlined"
+            size="small"
             sx={{
               width: "100%",
             }}
           />
           <Button
             variant="contained"
+            size="small"
             onClick={() => {
               console.log("Create");
             }}
           >
             Create
           </Button>
-        </div>
+        </Box>
       </BasicModal>
     </div>
   );

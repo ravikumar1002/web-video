@@ -20,12 +20,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
   const {
     id,
     title,
-    category,
-    description,
     creator,
     uploadDate,
-    viewCount,
-    url,
   } = props.videoContentData;
 
   const getLimitWordTitle = (title: string) =>
@@ -82,7 +78,6 @@ export const VideoCardContent = (props: IVideoContentData) => {
                   fontWeight: "600",
                   maxHeight: "4rem",
                   flexGrow: 1,
-                  // wordBreak: "break-all",
                 }}
               >
                 {getLimitWordTitle(title)}
