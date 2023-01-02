@@ -2,25 +2,33 @@ import { IVideoDto } from "../../../dto/videos";
 import { Typography, Avatar, Paper } from "@mui/material";
 import { useDateFormat } from "../../../hooks/useDateFormat";
 import { Link } from "react-router-dom";
-import { GoogleLogo } from "../../../assets/index";
+import { IChannelDto } from "../../../dto/channels";
 
 interface IVideoPlayerContent {
   videoDetails: IVideoDto;
+  creatorDetails: IChannelDto;
 }
 
 export const VideoPlayerContent = (props: IVideoPlayerContent) => {
-  const { id, snippet } = props.videoDetails;
+  const {
+    videoDetails: { id, snippet, statistics: videoStatistics },
+    creatorDetails: {
+      snippet: { thumbnails },
+      statistics,
+    },
+  } = props;
 
   return (
     <div>
       <div>
         <Typography
-          variant="body1"
+          variant="h6"
           component="div"
           sx={{
-            fontWeight: "600",
+            fontWeight: "700",
             maxHeight: "4rem",
             flexGrow: 1,
+            padding: "1rem 0",
           }}
         >
           {snippet.title}
@@ -28,26 +36,37 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
       </div>
       <div>
         <Link
-          to={`${id}`}
+          to={`#`}
           style={{
             display: "flex",
             gap: "0.5rem",
-            padding: "0",
-            paddingTop: "0.5rem",
+            padding: "0.5rem 0",
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "default",
           }}
         >
           <Avatar
             alt="Creator"
-            src={GoogleLogo}
-            sx={{ width: 24, height: 24 }}
+            src={thumbnails.default.url}
+            sx={{ width: 48, height: 48 }}
           />
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ cursor: "default", fontWeight: "600", color: "#6d6d6d" }}
-          >
-            {snippet.channelTitle}
-          </Typography>
+          <div>
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{ fontWeight: "600", color: "#3f3f3f" }}
+            >
+              {snippet.channelTitle}
+            </Typography>
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{ fontWeight: "600", color: "#6d6d6d" }}
+            >
+              {statistics.subscriberCount} subscribers
+            </Typography>
+          </div>
         </Link>
       </div>
       <div style={{ width: "100%" }}>
@@ -57,19 +76,24 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
             padding: "1rem",
           }}
         >
-          <div>
+          <div
+            style={{
+              display: "flex",
+              gap: "1rem",
+            }}
+          >
             <Typography
               variant="caption"
               component="span"
-              sx={{ cursor: "default", fontWeight: "500" }}
+              sx={{ cursor: "default", fontWeight: "600" }}
             >
-              Total Views
+              {videoStatistics.viewCount} views
             </Typography>
             <Typography
               gutterBottom
               variant="body2"
               component="span"
-              sx={{ cursor: "default", fontWeight: "500" }}
+              sx={{ cursor: "default", fontWeight: "600" }}
             >
               {useDateFormat(snippet.publishedAt)}
             </Typography>

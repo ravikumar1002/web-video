@@ -39,11 +39,9 @@ function App() {
     {
       path: "/:videoid",
       element: (
-        <AuthRoute>
           <SideNavDrawer>
             <VideoPlayPage />
           </SideNavDrawer>
-        </AuthRoute>
       ),
     },
     {

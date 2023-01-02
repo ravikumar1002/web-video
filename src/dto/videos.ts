@@ -11,8 +11,22 @@ export interface IVideoDto {
     etag: string;
     id: string;
     snippet: IVideoSnippet;
+    contentDetails: IContentDetails;
+    statistics: IStatistics;
 }
 
+export interface IContentDetails {
+    duration: string;
+    dimension: string;
+    definition: string;
+    caption: string;
+    licensedContent: boolean;
+    contentRating: IContentRating;
+    projection: string;
+}
+
+export interface IContentRating {
+}
 export interface IVideoSnippet {
     publishedAt: string;
     channelId: string;
@@ -27,6 +41,7 @@ export interface IVideoSnippet {
     defaultLanguage?: DefaultLanguage;
     defaultAudioLanguage?: DefaultLanguage;
 }
+
 
 export enum DefaultLanguage {
     En = "en",
@@ -55,6 +70,13 @@ export interface IThumbnailProperties {
     url: string;
     width: number;
     height: number;
+}
+
+export interface IStatistics {
+    viewCount: string;
+    likeCount: string;
+    favoriteCount: string;
+    commentCount: string;
 }
 
 export interface PageInfo {
