@@ -35,9 +35,6 @@ export const VideoPlayPage = () => {
 
   return (
     <div
-      style={{
-        height: "100vh",
-      }}
     >
       {currentVideo && (
         <>

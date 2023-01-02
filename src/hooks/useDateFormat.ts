@@ -12,6 +12,5 @@ export const useDateFormat = (uploadDate: string) => {
         month = `0${month}`
     }
 
-    console.log(`${date} ,,,, ${month} ,,,, ${year}`)
     return `${date}-${month}-${year}`
 }

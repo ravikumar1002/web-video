@@ -5,14 +5,13 @@ interface IVideoPlayerProps {
 }
 
 export const VideoPlayer = (props: IVideoPlayerProps) => {
-  console.log(props.videoId);
   return (
     <>
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${props.videoId}`}
         controls
         width="100%"
-        height="50%"
+        height="35rem"
         playing={true}
       />
     </>

@@ -49,7 +49,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
   }, [open]);
 
   const addDataInFirebase = async (storageValue: object, ...args: any) => {
-    console.log(user?.providerData[0].uid);
     try {
       const docRef = await addDoc(collection(db, ...args), {
         ...storageValue,
