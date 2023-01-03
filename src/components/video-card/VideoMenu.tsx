@@ -15,12 +15,14 @@ import {
   FormControlLabel,
   Checkbox,
   Box,
+  Typography,
 } from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
 import { BasicModal } from "../modal/Modal";
+import CloseIcon from "@mui/icons-material/Close";
 interface ICardMenuProps {
   videoDetails: IVideoDto;
 }
@@ -162,22 +164,42 @@ export const VideoMenu = (props: ICardMenuProps) => {
         closePlaylistModal={closePlaylistModal}
         openModal={openModal}
       >
-        <div>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Label"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Label"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Label"
-            />
-          </FormGroup>
-        </div>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItem: "center",
+          }}
+        >
+          <Typography
+            variant="body1"
+            component="div"
+            sx={{ cursor: "default", fontWeight: "700", alignSelf: "center" }}
+          >
+            Save to...
+          </Typography>
+          <IconButton aria-label="close">
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <FormGroup
+          sx={{
+            paddingBottom: "1rem",
+          }}
+        >
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Label"
+          />
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Label"
+          />
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Label"
+          />
+        </FormGroup>
         <Box
           style={{
             display: "flex",

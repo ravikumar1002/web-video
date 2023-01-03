@@ -9,7 +9,7 @@ const style = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 interface IBasicModalProps {
@@ -28,8 +28,9 @@ export const BasicModal = (props: IBasicModalProps) => {
         onClose={closePlaylistModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{}}
       >
-        <Box sx={style}>{children}</Box>
+        <Box  sx={style}>{children}</Box>
       </Modal>
     </div>
   );
