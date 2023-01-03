@@ -9,20 +9,14 @@ import {
   MenuList,
   IconButton,
   ClickAwayListener,
-  TextField,
-  Button,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Box,
-  Typography,
 } from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
 import { BasicModal } from "../modal/Modal";
-import CloseIcon from "@mui/icons-material/Close";
+import { PlaylistMenuModal } from "./PlaylistMenu";
+
 interface ICardMenuProps {
   videoDetails: IVideoDto;
 }
@@ -159,77 +153,11 @@ export const VideoMenu = (props: ICardMenuProps) => {
           </Grow>
         )}
       </Popper>
-      <BasicModal
+      <PlaylistMenuModal
         openPlaylistModal={openPlaylistModal}
         closePlaylistModal={closePlaylistModal}
         openModal={openModal}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItem: "center",
-          }}
-        >
-          <Typography
-            variant="body1"
-            component="div"
-            sx={{ cursor: "default", fontWeight: "700", alignSelf: "center" }}
-          >
-            Save to...
-          </Typography>
-          <IconButton aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        <FormGroup
-          sx={{
-            paddingBottom: "1rem",
-          }}
-        >
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Label"
-          />
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Label"
-          />
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Label"
-          />
-        </FormGroup>
-        <Box
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "end",
-            gap: "0.5rem",
-            flexDirection: "column",
-          }}
-        >
-          <TextField
-            id="outlined-basic"
-            label="Playlist Name"
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "100%",
-            }}
-          />
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => {
-              console.log("Create");
-            }}
-          >
-            Create
-          </Button>
-        </Box>
-      </BasicModal>
+      />
     </div>
   );
 };
