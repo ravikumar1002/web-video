@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { authReducer } from "../pages/auth/authSlice";
 import { VideosReducer } from "../pages/home/videosSlice";
+import { userReducer } from "../pages/auth/userSlice"
 
 // interface ISliceType {
 //     name: string,
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     user: authReducer,
     videos: VideosReducer,
+    userData: userReducer,
   },
 });
 

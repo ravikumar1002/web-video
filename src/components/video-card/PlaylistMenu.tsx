@@ -12,7 +12,14 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../../App";
 
 interface IPlaylistModalProps {
@@ -24,6 +31,7 @@ interface IPlaylistModalProps {
 export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
   const { openPlaylistModal, closePlaylistModal, openModal } = props;
   const [playlistNameInput, setPlaylistNameInput] = useState<string>();
+  const [playlistsName, setPlaylistsName] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -34,6 +42,18 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  };
+
+  const getPlaylistsName = async (userID: string | undefined) => {
+    const docSnap = await getDocs(
+      collection(db, "User", `${userID}`, "playlists")
+    );
+    console.log(docSnap, docSnap);
+    const PlaylistArray = docSnap.docs.map((item) => {
+      return item.id;
+    });
+    console.log(PlaylistArray);
+    setPlaylistsName(PlaylistArray);
   };
 
   return (
@@ -65,7 +85,14 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
           paddingBottom: "1rem",
         }}
       >
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+        {playlistsName.map((playlistId) => {
+          return (
+            <FormControlLabel
+              control={<Checkbox />}
+              label={playlistId}
+            />
+          );
+        })}
         <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
         <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
       </FormGroup>
@@ -84,6 +111,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
           label="Playlist Name"
           variant="outlined"
           size="small"
+          value={playlistNameInput}
           sx={{
             width: "100%",
           }}
@@ -101,6 +129,8 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
               "playlists",
               `${playlistNameInput}`
             );
+            setPlaylistNameInput("");
+            getPlaylistsName(user?.providerData[0].uid);
           }}
         >
           Create
