@@ -1,14 +1,14 @@
 
 export const useDateFormat = (uploadDate: string) => {
     const newDate = new Date(uploadDate)
-    let date = newDate.getDate()
-    let month = newDate.getMonth() + 1
+    let date = String(newDate.getDate())
+    let month = String(newDate.getMonth() + 1)
     let year = newDate.getFullYear()
 
-    if (date < 10) {
+    if (Number(date) < 10) {
         date = `0${date}`
     }
-    if (month < 10) {
+    if (Number(date) < 10) {
         month = `0${month}`
     }
 

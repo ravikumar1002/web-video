@@ -13,6 +13,7 @@ import { getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
 import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
+import { SinglePlayListPage } from "./pages/playlists/SinglePlaylistPage";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -20,6 +21,14 @@ export const db = getFirestore(app);
 
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <SideNavDrawer>
+          <HomePage />
+        </SideNavDrawer>
+      ),
+    },
     {
       path: "/",
       element: (
@@ -65,11 +74,21 @@ function App() {
       ),
     },
     {
-      path: "/Playlists",
+      path: "/playlists",
       element: (
         <AuthRoute>
           <SideNavDrawer>
             <PlaylistsPage />
+          </SideNavDrawer>
+        </AuthRoute>
+      ),
+    },
+    {
+      path: "/playlists/:playlistid",
+      element: (
+        <AuthRoute>
+          <SideNavDrawer>
+            <SinglePlayListPage />
           </SideNavDrawer>
         </AuthRoute>
       ),

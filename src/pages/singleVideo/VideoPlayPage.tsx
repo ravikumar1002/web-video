@@ -4,7 +4,7 @@ import { IVideosDto, IVideoDto } from "../../dto/videos";
 import { IChannelDto, IChannelsDto } from "../../dto/channels";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { VideoPlayerContent } from "./components/VideoContent";
-import { VideoPlayer } from "./components/VIdeoPlayer";
+import { VideoPlayer } from "./components/VideoPlayer";
 
 export const VideoPlayPage = () => {
   const [currentVideo, setCurrentVideo] = useState<IVideoDto>();
@@ -26,7 +26,6 @@ export const VideoPlayPage = () => {
     });
     setCurrentVideo(videoData.items[0]);
     setCurrentCreator(creatorData.items[0]);
-    console.log(creatorData, "details", videoData.items[0].snippet.channelId);
   };
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export const VideoPlayPage = () => {
   return (
     <div
     >
-      {currentVideo && (
+      {currentVideo && currentCreator && (
         <>
           <VideoPlayer videoId={currentVideo.id} />
           <VideoPlayerContent

@@ -3,7 +3,6 @@ import { useFormContext, Controller } from "react-hook-form";
 import { TextField, TextFieldProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// 👇 Styled Material UI TextField Component
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#5e5b5d",
@@ -34,13 +33,11 @@ const CssTextField = styled(TextField)({
   },
 });
 
-// 👇 Type of Props the FormInput will receive
 type FormInputProps = {
   name: string;
 } & TextFieldProps;
 
 const FormInput: FC<FormInputProps> = ({ name, ...otherProps }) => {
-  // 👇 Utilizing useFormContext to have access to the form Context
   const {
     control,
     formState: { errors },

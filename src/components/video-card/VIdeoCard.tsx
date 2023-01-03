@@ -1,7 +1,6 @@
 import Card from "@mui/material/Card";
 import { IVideoDto } from "../../dto/videos";
 import { VideoCardContent } from "./VideoCardContent";
-
 import { VideoCardImage } from "./VideoCardImage";
 
 export interface IVideoCardData {
@@ -21,16 +20,7 @@ export interface IVideoCardProps {
 }
 
 export const VideoCard = (props: IVideoCardProps) => {
-  const {
-    id,
-    title,
-    category,
-    description,
-    creator,
-    uploadDate,
-    viewCount,
-    url,
-  } = props.video;
+  const { id, title } = props.video;
 
   return (
     <Card sx={{ maxWidth: 300 }}>
@@ -38,7 +28,10 @@ export const VideoCard = (props: IVideoCardProps) => {
         <VideoCardImage imgHeight={190} imgAlt={title} imgId={id} />
       </div>
       <div>
-        <VideoCardContent videoContentData={props.video} videoDetails={props.apiVideoData}/>
+        <VideoCardContent
+          videoContentData={props.video}
+          videoDetails={props.apiVideoData}
+        />
       </div>
     </Card>
   );

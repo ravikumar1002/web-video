@@ -1,8 +1,10 @@
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
+import {
+  CardContent,
+  Typography,
+  Avatar,
+  Box,
+} from "@mui/material";
 import GoogleLogo from "../../assets/google.svg";
-import Box from "@mui/material/Box";
 import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
 import { useDateFormat } from "../../hooks/useDateFormat";
@@ -18,12 +20,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
   const {
     id,
     title,
-    category,
-    description,
     creator,
     uploadDate,
-    viewCount,
-    url,
   } = props.videoContentData;
 
   const getLimitWordTitle = (title: string) =>
@@ -80,7 +78,6 @@ export const VideoCardContent = (props: IVideoContentData) => {
                   fontWeight: "600",
                   maxHeight: "4rem",
                   flexGrow: 1,
-                  // wordBreak: "break-all",
                 }}
               >
                 {getLimitWordTitle(title)}

@@ -16,10 +16,8 @@ import { literal, object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
 import FormInput from "../../components/FormInput";
-import GoogleLogo from "../../assets/google.svg";
-import GitHubLogo from "../../assets/github.svg";
+import { GoogleLogo, GitHubLogo } from "../../assets";
 import { loginThunk } from "../../thunk/authThunk";
-import { FieldValues } from "react-hook-form/dist/types/fields";
 import { useAppDispatch } from "../../store/reduxHook";
 
 export const LinkItem = styled(Link)`

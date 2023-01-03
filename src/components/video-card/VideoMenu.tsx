@@ -1,38 +1,46 @@
 import * as React from "react";
-import IconButton from "@mui/material/IconButton";
+import { useState, useRef, useEffect } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
+import {
+  Grow,
+  Paper,
+  Popper,
+  MenuItem,
+  MenuList,
+  IconButton,
+  ClickAwayListener,
+} from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
+import { BasicModal } from "../modal/Modal";
+import { PlaylistMenuModal } from "./PlaylistMenu";
+
 interface ICardMenuProps {
   videoDetails: IVideoDto;
 }
 
 export const VideoMenu = (props: ICardMenuProps) => {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
-  const container = React.useRef<HTMLUListElement | null>(null);
+  const [openMenu, setOpenMenu] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
+  const container = useRef<HTMLUListElement | null>(null);
+  const [openModal, setOpenModal] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
-  const handleToggle = (event: React.MouseEvent<HTMLElement>) => {
-    setOpen((prevOpen) => !prevOpen);
+
+  const handleMenuToggle = (event: React.MouseEvent<HTMLElement>) => {
+    setOpenMenu((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event: Event | React.SyntheticEvent) => {
+  const handleMenuClose = (event: Event | React.SyntheticEvent) => {
     if (
       anchorRef.current &&
       anchorRef.current.contains(event.target as HTMLElement)
     ) {
       return;
     }
-    setOpen(false);
+    setOpenMenu(false);
   };
 
   const handleClickOutside = (e: Event | React.SyntheticEvent) => {
@@ -40,13 +48,16 @@ export const VideoMenu = (props: ICardMenuProps) => {
       container?.current &&
       !container?.current?.contains(e.target as HTMLElement)
     ) {
-      setOpen(false);
+      setOpenMenu(false);
     }
   };
 
-  React.useEffect(() => {
+  const openPlaylistModal = () => setOpenModal(true);
+  const closePlaylistModal = () => setOpenModal(false);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-  }, [open]);
+  }, [openMenu]);
 
   const addDataInFirebase = async (storageValue: object, ...args: any) => {
     try {
@@ -62,22 +73,21 @@ export const VideoMenu = (props: ICardMenuProps) => {
   return (
     <div
       onClick={(e) => {
-        e.preventDefault();
         e.stopPropagation();
       }}
     >
       <IconButton
         ref={anchorRef}
         id="composition-button"
-        aria-controls={open ? "composition-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
+        aria-controls={openMenu ? "composition-menu" : undefined}
+        aria-expanded={openMenu ? "true" : undefined}
         aria-haspopup="true"
-        onClick={handleToggle}
+        onClick={handleMenuToggle}
       >
         <MoreVertIcon />
       </IconButton>
       <Popper
-        open={open}
+        open={openMenu}
         anchorEl={anchorRef.current}
         role={undefined}
         placement="bottom-start"
@@ -95,9 +105,9 @@ export const VideoMenu = (props: ICardMenuProps) => {
             }}
           >
             <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
+              <ClickAwayListener onClickAway={handleMenuClose}>
                 <MenuList
-                  autoFocusItem={open}
+                  autoFocusItem={openMenu}
                   id="composition-menu"
                   aria-labelledby="composition-button"
                   ref={container}
@@ -111,7 +121,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         `${user?.providerData[0].uid}`,
                         "Liked"
                       );
-                      handleClose(e);
+                      handleMenuClose(e);
                     }}
                   >
                     Liked
@@ -122,17 +132,17 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         props.videoDetails,
                         "User",
                         `${user?.providerData[0].uid}`,
-                        "watch later"
+                        "watch-later"
                       );
-                      handleClose(e);
+                      handleMenuClose(e);
                     }}
                   >
                     save to watch later
                   </MenuItem>
                   <MenuItem
                     onClick={(e) => {
-                      addDataInFirebase(props.videoDetails, "Liked");
-                      handleClose(e);
+                      openPlaylistModal();
+                      handleMenuClose(e);
                     }}
                   >
                     Add to Playlist
@@ -143,6 +153,11 @@ export const VideoMenu = (props: ICardMenuProps) => {
           </Grow>
         )}
       </Popper>
+      <PlaylistMenuModal
+        openPlaylistModal={openPlaylistModal}
+        closePlaylistModal={closePlaylistModal}
+        openModal={openModal}
+      />
     </div>
   );
 };
