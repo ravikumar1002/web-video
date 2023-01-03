@@ -31,7 +31,7 @@ interface IPlaylistModalProps {
 export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
   const { openPlaylistModal, closePlaylistModal, openModal } = props;
   const [playlistNameInput, setPlaylistNameInput] = useState<string>();
-  const [playlistsName, setPlaylistsName] = useState([]);
+  const [playlistsName, setPlaylistsName] = useState<string[]>([]);
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -76,7 +76,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
         >
           Save to...
         </Typography>
-        <IconButton aria-label="close">
+        <IconButton aria-label="close" onClick={() => closePlaylistModal()}>
           <CloseIcon />
         </IconButton>
       </Box>
@@ -86,15 +86,8 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
         }}
       >
         {playlistsName.map((playlistId) => {
-          return (
-            <FormControlLabel
-              control={<Checkbox />}
-              label={playlistId}
-            />
-          );
+          return <FormControlLabel control={<Checkbox />} label={playlistId} />;
         })}
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
       </FormGroup>
       <Box
         style={{
