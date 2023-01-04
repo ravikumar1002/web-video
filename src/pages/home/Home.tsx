@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
+import { playlistsThunk } from "../../thunk/playliststhunk";
 
 export interface IVideoData {
   id: string;
@@ -22,13 +23,14 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
   const { videos } = useAppSelector((state) => state.videos);
   const auth = getAuth();
+  const user = auth.currentUser;
   const navigate = useNavigate();
 
-  const docRef = doc(db, "User", "Liked");
-  const docSnap = async () => {
-    const res = await getDoc(docRef);
-    return res.data();
-  };
+  // const docSnap = async () => {
+  //   const docRef = doc(db, "User", "Liked");
+  //   const res = await getDoc(docRef);
+  //   return res.data();
+  // };
 
   useEffect(() => {
     dispatch(videosThunk());

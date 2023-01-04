@@ -48,11 +48,9 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
     const docSnap = await getDocs(
       collection(db, "User", `${userID}`, "playlists")
     );
-    console.log(docSnap, docSnap);
     const PlaylistArray = docSnap.docs.map((item) => {
       return item.id;
     });
-    console.log(PlaylistArray);
     setPlaylistsName(PlaylistArray);
   };
 

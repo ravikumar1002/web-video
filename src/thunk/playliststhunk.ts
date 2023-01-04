@@ -6,13 +6,13 @@ import {
 import { db } from "../App";
 
 export const playlistsThunk = createAsyncThunk(
-    "/playlists/getplaylists", async ({ userID }, { rejectWithValue }) => {
+    "/user/playlists", async (userID: string, { rejectWithValue }) => {
         try {
             const response = await getDocs(
                 collection(db, "User", `${userID}`, "playlists")
             );
-            console.log(response)
-            return response;
+            console.log(response.docs, "response")
+            return response.docs;
         } catch (error: any) {
             const errorCode = error.code;
             const errorMessage = error.message;

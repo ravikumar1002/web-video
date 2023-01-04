@@ -14,12 +14,16 @@ import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
 import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
 import { SinglePlayListPage } from "./pages/playlists/SinglePlaylistPage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { playlistsThunk } from "./thunk/playliststhunk";
+import { useAppDispatch } from "./store/reduxHook";
 
 const app = initializeApp(firebaseConfigs);
 
 export const db = getFirestore(app);
 
-function App() {
+const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -48,9 +52,9 @@ function App() {
     {
       path: "/:videoid",
       element: (
-          <SideNavDrawer>
-            <VideoPlayPage />
-          </SideNavDrawer>
+        <SideNavDrawer>
+          <VideoPlayPage />
+        </SideNavDrawer>
       ),
     },
     {
@@ -114,12 +118,24 @@ function App() {
       ),
     },
   ]);
+  const dispatch = useAppDispatch();
+  const auth = getAuth();
+  // const user = auth.currentUser;
+
+  useEffect(() => {
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(playlistsThunk(user?.providerData[0].uid));
+      }
+    });
+
+  }, [auth]);
 
   return (
     <div className="App">
       <RouterProvider router={router} />
     </div>
   );
-}
+};
 
 export default App;

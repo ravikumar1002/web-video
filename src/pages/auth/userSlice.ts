@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { playlistsThunk } from "../../thunk/playliststhunk";
 
 interface IUsersState {
-    playlists: {},
+    playlists: [],
     likedVideos: {},
     history: {},
     userDataStatus: string,
@@ -10,7 +10,7 @@ interface IUsersState {
 }
 
 const initialState: IUsersState = {
-    playlists: {},
+    playlists: [],
     likedVideos: {},
     history: {},
     userDataStatus: "idle",
@@ -18,7 +18,7 @@ const initialState: IUsersState = {
 }
 
 export const userSlice = createSlice({
-    name: "auth",
+    name: "user",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -27,7 +27,8 @@ export const userSlice = createSlice({
         })
             .addCase(playlistsThunk.fulfilled, (state, action) => {
                 state.userDataStatus = "fulfilled";
-                state.playlists = action.payload;
+                console.log(action.payload, "action usersLice")
+                state.playlists = action.payload
             })
             .addCase(playlistsThunk.rejected, (state, action) => {
                 state.userDataStatus = "rejected";
