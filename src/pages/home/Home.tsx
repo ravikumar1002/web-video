@@ -37,7 +37,6 @@ export const HomePage = () => {
 
   return (
     <div>
-      <h2>Home</h2>
       <button
         onClick={() => {
           signOut(auth)
@@ -47,15 +46,6 @@ export const HomePage = () => {
       >
         Logout
       </button>
-
-      <button
-        onClick={() => {
-          navigate("/history");
-        }}
-      >
-        Go to History
-      </button>
-
       <Box>
         <Grid
           container
