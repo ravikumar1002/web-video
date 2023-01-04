@@ -39,15 +39,14 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const activeStyle = {
     color: "black",
     background: "blue",
-    borderRadius: "5px",
-    padding: "0.5rem 0rem",
     textDecoration: "none",
+    display: "block",
   };
 
   const deactiveStyle = {
     color: "black",
-    padding: "0.5rem 0rem",
     textDecoration: "none",
+    display: "block",
   };
 
   const getActiveStyle = ({ isActive }: { isActive: Boolean }) =>
@@ -97,7 +96,15 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           )}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{
+          "& .MuiDrawer-paper": {
+            height: "auto",
+          },
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <img

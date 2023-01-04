@@ -4,8 +4,6 @@ import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../App";
 import { Box, Grid } from "@mui/material";
 
 export interface IVideoData {
@@ -22,7 +20,6 @@ export interface IVideoData {
 export const HomePage = () => {
   const dispatch = useAppDispatch();
   const { videos } = useAppSelector((state) => state.videos);
-  const auth = getAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,15 +28,6 @@ export const HomePage = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          signOut(auth)
-            .then(() => {})
-            .catch((error) => {});
-        }}
-      >
-        Logout
-      </button>
       <Box>
         <Grid
           container
