@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import "./asidebar.css";
 import { MenuLogo, BackArrow } from "../../assets";
 import { Link, NavLink } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
@@ -74,11 +75,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
               color: "inherit",
             }}
           >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-            >
+            <Typography variant="h6" noWrap component="div">
               Web Video
             </Typography>
           </Link>
@@ -108,6 +105,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
+                      flexDirection: open ? "initial" : "column",
                       px: 2.5,
                     }}
                   >
@@ -126,7 +124,16 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                     </ListItemIcon>
                     <ListItemText
                       primary={item.title}
-                      sx={{ opacity: open ? 1 : 0 }}
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontSize: open ? "1rem" : "0.8rem",
+                          width: open ? "auto" : "4rem",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: open ? "clip" : "ellipsis",
+                          textAlign: open ? "left" : "center",
+                        },
+                      }}
                     />
                   </ListItemButton>
                 </NavLink>

@@ -1,0 +1,6 @@
+.truncate {
+  width: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
