@@ -23,7 +23,7 @@ export const VideoCard = (props: IVideoCardProps) => {
   const { id, title } = props.video;
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
+    <Card >
       <div>
         <VideoCardImage imgHeight={190} imgAlt={title} imgId={id} />
       </div>
