@@ -13,7 +13,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import "./asidebar.css";
 import { MenuLogo, BackArrow } from "../../assets";
 import { Link, NavLink } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
@@ -126,7 +125,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                       primary={item.title}
                       sx={{
                         "& .MuiTypography-root": {
-                          fontSize: open ? "1rem" : "0.8rem",
+                          fontSize: open ? "1rem" : "0.7rem",
                           width: open ? "auto" : "4rem",
                           whiteSpace: "nowrap",
                           overflow: "hidden",

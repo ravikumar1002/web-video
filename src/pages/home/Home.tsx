@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
+import { Box, Grid } from "@mui/material";
 
 export interface IVideoData {
   id: string;
@@ -55,31 +56,42 @@ export const HomePage = () => {
         Go to History
       </button>
 
-      <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-        {videos.map((videoData) => {
-          const editVideoData = {
-            id: videoData.id,
-            title: videoData.snippet.title,
-            category: videoData.snippet.categoryId,
-            description: videoData.snippet.description,
-            creator: videoData.snippet.channelTitle,
-            uploadDate: videoData.snippet.publishedAt,
-            viewCount: 123,
-            url: `https://youtu.be/${videoData.id}`,
-          } as IVideoData;
+      <Box>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 7, sm: 8, md: 12, lg:16, }}
+        >
+          {videos.map((videoData) => {
+            const editVideoData = {
+              id: videoData.id,
+              title: videoData.snippet.title,
+              category: videoData.snippet.categoryId,
+              description: videoData.snippet.description,
+              creator: videoData.snippet.channelTitle,
+              uploadDate: videoData.snippet.publishedAt,
+              viewCount: 123,
+              url: `https://youtu.be/${videoData.id}`,
+            } as IVideoData;
 
-          return (
-            <div
-              key={editVideoData.id}
-              onClick={(e) => {
-                navigate(`/${editVideoData.id}`);
-              }}
-            >
-              <VideoCard video={editVideoData} apiVideoData={videoData} />
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
+                <div
+                  key={editVideoData.id}
+                  onClick={(e) => {
+                    navigate(`/${editVideoData.id}`);
+                  }}
+                >
+                  <VideoCard video={editVideoData} apiVideoData={videoData} />
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+      {/* <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}> */}
+      {/*        
+      </div> */}
     </div>
   );
 };
