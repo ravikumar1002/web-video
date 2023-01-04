@@ -12,11 +12,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Button,
 } from "@mui/material";
 import { MenuLogo, BackArrow } from "../../assets";
 import { Link, NavLink } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
+import { getAuth, signOut } from "firebase/auth";
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -24,6 +26,7 @@ interface ISideNavDrawerProps {
 export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const { children } = props;
   const [open, setOpen] = useState(false);
+  const auth = getAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -71,13 +74,27 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             to="/"
             style={{
               textDecoration: "none",
+              display: "block",
               color: "inherit",
+              flexGrow: 1,
             }}
           >
             <Typography variant="h6" noWrap component="div">
               Web Video
             </Typography>
           </Link>
+          {auth.currentUser?.providerData[0].uid && (
+            <Button
+              color="inherit"
+              onClick={() => {
+                signOut(auth)
+                  .then(() => {})
+                  .catch((error) => {});
+              }}
+            >
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

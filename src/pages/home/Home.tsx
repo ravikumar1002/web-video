@@ -25,12 +25,6 @@ export const HomePage = () => {
   const auth = getAuth();
   const navigate = useNavigate();
 
-  const docRef = doc(db, "User", "Liked");
-  const docSnap = async () => {
-    const res = await getDoc(docRef);
-    return res.data();
-  };
-
   useEffect(() => {
     dispatch(videosThunk());
   }, []);
@@ -50,7 +44,7 @@ export const HomePage = () => {
         <Grid
           container
           spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 7, sm: 8, md: 12, lg:16, }}
+          columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
         >
           {videos.map((videoData) => {
             const editVideoData = {
@@ -79,9 +73,6 @@ export const HomePage = () => {
           })}
         </Grid>
       </Box>
-      {/* <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}> */}
-      {/*        
-      </div> */}
     </div>
   );
 };
