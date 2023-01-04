@@ -14,7 +14,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { MenuLogo, BackArrow } from "../../assets";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
 interface ISideNavDrawerProps {
@@ -67,9 +67,21 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           >
             <img src={MenuLogo} alt="Menu icon" style={{ height: "2rem" }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Web Video
-          </Typography>
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+            >
+              Web Video
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
