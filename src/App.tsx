@@ -5,7 +5,6 @@ import { HomePage } from "./pages/home";
 import AuthRoute from "./components/AuthRoute";
 import { LoginPage, SignupPage } from "./pages/auth";
 import { HistoryPage } from "./pages/history";
-import { UploadPage } from "./pages/upload";
 import { LikedPage } from "./pages/liked";
 import { WatchLaterPage } from "./pages/watch_later";
 import { PlaylistsPage } from "./pages/playlists";
@@ -98,21 +97,11 @@ const App = () => {
       ),
     },
     {
-      path: "/watch-later",
+      path: "/watchlater",
       element: (
         <AuthRoute>
           <SideNavDrawer>
             <WatchLaterPage />
-          </SideNavDrawer>
-        </AuthRoute>
-      ),
-    },
-    {
-      path: "/upload",
-      element: (
-        <AuthRoute>
-          <SideNavDrawer>
-            <UploadPage />
           </SideNavDrawer>
         </AuthRoute>
       ),

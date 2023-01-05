@@ -12,11 +12,14 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Button,
 } from "@mui/material";
 import { MenuLogo, BackArrow } from "../../assets";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
+import { getAuth, signOut } from "firebase/auth";
+import MenuIcon from "@mui/icons-material/Menu";
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -24,6 +27,9 @@ interface ISideNavDrawerProps {
 export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const { children } = props;
   const [open, setOpen] = useState(false);
+  const auth = getAuth();
+  const location = useLocation();
+  console.log(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -35,20 +41,19 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
 
   const activeStyle = {
     color: "black",
-    background: "blue",
-    borderRadius: "5px",
-    padding: "0.5rem 0rem",
+    background: "#808085",
     textDecoration: "none",
+    display: "block",
   };
 
-  const deactiveStyle = {
+  const inactiveStyle = {
     color: "black",
-    padding: "0.5rem 0rem",
     textDecoration: "none",
+    display: "block",
   };
 
   const getActiveStyle = ({ isActive }: { isActive: Boolean }) =>
-    isActive ? activeStyle : deactiveStyle;
+    isActive ? activeStyle : inactiveStyle;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -65,14 +70,44 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
               ...(open && { display: "none" }),
             }}
           >
-            <img src={MenuLogo} alt="Menu icon" style={{ height: "2rem" }} />
+            <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Web Video
-          </Typography>
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              display: "block",
+              color: "inherit",
+              flexGrow: 1,
+            }}
+          >
+            <Typography variant="h6" noWrap component="div">
+              Web Video
+            </Typography>
+          </Link>
+          {auth.currentUser?.providerData[0].uid && (
+            <Button
+              color="inherit"
+              onClick={() => {
+                signOut(auth)
+                  .then(() => {})
+                  .catch((error) => {});
+              }}
+            >
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{
+          "& .MuiDrawer-paper": {
+            height: "auto",
+          },
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <img
@@ -96,6 +131,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
+                      flexDirection: open ? "initial" : "column",
                       px: 2.5,
                     }}
                   >
@@ -106,15 +142,24 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                         justifyContent: "center",
                       }}
                     >
-                      <img
-                        src={item.iconSvg}
-                        alt="Google logo"
-                        style={{ height: "1.5rem" }}
-                      />
+                      {location.pathname.includes(item.path) ? (
+                        <item.activeIcon />
+                      ) : (
+                        <item.icon />
+                      )}
                     </ListItemIcon>
                     <ListItemText
                       primary={item.title}
-                      sx={{ opacity: open ? 1 : 0 }}
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontSize: open ? "1rem" : "0.7rem",
+                          width: open ? "auto" : "4rem",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: open ? "clip" : "ellipsis",
+                          textAlign: open ? "left" : "center",
+                        },
+                      }}
                     />
                   </ListItemButton>
                 </NavLink>
