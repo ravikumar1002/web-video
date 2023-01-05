@@ -19,7 +19,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
 import { getAuth, signOut } from "firebase/auth";
-
+import MenuIcon from "@mui/icons-material/Menu";
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -70,7 +70,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
               ...(open && { display: "none" }),
             }}
           >
-            <img src={MenuLogo} alt="Menu icon" style={{ height: "2rem" }} />
+            <MenuIcon />
           </IconButton>
           <Link
             to="/"
