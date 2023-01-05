@@ -46,6 +46,8 @@ export const HomePage = () => {
               url: `https://youtu.be/${videoData.id}`,
             } as IVideoData;
 
+            console.log(videoData)
+
             return (
               <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
                 <div

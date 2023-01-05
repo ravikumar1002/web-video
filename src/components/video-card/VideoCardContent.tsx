@@ -1,15 +1,13 @@
-import {
-  CardContent,
-  Typography,
-  Avatar,
-  Box,
-} from "@mui/material";
+import { CardContent, Typography, Avatar, Box } from "@mui/material";
 import GoogleLogo from "../../assets/google.svg";
 import { VideoMenu } from "./VideoMenu";
 import { Link } from "react-router-dom";
 import { useDateFormat } from "../../hooks/useDateFormat";
 import { IVideoCardData } from "./VIdeoCard";
 import { IVideoDto } from "../../dto/videos";
+import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
+import { IChannelDto, IChannelsDto } from "../../dto/channels";
+import { useEffect, useState } from "react";
 
 interface IVideoContentData {
   videoContentData: IVideoCardData;
@@ -17,12 +15,21 @@ interface IVideoContentData {
 }
 
 export const VideoCardContent = (props: IVideoContentData) => {
-  const {
-    id,
-    title,
-    creator,
-    uploadDate,
-  } = props.videoContentData;
+  const { id, title, creator, uploadDate } = props.videoContentData;
+  const [creatorDetails, setCreatorDetails] = useState<IChannelDto>();
+
+  const fetchCreatorData = async () => {
+    const creatorData = await GetYoutubeDataAsJSON<IChannelsDto>("/channels", {
+      params: {
+        part: "snippet,statistics,contentDetails",
+        id: props.videoDetails.snippet.channelId,
+      },
+    });
+    setCreatorDetails(creatorData.items[0]);
+  };
+  useEffect(() => {
+    fetchCreatorData();
+  }, []);
 
   const getLimitWordTitle = (title: string) =>
     title.length > 40 ? `${title.slice(0, 40)}...` : title;
@@ -49,8 +56,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
           >
             <Avatar
               alt="Creator"
-              src={GoogleLogo}
-              sx={{ width: 24, height: 24 }}
+              src={creatorDetails?.snippet.thumbnails.default.url}
+              sx={{ width: 36, height: 36 }}
             />
           </Link>
         </div>
@@ -94,13 +101,18 @@ export const VideoCardContent = (props: IVideoContentData) => {
             >
               {creator}
             </Typography>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+              }}
+            >
               <Typography
                 variant="caption"
                 component="span"
                 sx={{ cursor: "default", fontWeight: "500" }}
               >
-                Total Views
+                {props.videoDetails.statistics.viewCount} views
               </Typography>
               <Typography
                 gutterBottom
