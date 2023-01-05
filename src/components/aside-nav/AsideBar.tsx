@@ -15,10 +15,11 @@ import {
   Button,
 } from "@mui/material";
 import { MenuLogo, BackArrow } from "../../assets";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
 import { getAuth, signOut } from "firebase/auth";
+
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -27,6 +28,8 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const { children } = props;
   const [open, setOpen] = useState(false);
   const auth = getAuth();
+  const location = useLocation();
+  console.log(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -38,19 +41,19 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
 
   const activeStyle = {
     color: "black",
-    background: "blue",
+    background: "#808085",
     textDecoration: "none",
     display: "block",
   };
 
-  const deactiveStyle = {
+  const inactiveStyle = {
     color: "black",
     textDecoration: "none",
     display: "block",
   };
 
   const getActiveStyle = ({ isActive }: { isActive: Boolean }) =>
-    isActive ? activeStyle : deactiveStyle;
+    isActive ? activeStyle : inactiveStyle;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -139,11 +142,11 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                         justifyContent: "center",
                       }}
                     >
-                      <img
-                        src={item.iconSvg}
-                        alt="Google logo"
-                        style={{ height: "1.5rem" }}
-                      />
+                      {location.pathname.includes(item.path) ? (
+                        <item.activeIcon />
+                      ) : (
+                        <item.icon />
+                      )}
                     </ListItemIcon>
                     <ListItemText
                       primary={item.title}
