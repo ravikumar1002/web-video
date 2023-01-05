@@ -1,17 +1,22 @@
-import {
-    ClockLogo,
-    HeartLogo,
-    HomeLogo,
-    PlaylistsLogo,
-    UploadLogo,
-    HistoryLogo,
-} from "../../assets";
+
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import HomeIcon from '@mui/icons-material/Home';
+import { SvgIconProps } from "@mui/material";
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import PlaylistPlayOutlinedIcon from '@mui/icons-material/PlaylistPlayOutlined';
+import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay';
+import HistoryIcon from '@mui/icons-material/History';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
 
 interface INavigationItem {
     id: number,
     path: string,
     title: string,
-    iconSvg: string,
+    icon: (props: SvgIconProps) => JSX.Element,
+    activeIcon: (props: SvgIconProps) => JSX.Element,
 }
 
 
@@ -20,36 +25,35 @@ export const navigationLinks: INavigationItem[] = [
         id: 1,
         path: "/",
         title: "Home",
-        iconSvg: HomeLogo,
+        icon: HomeOutlinedIcon,
+        activeIcon: HomeIcon,
     },
     {
         id: 2,
         path: "/liked",
         title: "Liked",
-        iconSvg: HeartLogo,
+        icon: FavoriteBorderOutlinedIcon,
+        activeIcon: FavoriteIcon,
     },
     {
         id: 3,
         path: "/history",
         title: "History",
-        iconSvg: HistoryLogo,
+        icon: HistoryOutlinedIcon,
+        activeIcon: HistoryIcon,
     },
     {
         id: 4,
         path: "/playlists",
         title: "Playlists",
-        iconSvg: PlaylistsLogo,
+        icon: PlaylistPlayOutlinedIcon,
+        activeIcon: PlaylistPlayIcon,
     },
     {
         id: 5,
-        path: "/watch-later",
+        path: "/watchlater",
         title: "Watch Later",
-        iconSvg: ClockLogo,
-    },
-    {
-        id: 6,
-        path: "/upload",
-        title: "Upload",
-        iconSvg: UploadLogo,
+        icon: WatchLaterOutlinedIcon,
+        activeIcon: WatchLaterIcon,
     },
 ]

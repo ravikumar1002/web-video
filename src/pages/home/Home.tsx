@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
 import { Box, Grid } from "@mui/material";
+import { CardSceleton } from "../../components/sceleton/CardSceleton";
 
 export interface IVideoData {
   id: string;
@@ -19,7 +20,7 @@ export interface IVideoData {
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
-  const { videos } = useAppSelector((state) => state.videos);
+  const { videos, videosStatus } = useAppSelector((state) => state.videos);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +35,14 @@ export const HomePage = () => {
           spacing={{ xs: 2, md: 2 }}
           columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
         >
+          {videosStatus === "pending" &&
+            [...Array(20)].map((index) => {
+              return (
+                <Grid item xs={7} sm={4} md={4} lg={4} key={index}>
+                  <CardSceleton />
+                </Grid>
+              );
+            })}
           {videos.map((videoData) => {
             const editVideoData = {
               id: videoData.id,
