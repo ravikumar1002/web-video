@@ -6,10 +6,10 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  IconButton,
 } from "@mui/material";
-import { DeleteLogo } from "../../../../assets";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 interface IPlaylistValue {
   name: string;
   videos: string[];
@@ -81,7 +81,7 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
         }}
       >
         <Link
-          to={"/playlists/12345"}
+          to={`/playlists/${playlistData?.name}`}
           style={{
             textDecoration: "none",
             color: "inherit",
@@ -94,15 +94,21 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
               "&:last-child": { pb: 1 },
             }}
           >
-            <Typography variant="h5" component="div">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: "700",
+              }}
+            >
               {playlistData?.name}
             </Typography>
           </CardContent>
         </Link>
 
-        <Button size="small" color="primary">
-          <img src={DeleteLogo} alt="Delte Logo" style={{ height: "1.5rem" }} />
-        </Button>
+        <IconButton aria-label="delete" size="large">
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
       </CardActions>
     </Card>
   );
