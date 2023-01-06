@@ -157,6 +157,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
         openPlaylistModal={openPlaylistModal}
         closePlaylistModal={closePlaylistModal}
         openModal={openModal}
+        videoId = {props.videoDetails.id}
       />
     </div>
   );

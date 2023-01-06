@@ -1,42 +1,77 @@
 import { Link } from "react-router-dom";
 import {
   Button,
-  CardActionArea,
   CardActions,
   Card,
   CardContent,
   CardMedia,
   Typography,
+  IconButton,
 } from "@mui/material";
-import { DeleteLogo } from "../../../../assets";
+import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
+import DeleteIcon from "@mui/icons-material/Delete";
+interface IPlaylistValue {
+  name: string;
+  videos: string[];
+}
 
-export const PlaylistsFolderCard = () => {
+interface IPlaylistsFolderCardProps {
+  playlistData: IPlaylistValue;
+}
+
+export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
+  const { playlistData } = props;
+
   return (
     <Card
       sx={{
-        maxWidth: 345,
         padding: "0",
-        display: "inline-block",
       }}
     >
       <Link
-        to={"/playlists/12345"}
+        to={`/playlists/${playlistData?.name}`}
         style={{
           textDecoration: "none",
           color: "inherit",
           flexGrow: "2",
+          position: "relative",
         }}
       >
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height={200}
-            image={`https://i.ytimg.com/vi/P1Ohc8GDFPI/maxresdefault.jpg`}
-            alt={"Nothing"}
-            title={"nothing"}
-          />
-          <div className="playlist-card-count-section" style={{}}></div>
-        </CardActionArea>
+        <CardMedia
+          component="img"
+          height={200}
+          image={`https://i.ytimg.com/vi/${playlistData.videos[0]}/maxresdefault.jpg`}
+          alt={"Nothing"}
+          title={"nothing"}
+        />
+        <div
+          style={{
+            background: "#6d6d6dc4",
+            position: "absolute",
+            top: "0%",
+            right: " 0%",
+            height: "100%",
+            width: "25%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "1.2rem",
+            wordBreak: "break-word",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <Typography variant="h5" component="div">
+              {playlistData?.videos.length}
+            </Typography>
+            <Typography variant="h5" component="div">
+              Videos
+            </Typography>
+            <Typography variant="h4" component="div">
+              <PlaylistPlayIcon fontSize="large" />
+            </Typography>
+          </div>
+        </div>
       </Link>
 
       <CardActions
@@ -46,7 +81,7 @@ export const PlaylistsFolderCard = () => {
         }}
       >
         <Link
-          to={"/playlists/12345"}
+          to={`/playlists/${playlistData?.name}`}
           style={{
             textDecoration: "none",
             color: "inherit",
@@ -59,15 +94,21 @@ export const PlaylistsFolderCard = () => {
               "&:last-child": { pb: 1 },
             }}
           >
-            <Typography variant="h5" component="div">
-              Lizard
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: "700",
+              }}
+            >
+              {playlistData?.name}
             </Typography>
           </CardContent>
         </Link>
 
-        <Button size="small" color="primary">
-          <img src={DeleteLogo} alt="Delte Logo" style={{ height: "1.5rem" }} />
-        </Button>
+        <IconButton aria-label="delete" size="large">
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
       </CardActions>
     </Card>
   );

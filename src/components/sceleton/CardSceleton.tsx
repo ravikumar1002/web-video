@@ -19,13 +19,13 @@ export const CardSceleton = () => {
           }}
         >
           <Typography variant="h5">
-            <Skeleton variant="text" />
+            <Skeleton animation="wave" variant="text" />
           </Typography>
           <Typography variant="h5">
-            <Skeleton variant="text" />
+            <Skeleton animation="wave" variant="text" />
           </Typography>
           <Typography variant="caption">
-            <Skeleton variant="text" />
+            <Skeleton animation="wave" variant="text" />
           </Typography>
         </div>
       </div>

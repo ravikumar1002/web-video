@@ -29,7 +29,6 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const [open, setOpen] = useState(false);
   const auth = getAuth();
   const location = useLocation();
-  console.log(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -72,19 +71,24 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link
-            to="/"
+          <div
             style={{
-              textDecoration: "none",
-              display: "block",
-              color: "inherit",
-              flexGrow: 1,
+              flexGrow: "1",
             }}
           >
-            <Typography variant="h6" noWrap component="div">
-              Web Video
-            </Typography>
-          </Link>
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <Typography variant="h6" noWrap component="span">
+                Web Video
+              </Typography>
+            </Link>
+          </div>
+
           {auth.currentUser?.providerData[0].uid && (
             <Button
               color="inherit"
@@ -99,15 +103,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           )}
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        open={open}
-        sx={{
-          "& .MuiDrawer-paper": {
-            height: "auto",
-          },
-        }}
-      >
+      <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <img
@@ -133,6 +129,9 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                       justifyContent: open ? "initial" : "center",
                       flexDirection: open ? "initial" : "column",
                       px: 2.5,
+                      "& .MuiListItemIcon-root": {
+                        marginRight: "inherit",
+                      },
                     }}
                   >
                     <ListItemIcon
