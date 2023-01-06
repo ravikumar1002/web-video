@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
@@ -24,6 +24,7 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   const navigate = useNavigate();
 
   const { playlists } = useAppSelector((state) => state.userData);
+  const [playlistVideosLength, setPlaylistVideosLength] = useState<number>(0);
   const [playlistVideos, setPlaylistVideo] = useState<IVideoDto[]>([]);
 
   console.log(playlistid);
@@ -44,6 +45,7 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
       (playlist) => playlist.name === playlistID
     );
     getplaylistsVideos(playlistVideosUID[0].videos);
+    setPlaylistVideosLength(playlistVideosUID[0].videos.length);
   };
 
   useEffect(() => {
@@ -51,36 +53,52 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   }, [playlistid]);
 
   return (
-    <Grid
-      container
-      spacing={{ xs: 2, md: 2 }}
-      columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
-    >
-      {playlistVideos.map((videoData) => {
-        const editVideoData = {
-          id: videoData.id,
-          title: videoData.snippet.title,
-          category: videoData.snippet.categoryId,
-          description: videoData.snippet.description,
-          creator: videoData.snippet.channelTitle,
-          uploadDate: videoData.snippet.publishedAt,
-          viewCount: 123,
-          url: `https://youtu.be/${videoData.id}`,
-        } as IVideoData;
+    <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "1rem",
+        }}
+      >
+        <Typography variant="h4" gutterBottom component={"div"} >
+          {playlistid}
+        </Typography>
+        <Typography variant="h5" gutterBottom component={"div"}>
+          {playlistVideosLength} Videos
+        </Typography>
+      </div>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 2 }}
+        columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
+      >
+        {playlistVideos.map((videoData) => {
+          const editVideoData = {
+            id: videoData.id,
+            title: videoData.snippet.title,
+            category: videoData.snippet.categoryId,
+            description: videoData.snippet.description,
+            creator: videoData.snippet.channelTitle,
+            uploadDate: videoData.snippet.publishedAt,
+            viewCount: 123,
+            url: `https://youtu.be/${videoData.id}`,
+          } as IVideoData;
 
-        return (
-          <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
-            <div
-              key={editVideoData.id}
-              onClick={(e) => {
-                navigate(`/${editVideoData.id}`);
-              }}
-            >
-              <VideoCard video={editVideoData} apiVideoData={videoData} />
-            </div>
-          </Grid>
-        );
-      })}
-    </Grid>
+          return (
+            <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
+              <div
+                key={editVideoData.id}
+                onClick={(e) => {
+                  navigate(`/${editVideoData.id}`);
+                }}
+              >
+                <VideoCard video={editVideoData} apiVideoData={videoData} />
+              </div>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </div>
   );
 };

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {
   Button,
-  CardActionArea,
   CardActions,
   Card,
   CardContent,
@@ -9,9 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DeleteLogo } from "../../../../assets";
-import { GetYoutubeDataAsJSON } from "../../../../services/GetAsJSON";
-import { IVideosDto } from "../../../../dto/videos";
-import { useEffect } from "react";
+import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 
 interface IPlaylistValue {
   name: string;
@@ -48,7 +45,6 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
           title={"nothing"}
         />
         <div
-          className="playlist-card-count-section"
           style={{
             background: "#6d6d6dc4",
             position: "absolute",
@@ -59,12 +55,22 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            fontSize: "1.5rem",
+            fontSize: "1.2rem",
             wordBreak: "break-word",
             textAlign: "center",
           }}
         >
-          {playlistData?.videos.length} Videos
+          <div>
+            <Typography variant="h5" component="div">
+              {playlistData?.videos.length}
+            </Typography>
+            <Typography variant="h5" component="div">
+              Videos
+            </Typography>
+            <Typography variant="h4" component="div">
+              <PlaylistPlayIcon fontSize="large" />
+            </Typography>
+          </div>
         </div>
       </Link>
 

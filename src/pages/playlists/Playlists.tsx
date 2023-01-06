@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useAppSelector } from "../../store/reduxHook";
 import { PlaylistsFolderCard } from "./components/playlitsFolder/PlaylistsFolder";
 
@@ -7,6 +7,7 @@ export const PlaylistsPage = () => {
 
   return (
     <div>
+      <Typography variant="h4" gutterBottom>Playlist ({playlists.length})</Typography>
       <Grid
         container
         spacing={{ xs: 2, md: 2 }}
