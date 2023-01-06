@@ -41,9 +41,9 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const addDataInFirebase = async (...args: any) => {
+  const addDataInFirebase = async (data: string, ...args: any) => {
     try {
-      const docRef = await setDoc(doc(db, ...args), {});
+      const docRef = await setDoc(doc(db, ...args), { [data]: data });
       dispatch(playlistsThunk(user?.providerData[0].uid));
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -136,6 +136,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
           size="small"
           onClick={() => {
             addDataInFirebase(
+              props.videoId,
               "User",
               `${user?.providerData[0].uid}`,
               "playlists",
