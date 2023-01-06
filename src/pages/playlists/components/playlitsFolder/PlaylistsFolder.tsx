@@ -9,34 +9,58 @@ import {
   Typography,
 } from "@mui/material";
 import { DeleteLogo } from "../../../../assets";
+import { GetYoutubeDataAsJSON } from "../../../../services/GetAsJSON";
+import { IVideosDto } from "../../../../dto/videos";
+import { useEffect } from "react";
 
-export const PlaylistsFolderCard = () => {
+interface IPlaylistsFolderCardProps {
+  playlistData: object;
+}
+
+export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
+  const { playlistData } = props;
+
   return (
     <Card
       sx={{
-        maxWidth: 345,
         padding: "0",
-        display: "inline-block",
       }}
     >
       <Link
-        to={"/playlists/12345"}
+        to={`/playlists/${playlistData?.name}`}
         style={{
           textDecoration: "none",
           color: "inherit",
           flexGrow: "2",
+          position: "relative",
         }}
       >
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height={200}
-            image={`https://i.ytimg.com/vi/P1Ohc8GDFPI/maxresdefault.jpg`}
-            alt={"Nothing"}
-            title={"nothing"}
-          />
-          <div className="playlist-card-count-section" style={{}}></div>
-        </CardActionArea>
+        <CardMedia
+          component="img"
+          height={200}
+          image={`https://i.ytimg.com/vi/${playlistData.videos[0]}/maxresdefault.jpg`}
+          alt={"Nothing"}
+          title={"nothing"}
+        />
+        <div
+          className="playlist-card-count-section"
+          style={{
+            background: "#6d6d6dc4",
+            position: "absolute",
+            top: "0%",
+            right: " 0%",
+            height: "100%",
+            width: "25%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "1.5rem",
+            wordBreak: "break-word",
+            textAlign: "center",
+          }}
+        >
+          {playlistData?.videos.length} Videos
+        </div>
       </Link>
 
       <CardActions
@@ -60,7 +84,7 @@ export const PlaylistsFolderCard = () => {
             }}
           >
             <Typography variant="h5" component="div">
-              Lizard
+              {playlistData?.name}
             </Typography>
           </CardContent>
         </Link>
