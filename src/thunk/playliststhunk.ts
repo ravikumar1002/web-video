@@ -6,13 +6,19 @@ import {
 import { db } from "../App";
 
 export const playlistsThunk = createAsyncThunk(
-    "/user/playlists", async (userID: string, { rejectWithValue }) => {
+    "/user/playlists", async (userID: string| undefined, { rejectWithValue }) => {
+        console.log(userID, "before try block")
         try {
             const response = await getDocs(
                 collection(db, "User", `${userID}`, "playlists")
             );
-            console.log(response.docs, "response")
-            return response.docs;
+            const dataAarrange = response.docs.map(i => {
+                return {
+                    name: i.id,
+                    videos: Object.values(i.data()),
+                }
+            })
+            return dataAarrange;
         } catch (error: any) {
             const errorCode = error.code;
             const errorMessage = error.message;

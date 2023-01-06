@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import {
   addDoc,
@@ -19,39 +19,44 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../../App";
+import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
+import { playlistsThunk } from "../../thunk/playliststhunk";
 
 interface IPlaylistModalProps {
   openPlaylistModal: () => void;
   closePlaylistModal: () => void;
   openModal: boolean;
+  videoId: string;
 }
 
 export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
   const { openPlaylistModal, closePlaylistModal, openModal } = props;
   const [playlistNameInput, setPlaylistNameInput] = useState<string>();
-  const [playlistsName, setPlaylistsName] = useState<string[]>([]);
+
+  const { playlists } = useAppSelector((state) => state.userData);
+  const dispatch = useAppDispatch();
   const auth = getAuth();
   const user = auth.currentUser;
 
   const addDataInFirebase = async (...args: any) => {
     try {
       const docRef = await setDoc(doc(db, ...args), {});
-      console.log("Document written with ID: ", docRef);
+      dispatch(playlistsThunk(user?.providerData[0].uid));
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
-  const getPlaylistsName = async (userID: string | undefined) => {
-    const docSnap = await getDocs(
-      collection(db, "User", `${userID}`, "playlists")
-    );
-    const PlaylistArray = docSnap.docs.map((item) => {
-      return item.id;
-    });
-    setPlaylistsName(PlaylistArray);
+  const addVideoInFirebase = async (data: string, ...args: any) => {
+    try {
+      const docRef = await updateDoc(doc(db, ...args), { [data]: data });
+      dispatch(playlistsThunk(user?.providerData[0].uid));
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   return (
@@ -83,8 +88,24 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
           paddingBottom: "1rem",
         }}
       >
-        {playlistsName.map((playlistId) => {
-          return <FormControlLabel control={<Checkbox />} label={playlistId} />;
+        {playlists.map((playlist) => {
+          return (
+            <FormControlLabel
+              control={<Checkbox />}
+              label={playlist?.name}
+              key={playlist?.name}
+              onClick={() => {
+                console.log(props.videoId);
+                addVideoInFirebase(
+                  props.videoId,
+                  "User",
+                  `${user?.providerData[0].uid}`,
+                  "playlists",
+                  `${playlist?.name}`
+                );
+              }}
+            />
+          );
         })}
       </FormGroup>
       <Box
@@ -121,7 +142,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
               `${playlistNameInput}`
             );
             setPlaylistNameInput("");
-            getPlaylistsName(user?.providerData[0].uid);
+            closePlaylistModal();
           }}
         >
           Create

@@ -29,7 +29,6 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const [open, setOpen] = useState(false);
   const auth = getAuth();
   const location = useLocation();
-  console.log(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);

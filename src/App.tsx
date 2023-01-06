@@ -117,7 +117,7 @@ const App = () => {
         dispatch(playlistsThunk(user?.providerData[0].uid));
       }
     });
-
+    return () => AuthCheck();
   }, [auth]);
 
   return (
