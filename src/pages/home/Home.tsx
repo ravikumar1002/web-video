@@ -36,7 +36,7 @@ export const HomePage = () => {
           columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
         >
           {videosStatus === "pending" &&
-            [...Array(20)].map((_,index) => {
+            [...Array(20)].map((_, index) => {
               return (
                 <Grid item xs={7} sm={4} md={4} lg={4} key={index}>
                   <CardSceleton />

@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { playlistsThunk } from "../../thunk/playliststhunk";
 
+interface IPlaylistValue {
+    name: string,
+    videos: string[],
+}
+
 interface IUsersState {
-    playlists: object[],
+    playlists: IPlaylistValue[],
     likedVideos: {},
     history: {},
     userDataStatus: string,

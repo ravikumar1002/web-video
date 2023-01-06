@@ -13,8 +13,13 @@ import { GetYoutubeDataAsJSON } from "../../../../services/GetAsJSON";
 import { IVideosDto } from "../../../../dto/videos";
 import { useEffect } from "react";
 
+interface IPlaylistValue {
+  name: string;
+  videos: string[];
+}
+
 interface IPlaylistsFolderCardProps {
-  playlistData: object;
+  playlistData: IPlaylistValue;
 }
 
 export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
