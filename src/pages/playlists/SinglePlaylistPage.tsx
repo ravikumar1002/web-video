@@ -40,15 +40,14 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   };
 
   const getPlaylistData = (playlistID: string | undefined) => {
-    const playlistVideosUID = playlists.filter(
+    const playlistVideosUID = playlists.find(
       (playlist) => playlist.name === playlistID
     );
-    getplaylistsVideos(playlistVideosUID[0]?.videos);
+    getplaylistsVideos(playlistVideosUID?.videos);
   };
 
   useEffect(() => {
     getPlaylistData(playlistid);
-    console.log(playlistid);
   }, [playlistid, playlists]);
 
   return (

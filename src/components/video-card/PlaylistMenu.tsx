@@ -59,6 +59,16 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
     }
   };
 
+  const checkVideoInPlaylist = (
+    playlists: { name: string; videos: string[] }[],
+    playlistName: string,
+    videoId: string
+  ) => {
+    return playlists
+      .find((video) => video?.name === playlistName)
+      ?.videos.includes(videoId);
+  };
+
   return (
     <BasicModal
       openPlaylistModal={openPlaylistModal}
@@ -94,6 +104,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
               control={<Checkbox />}
               label={playlist?.name}
               key={playlist?.name}
+              checked={checkVideoInPlaylist(playlists, playlist?.name, props.videoId)}
               onClick={() => {
                 console.log(props.videoId);
                 addVideoInFirebase(
