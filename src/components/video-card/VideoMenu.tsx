@@ -10,7 +10,14 @@ import {
   IconButton,
   ClickAwayListener,
 } from "@mui/material";
-import { collection, addDoc, deleteDoc, doc, deleteField, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  deleteField,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
@@ -76,15 +83,12 @@ export const VideoMenu = (props: ICardMenuProps) => {
     }
   };
 
-  const deleteVideoFromPlaylist = async (videoId: string ,...arg: any[]) => {
+  const deleteVideoFromPlaylist = async (videoId: string, ...arg: any[]) => {
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
-      [videoId]: deleteField()
-  });
-
+      [videoId]: deleteField(),
+    });
     dispatch(playlistsThunk(user?.providerData[0].uid));
-
-    console.log(deleteData);
   };
 
   return (
@@ -172,7 +176,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                           "User",
                           `${user?.providerData[0].uid}`,
                           "playlists",
-                          `${playlistid}`,
+                          `${playlistid}`
                         );
                       }}
                     >
@@ -188,6 +192,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
       <PlaylistMenuModal
         openPlaylistModal={openPlaylistModal}
         closePlaylistModal={closePlaylistModal}
+        deleteVideoFromPlaylist={deleteVideoFromPlaylist}
         openModal={openModal}
         videoId={props.videoDetails.id}
       />
