@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 interface IVideoContentData {
   videoContentData: IVideoCardData;
   videoDetails: IVideoDto;
+  typeOfCard : string;
 }
 
 export const VideoCardContent = (props: IVideoContentData) => {
@@ -90,7 +91,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
                 {getLimitWordTitle(title)}
               </Typography>
             </Link>
-            <VideoMenu videoDetails={props.videoDetails} />
+            <VideoMenu videoDetails={props.videoDetails} typeOfCard={props.typeOfCard}/>
           </Box>
 
           <div>
