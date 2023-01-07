@@ -17,6 +17,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { playlistsThunk } from "./thunk/playliststhunk";
 import { useAppDispatch } from "./store/reduxHook";
+import { historyThunk } from "./thunk/historyThunk";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -115,6 +116,7 @@ const App = () => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(playlistsThunk(user?.providerData[0].uid));
+        dispatch(historyThunk(user?.providerData[0].uid));
       }
     });
     return () => AuthCheck();
