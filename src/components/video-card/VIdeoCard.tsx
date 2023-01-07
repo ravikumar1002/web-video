@@ -17,6 +17,7 @@ export interface IVideoCardData {
 export interface IVideoCardProps {
   video: IVideoCardData;
   apiVideoData: IVideoDto;
+  typeOfCard: string
 }
 
 export const VideoCard = (props: IVideoCardProps) => {
@@ -31,6 +32,7 @@ export const VideoCard = (props: IVideoCardProps) => {
         <VideoCardContent
           videoContentData={props.video}
           videoDetails={props.apiVideoData}
+          typeOfCard = {props.typeOfCard}
         />
       </div>
     </Card>

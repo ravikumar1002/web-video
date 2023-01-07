@@ -24,7 +24,6 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   const navigate = useNavigate();
 
   const { playlists } = useAppSelector((state) => state.userData);
-  const [playlistVideosLength, setPlaylistVideosLength] = useState<number>(0);
   const [playlistVideos, setPlaylistVideo] = useState<IVideoDto[]>([]);
 
   console.log(playlistid);
@@ -41,16 +40,15 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   };
 
   const getPlaylistData = (playlistID: string | undefined) => {
-    const playlistVideosUID = playlists.filter(
+    const playlistVideosUID = playlists.find(
       (playlist) => playlist.name === playlistID
     );
-    getplaylistsVideos(playlistVideosUID[0].videos);
-    setPlaylistVideosLength(playlistVideosUID[0].videos.length);
+    getplaylistsVideos(playlistVideosUID?.videos);
   };
 
   useEffect(() => {
     getPlaylistData(playlistid);
-  }, [playlistid]);
+  }, [playlistid, playlists]);
 
   return (
     <div>
@@ -61,11 +59,11 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
           marginBottom: "1rem",
         }}
       >
-        <Typography variant="h4" gutterBottom component={"div"} >
+        <Typography variant="h4" gutterBottom component={"div"}>
           {playlistid}
         </Typography>
         <Typography variant="h5" gutterBottom component={"div"}>
-          {playlistVideosLength} Videos
+          {playlistVideos.length} Videos
         </Typography>
       </div>
       <Grid
@@ -93,7 +91,11 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
                   navigate(`/${editVideoData.id}`);
                 }}
               >
-                <VideoCard video={editVideoData} apiVideoData={videoData} />
+                <VideoCard
+                  video={editVideoData}
+                  apiVideoData={videoData}
+                  typeOfCard={"playlist"}
+                />
               </div>
             </Grid>
           );

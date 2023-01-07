@@ -28,12 +28,19 @@ import { playlistsThunk } from "../../thunk/playliststhunk";
 interface IPlaylistModalProps {
   openPlaylistModal: () => void;
   closePlaylistModal: () => void;
+  deleteVideoFromPlaylist: (videoId: string, ...arg: any[]) => Promise<void>;
   openModal: boolean;
   videoId: string;
 }
 
 export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
-  const { openPlaylistModal, closePlaylistModal, openModal } = props;
+  const {
+    openPlaylistModal,
+    closePlaylistModal,
+    openModal,
+    deleteVideoFromPlaylist,
+    videoId,
+  } = props;
   const [playlistNameInput, setPlaylistNameInput] = useState<string>();
 
   const { playlists } = useAppSelector((state) => state.userData);
@@ -57,6 +64,16 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  };
+
+  const checkVideoInPlaylist = (
+    playlists: { name: string; videos: string[] }[],
+    playlistName: string,
+    videoId: string
+  ) => {
+    return playlists
+      .find((video) => video?.name === playlistName)
+      ?.videos.includes(videoId);
   };
 
   return (
@@ -94,15 +111,26 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
               control={<Checkbox />}
               label={playlist?.name}
               key={playlist?.name}
+              checked={checkVideoInPlaylist(playlists, playlist?.name, videoId)}
               onClick={() => {
-                console.log(props.videoId);
-                addVideoInFirebase(
-                  props.videoId,
-                  "User",
-                  `${user?.providerData[0].uid}`,
-                  "playlists",
-                  `${playlist?.name}`
-                );
+                console.log(videoId);
+                if (checkVideoInPlaylist(playlists, playlist?.name, videoId)) {
+                  deleteVideoFromPlaylist(
+                    `${videoId}`,
+                    "User",
+                    `${user?.providerData[0].uid}`,
+                    "playlists",
+                    `${playlist?.name}`
+                  );
+                } else {
+                  addVideoInFirebase(
+                    videoId,
+                    "User",
+                    `${user?.providerData[0].uid}`,
+                    "playlists",
+                    `${playlist?.name}`
+                  );
+                }
               }}
             />
           );
@@ -136,7 +164,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
           size="small"
           onClick={() => {
             addDataInFirebase(
-              props.videoId,
+              videoId,
               "User",
               `${user?.providerData[0].uid}`,
               "playlists",

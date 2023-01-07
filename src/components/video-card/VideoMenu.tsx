@@ -10,15 +10,26 @@ import {
   IconButton,
   ClickAwayListener,
 } from "@mui/material";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  deleteField,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
 import { BasicModal } from "../modal/Modal";
 import { PlaylistMenuModal } from "./PlaylistMenu";
+import { useAppDispatch } from "../../store/reduxHook";
+import { playlistsThunk } from "../../thunk/playliststhunk";
+import { useParams } from "react-router";
 
 interface ICardMenuProps {
   videoDetails: IVideoDto;
+  typeOfCard: string;
 }
 
 export const VideoMenu = (props: ICardMenuProps) => {
@@ -28,6 +39,8 @@ export const VideoMenu = (props: ICardMenuProps) => {
   const [openModal, setOpenModal] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
+  const dispatch = useAppDispatch();
+  const { playlistid } = useParams();
 
   const handleMenuToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -68,6 +81,14 @@ export const VideoMenu = (props: ICardMenuProps) => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  };
+
+  const deleteVideoFromPlaylist = async (videoId: string, ...arg: any[]) => {
+    const videoDoc = doc(db, ...arg);
+    const deleteData = await updateDoc(videoDoc, {
+      [videoId]: deleteField(),
+    });
+    dispatch(playlistsThunk(user?.providerData[0].uid));
   };
 
   return (
@@ -147,6 +168,21 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   >
                     Add to Playlist
                   </MenuItem>
+                  {props.typeOfCard === "playlist" && (
+                    <MenuItem
+                      onClick={(e) => {
+                        deleteVideoFromPlaylist(
+                          `${props.videoDetails.id}`,
+                          "User",
+                          `${user?.providerData[0].uid}`,
+                          "playlists",
+                          `${playlistid}`
+                        );
+                      }}
+                    >
+                      Remove from playlist
+                    </MenuItem>
+                  )}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -156,8 +192,9 @@ export const VideoMenu = (props: ICardMenuProps) => {
       <PlaylistMenuModal
         openPlaylistModal={openPlaylistModal}
         closePlaylistModal={closePlaylistModal}
+        deleteVideoFromPlaylist={deleteVideoFromPlaylist}
         openModal={openModal}
-        videoId = {props.videoDetails.id}
+        videoId={props.videoDetails.id}
       />
     </div>
   );

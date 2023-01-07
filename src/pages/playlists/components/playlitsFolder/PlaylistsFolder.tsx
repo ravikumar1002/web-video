@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { doc, deleteDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { db } from "../../../../App";
+import { useAppDispatch } from "../../../../store/reduxHook";
+import { playlistsThunk } from "../../../../thunk/playliststhunk";
 interface IPlaylistValue {
   name: string;
   videos: string[];
@@ -21,6 +26,16 @@ interface IPlaylistsFolderCardProps {
 
 export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
   const { playlistData } = props;
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const dispatch = useAppDispatch();
+
+  const deletePlaylist = async (...arg:any[]) => {
+    const deleteData = await deleteDoc(doc(db, ...arg));
+    dispatch(playlistsThunk(user?.providerData[0].uid));
+
+    console.log(deleteData);
+  };
 
   return (
     <Card
@@ -106,7 +121,18 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
           </CardContent>
         </Link>
 
-        <IconButton aria-label="delete" size="large">
+        <IconButton
+          aria-label="delete"
+          size="large"
+          onClick={() => {
+            deletePlaylist(
+              "User",
+              `${user?.providerData[0].uid}`,
+              "playlists",
+              `${playlistData?.name}`
+            );
+          }}
+        >
           <DeleteIcon fontSize="inherit" />
         </IconButton>
       </CardActions>
