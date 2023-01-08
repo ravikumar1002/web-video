@@ -7,7 +7,6 @@ import { db } from "../App";
 
 export const playlistsThunk = createAsyncThunk(
     "/user/playlists", async (userID: string| undefined, { rejectWithValue }) => {
-        console.log(userID, "before try block")
         try {
             const response = await getDocs(
                 collection(db, "User", `${userID}`, "playlists")

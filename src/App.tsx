@@ -110,7 +110,6 @@ const App = () => {
   ]);
   const dispatch = useAppDispatch();
   const auth = getAuth();
-  // const user = auth.currentUser;
 
   useEffect(() => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {

@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { useAppDispatch } from "../../store/reduxHook";
 import { getAuth } from "firebase/auth";
 import { historyThunk } from "../../thunk/historyThunk";
-import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
+import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../App";
 
 interface IVideoCardImageProps {
