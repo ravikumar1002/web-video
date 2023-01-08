@@ -46,23 +46,34 @@ export const HistoryPage = (props: HistoryPageProps) => {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        History ({history.length})
-      </Typography>
-      <Button
-        variant="outlined"
-        startIcon={<DeleteIcon />}
-        onClick={() => {
-          deleteAllVideoFromHistory(
-            "User",
-            `${user?.providerData[0].uid}`,
-            "history",
-            "history"
-          );
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        Delete All
-      </Button>
+        <Typography variant="h4" gutterBottom>
+          History ({history.length})
+        </Typography>
+        <Button
+          variant="outlined"
+          sx={{
+            color: "red",
+          }}
+          startIcon={<DeleteIcon />}
+          onClick={() => {
+            deleteAllVideoFromHistory(
+              "User",
+              `${user?.providerData[0].uid}`,
+              "history",
+              "history"
+            );
+          }}
+        >
+          Delete All
+        </Button>
+      </div>
+
       <Grid
         container
         spacing={{ xs: 2, md: 2 }}
