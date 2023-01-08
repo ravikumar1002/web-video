@@ -8,7 +8,7 @@ import { HistoryPage } from "./pages/history";
 import { LikedPage } from "./pages/liked";
 import { WatchLaterPage } from "./pages/watch_later";
 import { PlaylistsPage } from "./pages/playlists";
-import { getFirestore } from "firebase/firestore";
+import { Firestore, getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
 import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
@@ -21,7 +21,7 @@ import { historyThunk } from "./thunk/historyThunk";
 
 const app = initializeApp(firebaseConfigs);
 
-export const db = getFirestore(app);
+export const db:Firestore = getFirestore(app);
 
 const App = () => {
   const router = createBrowserRouter([

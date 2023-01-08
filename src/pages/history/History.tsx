@@ -18,7 +18,7 @@ interface HistoryPageProps {}
 
 export const HistoryPage = (props: HistoryPageProps) => {
   const { history } = useAppSelector((state) => state.userData);
-  const [HistoryVideos, setHistoryVideo] = useState<IVideoDto[]>([]);
+  const [historyVideos, setHistoryVideo] = useState<IVideoDto[]>([]);
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -50,6 +50,7 @@ export const HistoryPage = (props: HistoryPageProps) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
+          padding: "2rem 0rem",
         }}
       >
         <Typography variant="h4" gutterBottom>
@@ -79,7 +80,7 @@ export const HistoryPage = (props: HistoryPageProps) => {
         spacing={{ xs: 2, md: 2 }}
         columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
       >
-        {HistoryVideos.map((videoData) => {
+        {historyVideos.map((videoData) => {
           const editVideoData = {
             id: videoData.id,
             title: videoData.snippet.title,
