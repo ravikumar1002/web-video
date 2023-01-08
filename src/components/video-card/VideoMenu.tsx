@@ -16,14 +16,16 @@ import {
   doc,
   deleteField,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
 import { PlaylistMenuModal } from "./PlaylistMenu";
-import { useAppDispatch } from "../../store/reduxHook";
+import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";
 import { useParams } from "react-router";
+import { watchlaterThunk } from "../../thunk/watchlaterThunk";
 
 interface ICardMenuProps {
   videoDetails: IVideoDto;
@@ -39,10 +41,14 @@ export const VideoMenu = (props: ICardMenuProps) => {
   const user = auth.currentUser;
   const dispatch = useAppDispatch();
   const { playlistid } = useParams();
+  const { watchlater } = useAppSelector((state) => state.userData);
 
   const handleMenuToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
+
+  const openPlaylistModal = () => setOpenModal(true);
+  const closePlaylistModal = () => setOpenModal(false);
 
   const handleMenuClose = (event: Event | React.SyntheticEvent) => {
     if (
@@ -63,23 +69,9 @@ export const VideoMenu = (props: ICardMenuProps) => {
     }
   };
 
-  const openPlaylistModal = () => setOpenModal(true);
-  const closePlaylistModal = () => setOpenModal(false);
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
   }, [openMenu]);
-
-  const addDataInFirebase = async (storageValue: object, ...args: any) => {
-    try {
-      const docRef = await addDoc(collection(db, ...args), {
-        ...storageValue,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
 
   const deleteVideoFromPlaylist = async (videoId: string, ...arg: any[]) => {
     const videoDoc = doc(db, ...arg);
@@ -87,6 +79,29 @@ export const VideoMenu = (props: ICardMenuProps) => {
       [videoId]: deleteField(),
     });
     dispatch(playlistsThunk(user?.providerData[0].uid));
+  };
+
+  const deleteVideoFromWatchlater = async (videoId: string, ...arg: any[]) => {
+    const videoDoc = doc(db, ...arg);
+    const deleteData = await updateDoc(videoDoc, {
+      [videoId]: deleteField(),
+    });
+    dispatch(watchlaterThunk(user?.providerData[0].uid));
+  };
+
+  const addVideoInWatchlater = async (data: string, ...args: any) => {
+    try {
+      if (watchlater.length > 0) {
+        const docRef = await updateDoc(doc(db, ...args), {
+          [data]: data,
+        });
+      } else {
+        const setWatchlaterPath = setDoc(doc(db, ...args), { [data]: data });
+      }
+      dispatch(watchlaterThunk(user?.providerData[0].uid));
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   return (
@@ -133,31 +148,49 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   className="container"
                 >
                   <MenuItem
-                    onClick={(e) => {
-                      addDataInFirebase(
-                        props.videoDetails,
-                        "User",
-                        `${user?.providerData[0].uid}`,
-                        "Liked"
-                      );
-                      handleMenuClose(e);
-                    }}
+                  // onClick={(e) => {
+                  //   addDataInFirebase(
+                  //     props.videoDetails,
+                  //     "User",
+                  //     `${user?.providerData[0].uid}`,
+                  //     "Liked"
+                  //   );
+                  //   handleMenuClose(e);
+                  // }}
                   >
                     Liked
                   </MenuItem>
-                  <MenuItem
-                    onClick={(e) => {
-                      addDataInFirebase(
-                        props.videoDetails,
-                        "User",
-                        `${user?.providerData[0].uid}`,
-                        "watch-later"
-                      );
-                      handleMenuClose(e);
-                    }}
-                  >
-                    save to watch later
-                  </MenuItem>
+                  {watchlater.includes(props.videoDetails.id) ? (
+                    <MenuItem
+                      onClick={(e) => {
+                        deleteVideoFromWatchlater(
+                          `${props.videoDetails.id}`,
+                          "User",
+                          `${user?.providerData[0].uid}`,
+                          "watchlater",
+                          "watchlater"
+                        );
+                        handleMenuClose(e);
+                      }}
+                    >
+                      Remove from watch later
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      onClick={(e) => {
+                        addVideoInWatchlater(
+                          props.videoDetails.id,
+                          "User",
+                          `${user?.providerData[0].uid}`,
+                          "watchlater",
+                          "watchlater"
+                        );
+                        handleMenuClose(e);
+                      }}
+                    >
+                      Add watch later
+                    </MenuItem>
+                  )}
                   <MenuItem
                     onClick={(e) => {
                       openPlaylistModal();
