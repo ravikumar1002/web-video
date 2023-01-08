@@ -10,7 +10,7 @@ interface IPlaylistValue {
 interface IUsersState {
     playlists: IPlaylistValue[],
     likedVideos: {},
-    history: {},
+    history: string[],
     userDataStatus: string,
     userDataError: string | null,
 }
@@ -18,7 +18,7 @@ interface IUsersState {
 const initialState: IUsersState = {
     playlists: [],
     likedVideos: {},
-    history: {},
+    history: [],
     userDataStatus: "idle",
     userDataError: null,
 }
@@ -44,8 +44,7 @@ export const userSlice = createSlice({
             })
             .addCase(historyThunk.fulfilled, (state, action) => {
                 state.userDataStatus = "fulfilled";
-                console.log(action.payload, "action usersLice history")
-                console.log(state.playlists)
+                state.history = action.payload
             })
             .addCase(historyThunk.rejected, (state, action) => {
                 state.userDataStatus = "rejected";

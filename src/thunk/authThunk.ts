@@ -32,14 +32,6 @@ export const signupThunk = createAsyncThunk(
     const { email, password } = values
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
-      // if (response?.user) {
-      //   console.log(response.user, db, "auth thunk")
-      //   const history = doc(db, "User", `${response.user.email, "history"}`);
-      //   const playlists = await setDoc(doc(db, "User", `${response.user.email}`), { playlist: "playlist" });
-      //   const liked = doc(collection(db, "User", `${response.user.email, "liked"}`));
-      //   const watchLater = await setDoc(doc(db, "User", `${response.user.email}`), { watchlater: "watchlater" });
-      //   // console.log(history, "history")
-      // }
       return response.user;
     } catch (error: any) {
       const errorCode = error.code;

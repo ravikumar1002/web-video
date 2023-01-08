@@ -12,8 +12,7 @@ export const historyThunk = createAsyncThunk(
             const response = await getDocs(
                 collection(db, "User", `${userID}`, "history")
             );
-            const dataAarrange = response.docs
-            console.log(dataAarrange)
+            const dataAarrange = response.docs.map((videosDocs) => videosDocs.id)
             return dataAarrange;
         } catch (error: any) {
             const errorCode = error.code;
