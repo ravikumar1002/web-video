@@ -17,22 +17,27 @@ export interface IVideoCardData {
 export interface IVideoCardProps {
   video: IVideoCardData;
   apiVideoData: IVideoDto;
-  typeOfCard: string
+  typeOfCard: string;
 }
 
 export const VideoCard = (props: IVideoCardProps) => {
   const { id, title } = props.video;
 
   return (
-    <Card >
+    <Card>
       <div>
-        <VideoCardImage imgHeight={190} imgAlt={title} imgId={id} />
+        <VideoCardImage
+          imgHeight={190}
+          imgAlt={title}
+          imgId={id}
+          typeOfCard={props.typeOfCard}
+        />
       </div>
       <div>
         <VideoCardContent
           videoContentData={props.video}
           videoDetails={props.apiVideoData}
-          typeOfCard = {props.typeOfCard}
+          typeOfCard={props.typeOfCard}
         />
       </div>
     </Card>

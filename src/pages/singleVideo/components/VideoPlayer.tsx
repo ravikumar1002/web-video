@@ -1,8 +1,8 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import ReactPlayer from "react-player/youtube";
 import { db } from "../../../App";
-import { useAppDispatch } from "../../../store/reduxHook";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxHook";
 import { historyThunk } from "../../../thunk/historyThunk";
 
 interface IVideoPlayerProps {
@@ -13,13 +13,17 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const dispatch = useAppDispatch();
   const auth = getAuth();
   const user = auth.currentUser;
+  const { history } = useAppSelector((state) => state.userData);
 
   const addVideoInHistory = async (data: string, ...args: any) => {
     try {
-      const docRef = await setDoc(doc(db, ...args), {
-        [data]: data,
-      });
-      console.log(docRef);
+      if (history.length > 0) {
+        const docRef = await updateDoc(doc(db, ...args), {
+          [data]: data,
+        });
+      } else {
+        const setHistoryPath = setDoc(doc(db, ...args), { [data]: data });
+      }
       dispatch(historyThunk(user?.providerData[0].uid));
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -41,7 +45,7 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
               "User",
               `${user?.providerData[0].uid}`,
               "history",
-              props.videoId
+              "history"
             );
             return () => AuthCheck();
           });
