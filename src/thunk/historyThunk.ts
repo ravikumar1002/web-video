@@ -5,19 +5,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../App";
 
-export const playlistsThunk = createAsyncThunk(
-    "/user/playlists", async (userID: string| undefined, { rejectWithValue }) => {
+export const historyThunk = createAsyncThunk(
+    "/user/history", async (userID: string | undefined, { rejectWithValue }) => {
         try {
             const response = await getDocs(
-                collection(db, "User", `${userID}`, "playlists")
+                collection(db, "User", `${userID}`, "history")
             );
-            const dataAarrange = response.docs.map(i => {
-                return {
-                    name: i.id,
-                    videos: Object.values(i.data()),
-                }
-            })
-            return dataAarrange;
+            let dataAarrange;
+            if (response?.docs[0]) {
+                dataAarrange = Object.values(response?.docs[0].data())
+            }
+            return dataAarrange ? dataAarrange : [];
         } catch (error: any) {
             const errorCode = error.code;
             const errorMessage = error.message;

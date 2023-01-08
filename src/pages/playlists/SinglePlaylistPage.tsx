@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { IVideoDto, IVideosDto } from "../../dto/videos";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
@@ -22,11 +22,8 @@ export interface IVideoData {
 export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   const { playlistid } = useParams();
   const navigate = useNavigate();
-
   const { playlists } = useAppSelector((state) => state.userData);
   const [playlistVideos, setPlaylistVideo] = useState<IVideoDto[]>([]);
-
-  console.log(playlistid);
 
   const getplaylistsVideos = async (videosId: string[] | undefined) => {
     const splitArray = videosId?.join(",");

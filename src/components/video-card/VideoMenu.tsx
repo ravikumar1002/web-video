@@ -13,7 +13,6 @@ import {
 import {
   collection,
   addDoc,
-  deleteDoc,
   doc,
   deleteField,
   updateDoc,
@@ -21,7 +20,6 @@ import {
 import { db } from "../../App";
 import { IVideoDto } from "../../dto/videos";
 import { getAuth } from "firebase/auth";
-import { BasicModal } from "../modal/Modal";
 import { PlaylistMenuModal } from "./PlaylistMenu";
 import { useAppDispatch } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";

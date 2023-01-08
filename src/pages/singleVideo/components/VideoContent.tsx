@@ -102,7 +102,6 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
             <Typography
               variant="caption"
               component="span"
-              //   sx={{ cursor: "default", fontWeight: "500" }}
             >
               {snippet.description}
             </Typography>

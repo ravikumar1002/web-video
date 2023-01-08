@@ -10,14 +10,10 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import {
-  addDoc,
-  collection,
   doc,
-  getDoc,
-  getDocs,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -113,7 +109,6 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
               key={playlist?.name}
               checked={checkVideoInPlaylist(playlists, playlist?.name, videoId)}
               onClick={() => {
-                console.log(videoId);
                 if (checkVideoInPlaylist(playlists, playlist?.name, videoId)) {
                   deleteVideoFromPlaylist(
                     `${videoId}`,

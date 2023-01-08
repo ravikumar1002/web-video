@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  Button,
   CardActions,
   Card,
   CardContent,
@@ -33,8 +32,6 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
   const deletePlaylist = async (...arg:any[]) => {
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(playlistsThunk(user?.providerData[0].uid));
-
-    console.log(deleteData);
   };
 
   return (

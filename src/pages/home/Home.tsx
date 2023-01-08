@@ -63,7 +63,11 @@ export const HomePage = () => {
                     navigate(`/${editVideoData.id}`);
                   }}
                 >
-                  <VideoCard video={editVideoData} apiVideoData={videoData} />
+                  <VideoCard
+                    video={editVideoData}
+                    apiVideoData={videoData}
+                    typeOfCard={"video"}
+                  />
                 </div>
               </Grid>
             );
