@@ -86,8 +86,8 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
                     `${id}`,
                     "User",
                     `${user?.providerData[0].uid}`,
-                    "watchlater",
-                    "watchlater"
+                    "liked",
+                    "liked"
                   );
                 }}
               >
@@ -102,8 +102,8 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
                     id,
                     "User",
                     `${user?.providerData[0].uid}`,
-                    "watchlater",
-                    "watchlater"
+                    "liked",
+                    "liked"
                   );
                 }}
               >
