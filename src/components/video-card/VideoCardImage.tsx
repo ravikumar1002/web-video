@@ -8,6 +8,7 @@ import { getAuth } from "firebase/auth";
 import { historyThunk } from "../../thunk/historyThunk";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../App";
+import { likedThunk } from "../../thunk/likedThunk";
 
 interface IVideoCardImageProps {
   imgHeight: number;
@@ -29,12 +30,55 @@ export const VideoCardImage = (props: IVideoCardImageProps) => {
     dispatch(historyThunk(user?.providerData[0].uid));
   };
 
+  const deleteVideoFromLiked = async (videoId: string, ...arg: any[]) => {
+    const videoDoc = doc(db, ...arg);
+    const deleteData = await updateDoc(videoDoc, {
+      [videoId]: deleteField(),
+    });
+    dispatch(likedThunk(user?.providerData[0].uid));
+  };
+
   return (
     <div
       style={{
         position: "relative",
       }}
     >
+      {props.typeOfCard === "liked" && (
+        <Box
+          sx={{
+            borderRadius: "50%",
+            top: "2%",
+            position: "absolute",
+            color: "black",
+            background: "#f0f0f0cc",
+            right: "1%",
+            "&:hover": {
+              background: "#efefef",
+            },
+          }}
+        >
+          <Tooltip title="Delete">
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                deleteVideoFromLiked(
+                  `${props.imgId}`,
+                  "User",
+                  `${user?.providerData[0].uid}`,
+                  "liked",
+                  "liked"
+                );
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
+
       {props.typeOfCard === "history" && (
         <Box
           sx={{
