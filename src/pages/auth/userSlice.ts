@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { historyThunk } from "../../thunk/historyThunk";
+import { likedThunk } from "../../thunk/likedThunk";
 import { playlistsThunk } from "../../thunk/playliststhunk";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
 
@@ -10,7 +11,7 @@ interface IPlaylistValue {
 
 interface IUsersState {
     playlists: IPlaylistValue[],
-    likedVideos: {},
+    likedVideos: string[],
     history: string[],
     watchlater: string[],
     userDataStatus: string,
@@ -20,7 +21,7 @@ interface IUsersState {
 const initialState: IUsersState = {
     playlists: [],
     watchlater: [],
-    likedVideos: {},
+    likedVideos: [],
     history: [],
     userDataStatus: "idle",
     userDataError: null,
@@ -60,6 +61,16 @@ export const userSlice = createSlice({
                 state.watchlater = action.payload
             })
             .addCase(watchlaterThunk.rejected, (state, action) => {
+                state.userDataStatus = "rejected";
+            })
+            .addCase(likedThunk.pending, (state, action) => {
+                state.userDataStatus = "pending";
+            })
+            .addCase(likedThunk.fulfilled, (state, action) => {
+                state.userDataStatus = "fulfilled";
+                state.likedVideos = action.payload
+            })
+            .addCase(likedThunk.rejected, (state, action) => {
                 state.userDataStatus = "rejected";
             })
     }

@@ -3,6 +3,16 @@ import { Typography, Avatar, Paper } from "@mui/material";
 import { useDateFormat } from "../../../hooks/useDateFormat";
 import { Link } from "react-router-dom";
 import { IChannelDto } from "../../../dto/channels";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxHook";
+import { getAuth } from "firebase/auth";
+import { deleteField, doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../../App";
+import { likedThunk } from "../../../thunk/likedThunk";
+import { VideoMenu } from "../../../components/video-card/VideoMenu";
 
 interface IVideoPlayerContent {
   videoDetails: IVideoDto;
@@ -18,9 +28,42 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
     },
   } = props;
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const dispatch = useAppDispatch();
+  const { likedVideos } = useAppSelector((state) => state.userData);
+
+  const addVideoInLiked = async (data: string, ...args: any) => {
+    try {
+      if (likedVideos.length > 0) {
+        const docRef = await updateDoc(doc(db, ...args), {
+          [data]: data,
+        });
+      } else {
+        const setLikedPath = setDoc(doc(db, ...args), { [data]: data });
+      }
+      dispatch(likedThunk(user?.providerData[0].uid));
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const deleteVideoFromLiked = async (videoId: string, ...arg: any[]) => {
+    const videoDoc = doc(db, ...arg);
+    const deleteData = await updateDoc(videoDoc, {
+      [videoId]: deleteField(),
+    });
+    dispatch(likedThunk(user?.providerData[0].uid));
+  };
+
   return (
     <div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography
           variant="h6"
           component="div"
@@ -33,6 +76,46 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
         >
           {snippet.title}
         </Typography>
+
+        <div>
+          {likedVideos.includes(id) ? (
+            <Tooltip title="liked">
+              <IconButton
+                onClick={(e) => {
+                  deleteVideoFromLiked(
+                    `${id}`,
+                    "User",
+                    `${user?.providerData[0].uid}`,
+                    "liked",
+                    "liked"
+                  );
+                }}
+              >
+                <ThumbUpIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="liked">
+              <IconButton
+                onClick={(e) => {
+                  addVideoInLiked(
+                    id,
+                    "User",
+                    `${user?.providerData[0].uid}`,
+                    "liked",
+                    "liked"
+                  );
+                }}
+              >
+                <ThumbUpOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
+        <VideoMenu
+          videoDetails={props.videoDetails}
+          typeOfCard={"single player"}
+        />
       </div>
       <div>
         <Link
@@ -99,10 +182,7 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
             </Typography>
           </div>
           <div>
-            <Typography
-              variant="caption"
-              component="span"
-            >
+            <Typography variant="caption" component="span">
               {snippet.description}
             </Typography>
           </div>

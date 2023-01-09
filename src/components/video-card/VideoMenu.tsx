@@ -147,19 +147,6 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   ref={container}
                   className="container"
                 >
-                  <MenuItem
-                  // onClick={(e) => {
-                  //   addDataInFirebase(
-                  //     props.videoDetails,
-                  //     "User",
-                  //     `${user?.providerData[0].uid}`,
-                  //     "Liked"
-                  //   );
-                  //   handleMenuClose(e);
-                  // }}
-                  >
-                    Liked
-                  </MenuItem>
                   {watchlater.includes(props.videoDetails.id) ? (
                     <MenuItem
                       onClick={(e) => {
