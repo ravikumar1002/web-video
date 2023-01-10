@@ -13,7 +13,8 @@ import { IVideoData } from "../home/Home";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../App";
-import { CardSceleton } from "../../components/sceleton/CardSceleton";
+import { Box } from "@mui/system";
+import { LoadingImage } from "../../assets";
 
 interface HistoryPageProps {}
 
@@ -46,80 +47,112 @@ export const HistoryPage = (props: HistoryPageProps) => {
   }, [history]);
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "2rem 0rem",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          History ({history.length})
-        </Typography>
-        <Button
-          variant="outlined"
+    <>
+      {historyStatus === "fulfilled" && historyVideos.length === 0 && (
+        <Box
           sx={{
-            color: "red",
-          }}
-          startIcon={<DeleteIcon />}
-          onClick={() => {
-            deleteAllVideoFromHistory(
-              "User",
-              `${user?.providerData[0].uid}`,
-              "history",
-              "history"
-            );
+            padding: "2rem 0rem",
           }}
         >
-          Delete All
-        </Button>
-      </div>
+          <Typography variant="h4" component={"div"} gutterBottom>
+            History ({history.length})
+          </Typography>
+          <Typography
+            variant="h5"
+            component={"div"}
+            sx={{ textAlign: "center", paddingTop: "5rem" }}
+            gutterBottom
+          >
+            This list has no videos.
+          </Typography>
+        </Box>
+      )}
 
-      <Grid
-        container
-        spacing={{ xs: 2, md: 2 }}
-        columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
-      >
-        {historyStatus === "pending" &&
-          [...Array(8)].map((_, index) => {
-            return (
-              <Grid item xs={7} sm={4} md={4} lg={4} key={index}>
-                <CardSceleton />
-              </Grid>
-            );
-          })}
+      {historyStatus === "pending" && (
+        <Box
+          sx={{
+            margin: "auto",
+            height: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={LoadingImage}
+            alt="loading logo"
+            style={{ height: "8rem" }}
+          />
+        </Box>
+      )}
 
-        {historyVideos.map((videoData) => {
-          const editVideoData = {
-            id: videoData.id,
-            title: videoData.snippet.title,
-            category: videoData.snippet.categoryId,
-            description: videoData.snippet.description,
-            creator: videoData.snippet.channelTitle,
-            uploadDate: videoData.snippet.publishedAt,
-            viewCount: 123,
-            url: `https://youtu.be/${videoData.id}`,
-          } as IVideoData;
+      {historyStatus === "fulfilled" && historyVideos.length > 0 && (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2rem 0rem",
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              History ({history.length})
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                color: "red",
+              }}
+              startIcon={<DeleteIcon />}
+              onClick={() => {
+                deleteAllVideoFromHistory(
+                  "User",
+                  `${user?.providerData[0].uid}`,
+                  "history",
+                  "history"
+                );
+              }}
+            >
+              Delete All
+            </Button>
+          </div>
+          <Grid
+            container
+            spacing={{ xs: 2, md: 2 }}
+            columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
+          >
+            {historyVideos.map((videoData) => {
+              const editVideoData = {
+                id: videoData.id,
+                title: videoData.snippet.title,
+                category: videoData.snippet.categoryId,
+                description: videoData.snippet.description,
+                creator: videoData.snippet.channelTitle,
+                uploadDate: videoData.snippet.publishedAt,
+                viewCount: 123,
+                url: `https://youtu.be/${videoData.id}`,
+              } as IVideoData;
 
-          return (
-            <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
-              <div
-                key={editVideoData.id}
-                onClick={(e) => {
-                  navigate(`/${editVideoData.id}`);
-                }}
-              >
-                <VideoCard
-                  video={editVideoData}
-                  apiVideoData={videoData}
-                  typeOfCard={"history"}
-                />
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+              return (
+                <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
+                  <div
+                    key={editVideoData.id}
+                    onClick={(e) => {
+                      navigate(`/${editVideoData.id}`);
+                    }}
+                  >
+                    <VideoCard
+                      video={editVideoData}
+                      apiVideoData={videoData}
+                      typeOfCard={"history"}
+                    />
+                  </div>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </div>
+      )}
+    </>
   );
 };
