@@ -21,7 +21,7 @@ import { historyThunk } from "./thunk/historyThunk";
 
 const app = initializeApp(firebaseConfigs);
 
-export const db:Firestore = getFirestore(app);
+export const db = getFirestore(app);
 
 const App = () => {
   const router = createBrowserRouter([

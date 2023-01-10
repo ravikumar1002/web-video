@@ -13,11 +13,12 @@ import { IVideoData } from "../home/Home";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../App";
+import { CardSceleton } from "../../components/sceleton/CardSceleton";
 
 interface HistoryPageProps {}
 
 export const HistoryPage = (props: HistoryPageProps) => {
-  const { history } = useAppSelector((state) => state.userData);
+  const { history, historyStatus } = useAppSelector((state) => state.userData);
   const [historyVideos, setHistoryVideo] = useState<IVideoDto[]>([]);
   const navigate = useNavigate();
   const auth = getAuth();
@@ -80,6 +81,15 @@ export const HistoryPage = (props: HistoryPageProps) => {
         spacing={{ xs: 2, md: 2 }}
         columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
       >
+        {historyStatus === "pending" &&
+          [...Array(8)].map((_, index) => {
+            return (
+              <Grid item xs={7} sm={4} md={4} lg={4} key={index}>
+                <CardSceleton />
+              </Grid>
+            );
+          })}
+
         {historyVideos.map((videoData) => {
           const editVideoData = {
             id: videoData.id,
