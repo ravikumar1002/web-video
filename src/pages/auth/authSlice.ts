@@ -16,7 +16,14 @@ const initialState: IUsersState = {
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        addUserData: (state, action) => {
+            state.authUser = action.payload
+        },
+        logoutUserProfile: (state,action) => {
+            state.authUser = {}
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(loginThunk.pending, (state, action) => {
@@ -35,6 +42,7 @@ const authSlice = createSlice({
             })
             .addCase(signupThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
+                console.log(action.payload)
                 state.authUser = action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })
@@ -44,5 +52,7 @@ const authSlice = createSlice({
 
     },
 });
+
+export const { addUserData , logoutUserProfile} = authSlice.actions
 
 export const authReducer = authSlice.reducer;

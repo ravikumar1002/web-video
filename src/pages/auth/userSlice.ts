@@ -32,7 +32,14 @@ const initialState: IUsersState = {
 export const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        removeUserData: (state, action) => {
+            state.playlists = [],
+            state.watchlater = [],
+            state.likedVideos = [],
+            state.history = []
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(playlistsThunk.pending, (state, action) => {
@@ -77,6 +84,8 @@ export const userSlice = createSlice({
             })
     }
 })
+
+export const { removeUserData } = userSlice.actions
 
 
 export const userReducer = userSlice.reducer;
