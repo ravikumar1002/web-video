@@ -16,6 +16,7 @@ interface IUsersState {
     watchlater: string[],
     userDataStatus: string,
     historyStatus: string,
+    likedStatus: string,
     userDataError: string | null,
 }
 
@@ -26,6 +27,7 @@ const initialState: IUsersState = {
     history: [],
     userDataStatus: "idle",
     historyStatus: "idle",
+    likedStatus: "idle",
     userDataError: null,
 }
 
@@ -35,9 +37,9 @@ export const userSlice = createSlice({
     reducers: {
         removeUserData: (state, action) => {
             state.playlists = [],
-            state.watchlater = [],
-            state.likedVideos = [],
-            state.history = []
+                state.watchlater = [],
+                state.likedVideos = [],
+                state.history = []
         }
     },
     extraReducers: (builder) => {
@@ -73,14 +75,14 @@ export const userSlice = createSlice({
                 state.userDataStatus = "rejected";
             })
             .addCase(likedThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.likedStatus = "pending";
             })
             .addCase(likedThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.likedStatus = "fulfilled";
                 state.likedVideos = action.payload
             })
             .addCase(likedThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.likedStatus = "rejected";
             })
     }
 })

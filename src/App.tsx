@@ -22,6 +22,8 @@ import { addUserData } from "./pages/auth/authSlice";
 import { BasicModal } from "./components/modal/Modal";
 import { LoadingImage } from "./assets";
 import { Box } from "@mui/system";
+import { likedThunk } from "./thunk/likedThunk";
+import { watchlaterThunk } from "./thunk/watchlaterThunk";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -126,6 +128,9 @@ const App = () => {
         dispatch(addUserData(user?.providerData[0]));
         dispatch(playlistsThunk(user?.providerData[0].uid));
         dispatch(historyThunk(user?.providerData[0].uid));
+        dispatch(likedThunk(user?.providerData[0].uid));
+        dispatch(watchlaterThunk(user?.providerData[0].uid));
+
       }
     });
     return () => AuthCheck();
