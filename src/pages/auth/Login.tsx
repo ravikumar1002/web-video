@@ -54,7 +54,6 @@ const LoginSchema = object({
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters"),
-  persistUser: literal(true).optional(),
 });
 
 type ILogin = TypeOf<typeof LoginSchema>;
@@ -151,30 +150,6 @@ export const LoginPage: FC = () => {
                       required
                       focused
                     />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          size="small"
-                          aria-label="trust this device checkbox"
-                          required
-                          {...methods.register("persistUser")}
-                        />
-                      }
-                      label={
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            fontSize: "0.8rem",
-                            fontWeight: 400,
-                            color: "#5e5b5d",
-                          }}
-                        >
-                          Trust this device
-                        </Typography>
-                      }
-                    />
-
                     <LoadingButton
                       loading={false}
                       type="submit"

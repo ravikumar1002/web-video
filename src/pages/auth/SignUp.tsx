@@ -80,8 +80,8 @@ export const SignupPage: FC = () => {
                 sx={{
                   textAlign: "center",
                   width: "100%",
-                  mb: "1.5rem",
-                  pb: { sm: "3rem" },
+                  mb: "1rem",
+                  pb: { sm: "1rem" },
                 }}
               >
                 Welcome To Web Video!
@@ -89,19 +89,14 @@ export const SignupPage: FC = () => {
               <Grid
                 item
                 container
-                justifyContent="space-between"
+                justifyContent="center"
                 rowSpacing={5}
                 sx={{
                   maxWidth: { sm: "45rem" },
                   marginInline: "auto",
                 }}
               >
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ borderRight: { sm: "1px solid #ddd" } }}
-                >
+                <Grid item xs={12} sm={6}>
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -161,41 +156,6 @@ export const SignupPage: FC = () => {
                     >
                       Sign Up
                     </LoadingButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6} sx={{}}>
-                  <Typography
-                    variant="h6"
-                    component="p"
-                    sx={{
-                      paddingLeft: { sm: "3rem" },
-                      mb: "1.5rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    Sign up using another provider:
-                  </Typography>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    sx={{ paddingLeft: { sm: "3rem" }, rowGap: "1rem" }}
-                  >
-                    <OauthMuiLink href="">
-                      <img
-                        src={GoogleLogo}
-                        alt="Google logo"
-                        style={{ height: "2rem" }}
-                      />
-                      Google
-                    </OauthMuiLink>
-                    <OauthMuiLink href="">
-                      <img
-                        src={GitHubLogo}
-                        alt="GitHub logo"
-                        style={{ height: "2rem" }}
-                      />
-                      GitHub
-                    </OauthMuiLink>
                   </Box>
                 </Grid>
               </Grid>
