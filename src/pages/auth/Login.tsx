@@ -95,6 +95,18 @@ export const LoginPage: FC = () => {
       >
         <Grid item xs={8}>
           <FormProvider {...methods}>
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
+                textAlign: "center",
+                width: "100%",
+                mb: "1rem",
+                pb: { sm: "1rem" },
+              }}
+            >
+              Welcome To Web Video!
+            </Typography>
             <Grid
               container
               sx={{
@@ -163,41 +175,6 @@ export const LoginPage: FC = () => {
                     >
                       Login
                     </LoadingButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="h6"
-                    component="p"
-                    sx={{
-                      paddingLeft: { sm: "3rem" },
-                      mb: "1.5rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    Log in with another provider:
-                  </Typography>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    sx={{ paddingLeft: { sm: "3rem" }, rowGap: "1rem" }}
-                  >
-                    <OauthMuiLink href="">
-                      <img
-                        src={GoogleLogo}
-                        alt="Google logo"
-                        style={{ height: "2rem" }}
-                      />
-                      Google
-                    </OauthMuiLink>
-                    <OauthMuiLink href="">
-                      <img
-                        src={GitHubLogo}
-                        alt="GitHub logo"
-                        style={{ height: "2rem" }}
-                      />
-                      GitHub
-                    </OauthMuiLink>
                   </Box>
                 </Grid>
               </Grid>
