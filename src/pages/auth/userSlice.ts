@@ -17,6 +17,7 @@ interface IUsersState {
     userDataStatus: string,
     historyStatus: string,
     likedStatus: string,
+    watchlaterStatus: string,
     userDataError: string | null,
 }
 
@@ -28,6 +29,7 @@ const initialState: IUsersState = {
     userDataStatus: "idle",
     historyStatus: "idle",
     likedStatus: "idle",
+    watchlaterStatus: "idle",
     userDataError: null,
 }
 
@@ -65,14 +67,14 @@ export const userSlice = createSlice({
                 state.historyStatus = "rejected";
             })
             .addCase(watchlaterThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.watchlaterStatus = "pending";
             })
             .addCase(watchlaterThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.watchlaterStatus = "fulfilled";
                 state.watchlater = action.payload
             })
             .addCase(watchlaterThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.watchlaterStatus = "rejected";
             })
             .addCase(likedThunk.pending, (state, action) => {
                 state.likedStatus = "pending";
