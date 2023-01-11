@@ -14,11 +14,14 @@ import firebaseConfigs from "./config/firebase";
 import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
 import { SinglePlayListPage } from "./pages/playlists/SinglePlaylistPage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { playlistsThunk } from "./thunk/playliststhunk";
-import { useAppDispatch } from "./store/reduxHook";
+import { useAppDispatch, useAppSelector } from "./store/reduxHook";
 import { historyThunk } from "./thunk/historyThunk";
 import { addUserData } from "./pages/auth/authSlice";
+import { BasicModal } from "./components/modal/Modal";
+import { LoadingImage } from "./assets";
+import { Box } from "@mui/system";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -111,6 +114,11 @@ const App = () => {
   ]);
   const dispatch = useAppDispatch();
   const auth = getAuth();
+  const { authStatus } = useAppSelector((state) => state.user);
+  const [openModal, setOpenModal] = useState<boolean>(true);
+
+  const openPlaylistModal = () => setOpenModal(true);
+  const closePlaylistModal = () => setOpenModal(false);
 
   useEffect(() => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
@@ -124,8 +132,32 @@ const App = () => {
   }, [auth]);
 
   return (
-    <div className="App">
+    <div className={`App ${authStatus === "pending" && "pos-rel"}`}>
       <RouterProvider router={router} />
+      {authStatus === "pending" && (
+        <div
+          style={{
+            margin: "auto",
+            background: "#d3d3d333",
+            position: "fixed",
+            height: "100%",
+            width: "100%",
+            zIndex: "1400",
+            top: " 0",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{}}>
+            <img
+              src={LoadingImage}
+              alt="loading logo"
+              style={{ height: "8rem" }}
+            />
+          </Box>
+        </div>
+      )}
     </div>
   );
 };

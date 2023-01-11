@@ -28,9 +28,8 @@ export const BasicModal = (props: IBasicModalProps) => {
         onClose={closePlaylistModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        sx={{}}
       >
-        <Box  sx={style}>{children}</Box>
+        <Box sx={style}>{children}</Box>
       </Modal>
     </div>
   );

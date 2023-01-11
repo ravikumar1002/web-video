@@ -1,6 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginThunk, signupThunk } from "../../thunk/authThunk";
 
+
+interface IAuthUser {
+    providerId: string,
+    uid: string,
+    displayName: null,
+    email: string,
+    phoneNumber: null,
+    photoURL: null,
+}
+
 interface IUsersState {
     authUser: {},
     authStatus: string,
@@ -18,9 +28,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         addUserData: (state, action) => {
-            state.authUser = action.payload
+            state.authUser = <IAuthUser>action.payload
         },
-        logoutUserProfile: (state,action) => {
+        logoutUserProfile: (state, action) => {
             state.authUser = {}
         }
     },
@@ -31,7 +41,7 @@ const authSlice = createSlice({
             })
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
-                state.authUser = action.payload?.providerData[0];
+                state.authUser = <IAuthUser>action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })
             .addCase(loginThunk.rejected, (state, action) => {
@@ -43,7 +53,7 @@ const authSlice = createSlice({
             .addCase(signupThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
                 console.log(action.payload)
-                state.authUser = action.payload?.providerData[0];
+                state.authUser = <IAuthUser>action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })
             .addCase(signupThunk.rejected, (state, action) => {
@@ -53,6 +63,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { addUserData , logoutUserProfile} = authSlice.actions
+export const { addUserData, logoutUserProfile } = authSlice.actions
 
 export const authReducer = authSlice.reducer;
