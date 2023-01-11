@@ -56,7 +56,7 @@ export const LikedPage = (props: ILikedVideoPage) => {
           }}
         >
           <Typography variant="h4" component={"div"} gutterBottom>
-            Liked ({history.length})
+            Liked ({likedVideos.length})
           </Typography>
           <Typography
             variant="h5"

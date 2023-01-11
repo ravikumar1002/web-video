@@ -14,7 +14,7 @@ interface IUsersState {
     likedVideos: string[],
     history: string[],
     watchlater: string[],
-    userDataStatus: string,
+    playlitsStatus: string,
     historyStatus: string,
     likedStatus: string,
     watchlaterStatus: string,
@@ -26,7 +26,7 @@ const initialState: IUsersState = {
     watchlater: [],
     likedVideos: [],
     history: [],
-    userDataStatus: "idle",
+    playlitsStatus: "idle",
     historyStatus: "idle",
     likedStatus: "idle",
     watchlaterStatus: "idle",
@@ -47,14 +47,14 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(playlistsThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.playlitsStatus = "pending";
             })
             .addCase(playlistsThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.playlitsStatus = "fulfilled";
                 state.playlists = action.payload
             })
             .addCase(playlistsThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.playlitsStatus = "rejected";
             })
             .addCase(historyThunk.pending, (state, action) => {
                 state.historyStatus = "pending";
