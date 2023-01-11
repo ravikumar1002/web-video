@@ -13,9 +13,15 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../App";
 import { likedThunk } from "../../thunk/likedThunk";
+import { Box } from "@mui/material";
+import { LoadingImage } from "../../assets";
 
-export const LikedPage = () => {
-  const { likedVideos } = useAppSelector((state) => state.userData);
+interface ILikedVideoPage {}
+
+export const LikedPage = (props: ILikedVideoPage) => {
+  const { likedVideos, likedStatus } = useAppSelector(
+    (state) => state.userData
+  );
   const [likeAddedVideos, setLikedAddedVideos] = useState<IVideoDto[]>([]);
   const navigate = useNavigate();
   const auth = getAuth();
@@ -33,7 +39,7 @@ export const LikedPage = () => {
     setLikedAddedVideos(videoData.items);
   };
 
-  const deleteAllVideoFromWatchLater = async (...arg: any[]) => {
+  const deleteAllVideoFromLiked = async (...arg: any[]) => {
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(likedThunk(user?.providerData[0].uid));
   };
@@ -42,71 +48,113 @@ export const LikedPage = () => {
     getLikesVideos(likedVideos);
   }, [likedVideos]);
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "2rem 0rem",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          Liked ({likedVideos.length})
-        </Typography>
-        <Button
-          variant="outlined"
+    <>
+      {likedStatus === "fulfilled" && likedVideos.length === 0 && (
+        <Box
           sx={{
-            color: "red",
-          }}
-          startIcon={<DeleteIcon />}
-          onClick={() => {
-            deleteAllVideoFromWatchLater(
-              "User",
-              `${user?.providerData[0].uid}`,
-              "liked",
-              "liked"
-            );
+            padding: "2rem 0rem",
           }}
         >
-          Delete All
-        </Button>
-      </div>
+          <Typography variant="h4" component={"div"} gutterBottom>
+            Liked ({likedVideos.length})
+          </Typography>
+          <Typography
+            variant="h5"
+            component={"div"}
+            sx={{ textAlign: "center", paddingTop: "5rem" }}
+            gutterBottom
+          >
+            This list has no videos.
+          </Typography>
+        </Box>
+      )}
 
-      <Grid
-        container
-        spacing={{ xs: 2, md: 2 }}
-        columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
-      >
-        {likeAddedVideos.map((videoData) => {
-          const editVideoData = {
-            id: videoData.id,
-            title: videoData.snippet.title,
-            category: videoData.snippet.categoryId,
-            description: videoData.snippet.description,
-            creator: videoData.snippet.channelTitle,
-            uploadDate: videoData.snippet.publishedAt,
-            viewCount: 123,
-            url: `https://youtu.be/${videoData.id}`,
-          } as IVideoData;
+      {likedStatus === "pending" && (
+        <Box
+          sx={{
+            margin: "auto",
+            height: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={LoadingImage}
+            alt="loading logo"
+            style={{ height: "8rem" }}
+          />
+        </Box>
+      )}
 
-          return (
-            <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
-              <div
-                key={editVideoData.id}
-                onClick={(e) => {
-                  navigate(`/${editVideoData.id}`);
-                }}
-              >
-                <VideoCard
-                  video={editVideoData}
-                  apiVideoData={videoData}
-                  typeOfCard={"liked"}
-                />
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+      {likedStatus === "fulfilled" && likedVideos.length > 0 && (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2rem 0rem",
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Liked ({likedVideos.length})
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                color: "red",
+              }}
+              startIcon={<DeleteIcon />}
+              onClick={() => {
+                deleteAllVideoFromLiked(
+                  "User",
+                  `${user?.providerData[0].uid}`,
+                  "liked",
+                  "liked"
+                );
+              }}
+            >
+              Delete All
+            </Button>
+          </div>
+
+          <Grid
+            container
+            spacing={{ xs: 2, md: 2 }}
+            columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
+          >
+            {likeAddedVideos.map((videoData) => {
+              const editVideoData = {
+                id: videoData.id,
+                title: videoData.snippet.title,
+                category: videoData.snippet.categoryId,
+                description: videoData.snippet.description,
+                creator: videoData.snippet.channelTitle,
+                uploadDate: videoData.snippet.publishedAt,
+                viewCount: 123,
+                url: `https://youtu.be/${videoData.id}`,
+              } as IVideoData;
+
+              return (
+                <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
+                  <div
+                    key={editVideoData.id}
+                    onClick={(e) => {
+                      navigate(`/${editVideoData.id}`);
+                    }}
+                  >
+                    <VideoCard
+                      video={editVideoData}
+                      apiVideoData={videoData}
+                      typeOfCard={"liked"}
+                    />
+                  </div>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </div>
+      )}
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Toolbar,
@@ -14,11 +14,14 @@ import {
   Button,
 } from "@mui/material";
 import { MenuLogo, BackArrow } from "../../assets";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
 import { DrawerHeader, AppBar, Drawer } from "./AsideBarStyle";
 import { getAuth, signOut } from "firebase/auth";
 import MenuIcon from "@mui/icons-material/Menu";
+import { logoutUserProfile } from "../../pages/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
+import { removeUserData } from "../../pages/auth/userSlice";
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -28,6 +31,9 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const [open, setOpen] = useState(false);
   const auth = getAuth();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { authUser } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -88,16 +94,29 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             </Link>
           </div>
 
-          {auth.currentUser?.providerData[0].uid && (
+          {authUser?.uid ? (
             <Button
               color="inherit"
               onClick={() => {
                 signOut(auth)
-                  .then(() => {})
+                  .then(() => {
+                    localStorage.clear();
+                    dispatch(logoutUserProfile());
+                    dispatch(removeUserData());
+                  })
                   .catch((error) => {});
               }}
             >
               Logout
+            </Button>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate("/login")
+              }}
+            >
+              Login
             </Button>
           )}
         </Toolbar>
@@ -166,7 +185,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           })}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 , height: "100vh" }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
         <DrawerHeader />
         {children}
       </Box>

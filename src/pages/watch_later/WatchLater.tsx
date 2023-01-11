@@ -13,9 +13,13 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../App";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
+import { Box } from "@mui/material";
+import { LoadingImage } from "../../assets";
 
 export const WatchLaterPage = () => {
-  const { watchlater } = useAppSelector((state) => state.userData);
+  const { watchlater, watchlaterStatus } = useAppSelector(
+    (state) => state.userData
+  );
   const [watchlaterVideos, setWatchlaterVideo] = useState<IVideoDto[]>([]);
   const navigate = useNavigate();
   const auth = getAuth();
@@ -42,71 +46,112 @@ export const WatchLaterPage = () => {
     getWatchlaterVideos(watchlater);
   }, [watchlater]);
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "2rem 0rem",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          watchlater ({watchlater.length})
-        </Typography>
-        <Button
-          variant="outlined"
+    <>
+      {watchlaterStatus === "fulfilled" && watchlater.length === 0 && (
+        <Box
           sx={{
-            color: "red",
-          }}
-          startIcon={<DeleteIcon />}
-          onClick={() => {
-            deleteAllVideoFromWatchLater(
-              "User",
-              `${user?.providerData[0].uid}`,
-              "watchlater",
-              "watchlater"
-            );
+            padding: "2rem 0rem",
           }}
         >
-          Delete All
-        </Button>
-      </div>
+          <Typography variant="h4" component={"div"} gutterBottom>
+            watch Later ({history.length})
+          </Typography>
+          <Typography
+            variant="h5"
+            component={"div"}
+            sx={{ textAlign: "center", paddingTop: "5rem" }}
+            gutterBottom
+          >
+            This list has no videos.
+          </Typography>
+        </Box>
+      )}
 
-      <Grid
-        container
-        spacing={{ xs: 2, md: 2 }}
-        columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
-      >
-        {watchlaterVideos.map((videoData) => {
-          const editVideoData = {
-            id: videoData.id,
-            title: videoData.snippet.title,
-            category: videoData.snippet.categoryId,
-            description: videoData.snippet.description,
-            creator: videoData.snippet.channelTitle,
-            uploadDate: videoData.snippet.publishedAt,
-            viewCount: 123,
-            url: `https://youtu.be/${videoData.id}`,
-          } as IVideoData;
+      {watchlaterStatus === "pending" && (
+        <Box
+          sx={{
+            margin: "auto",
+            height: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={LoadingImage}
+            alt="loading logo"
+            style={{ height: "8rem" }}
+          />
+        </Box>
+      )}
+      {watchlaterStatus === "fulfilled" && watchlater.length > 0 && (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2rem 0rem",
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              watchlater ({watchlater.length})
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                color: "red",
+              }}
+              startIcon={<DeleteIcon />}
+              onClick={() => {
+                deleteAllVideoFromWatchLater(
+                  "User",
+                  `${user?.providerData[0].uid}`,
+                  "watchlater",
+                  "watchlater"
+                );
+              }}
+            >
+              Delete All
+            </Button>
+          </div>
 
-          return (
-            <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
-              <div
-                key={editVideoData.id}
-                onClick={(e) => {
-                  navigate(`/${editVideoData.id}`);
-                }}
-              >
-                <VideoCard
-                  video={editVideoData}
-                  apiVideoData={videoData}
-                  typeOfCard={"watchlater"}
-                />
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+          <Grid
+            container
+            spacing={{ xs: 2, md: 2 }}
+            columns={{ xs: 7, sm: 8, md: 12, lg: 16 }}
+          >
+            {watchlaterVideos.map((videoData) => {
+              const editVideoData = {
+                id: videoData.id,
+                title: videoData.snippet.title,
+                category: videoData.snippet.categoryId,
+                description: videoData.snippet.description,
+                creator: videoData.snippet.channelTitle,
+                uploadDate: videoData.snippet.publishedAt,
+                viewCount: 123,
+                url: `https://youtu.be/${videoData.id}`,
+              } as IVideoData;
+
+              return (
+                <Grid item xs={7} sm={4} md={4} lg={4} key={editVideoData.id}>
+                  <div
+                    key={editVideoData.id}
+                    onClick={(e) => {
+                      navigate(`/${editVideoData.id}`);
+                    }}
+                  >
+                    <VideoCard
+                      video={editVideoData}
+                      apiVideoData={videoData}
+                      typeOfCard={"watchlater"}
+                    />
+                  </div>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </div>
+      )}
+    </>
   );
 };

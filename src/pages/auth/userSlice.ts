@@ -14,8 +14,10 @@ interface IUsersState {
     likedVideos: string[],
     history: string[],
     watchlater: string[],
-    userDataStatus: string,
+    playlitsStatus: string,
     historyStatus: string,
+    likedStatus: string,
+    watchlaterStatus: string,
     userDataError: string | null,
 }
 
@@ -24,26 +26,35 @@ const initialState: IUsersState = {
     watchlater: [],
     likedVideos: [],
     history: [],
-    userDataStatus: "idle",
+    playlitsStatus: "idle",
     historyStatus: "idle",
+    likedStatus: "idle",
+    watchlaterStatus: "idle",
     userDataError: null,
 }
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        removeUserData: (state, action) => {
+            state.playlists = [],
+                state.watchlater = [],
+                state.likedVideos = [],
+                state.history = []
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(playlistsThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.playlitsStatus = "pending";
             })
             .addCase(playlistsThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.playlitsStatus = "fulfilled";
                 state.playlists = action.payload
             })
             .addCase(playlistsThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.playlitsStatus = "rejected";
             })
             .addCase(historyThunk.pending, (state, action) => {
                 state.historyStatus = "pending";
@@ -56,27 +67,29 @@ export const userSlice = createSlice({
                 state.historyStatus = "rejected";
             })
             .addCase(watchlaterThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.watchlaterStatus = "pending";
             })
             .addCase(watchlaterThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.watchlaterStatus = "fulfilled";
                 state.watchlater = action.payload
             })
             .addCase(watchlaterThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.watchlaterStatus = "rejected";
             })
             .addCase(likedThunk.pending, (state, action) => {
-                state.userDataStatus = "pending";
+                state.likedStatus = "pending";
             })
             .addCase(likedThunk.fulfilled, (state, action) => {
-                state.userDataStatus = "fulfilled";
+                state.likedStatus = "fulfilled";
                 state.likedVideos = action.payload
             })
             .addCase(likedThunk.rejected, (state, action) => {
-                state.userDataStatus = "rejected";
+                state.likedStatus = "rejected";
             })
     }
 })
+
+export const { removeUserData } = userSlice.actions
 
 
 export const userReducer = userSlice.reducer;

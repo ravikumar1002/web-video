@@ -1,4 +1,8 @@
 .App {
   background: #c9d9e7a6;
-  min-height:100vh ;
+  min-height: 100vh;
+}
+
+.pos-rel {
+  position: relative;
 }

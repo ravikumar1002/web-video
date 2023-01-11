@@ -54,7 +54,6 @@ const LoginSchema = object({
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters"),
-  persistUser: literal(true).optional(),
 });
 
 type ILogin = TypeOf<typeof LoginSchema>;
@@ -96,6 +95,18 @@ export const LoginPage: FC = () => {
       >
         <Grid item xs={8}>
           <FormProvider {...methods}>
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
+                textAlign: "center",
+                width: "100%",
+                mb: "1rem",
+                pb: { sm: "1rem" },
+              }}
+            >
+              Welcome To Web Video!
+            </Typography>
             <Grid
               container
               sx={{
@@ -151,30 +162,6 @@ export const LoginPage: FC = () => {
                       required
                       focused
                     />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          size="small"
-                          aria-label="trust this device checkbox"
-                          required
-                          {...methods.register("persistUser")}
-                        />
-                      }
-                      label={
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            fontSize: "0.8rem",
-                            fontWeight: 400,
-                            color: "#5e5b5d",
-                          }}
-                        >
-                          Trust this device
-                        </Typography>
-                      }
-                    />
-
                     <LoadingButton
                       loading={false}
                       type="submit"
@@ -188,41 +175,6 @@ export const LoginPage: FC = () => {
                     >
                       Login
                     </LoadingButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="h6"
-                    component="p"
-                    sx={{
-                      paddingLeft: { sm: "3rem" },
-                      mb: "1.5rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    Log in with another provider:
-                  </Typography>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    sx={{ paddingLeft: { sm: "3rem" }, rowGap: "1rem" }}
-                  >
-                    <OauthMuiLink href="">
-                      <img
-                        src={GoogleLogo}
-                        alt="Google logo"
-                        style={{ height: "2rem" }}
-                      />
-                      Google
-                    </OauthMuiLink>
-                    <OauthMuiLink href="">
-                      <img
-                        src={GitHubLogo}
-                        alt="GitHub logo"
-                        style={{ height: "2rem" }}
-                      />
-                      GitHub
-                    </OauthMuiLink>
                   </Box>
                 </Grid>
               </Grid>
