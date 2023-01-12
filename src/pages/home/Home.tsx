@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
-import { videosThunk } from "../../thunk/VideosThunk";
+import { categoriesVideosThunk, videosThunk } from "../../thunk/VideosThunk";
 import { Box, Chip, Grid, Stack, Tab, Tabs } from "@mui/material";
 import { CardSceleton } from "../../components/sceleton/CardSceleton";
 import { categoriesThunk } from "../../thunk/categoriesThunk";
@@ -48,14 +48,28 @@ export const HomePage = () => {
             scrollButtons="auto"
             aria-label="categories"
           >
-            {categories.map((categroy, index) => {
+            <Tab
+              label="All"
+              sx={{
+                padding: "0.5rem",
+                fontWeight: "600",
+              }}
+              onClick={() => {
+                dispatch(videosThunk());
+              }}
+            />
+            {categories.map((categroy, i) => {
               return (
                 <Tab
-                  value={index}
+                  key={i}
                   label={`${categroy.snippet.title}`}
                   sx={{
                     padding: "0.5rem",
                     fontWeight: "600",
+                  }}
+                  onClick={(e) => {
+                    // e.stopPropagation()
+                    dispatch(categoriesVideosThunk(categroy.id));
                   }}
                 />
               );
