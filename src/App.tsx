@@ -24,6 +24,8 @@ import { LoadingImage } from "./assets";
 import { Box } from "@mui/system";
 import { likedThunk } from "./thunk/likedThunk";
 import { watchlaterThunk } from "./thunk/watchlaterThunk";
+import { ThemeProvider } from "@mui/material";
+import baseTheme from "./config/theme";
 
 const app = initializeApp(firebaseConfigs);
 
@@ -130,40 +132,41 @@ const App = () => {
         dispatch(historyThunk(user?.providerData[0].uid));
         dispatch(likedThunk(user?.providerData[0].uid));
         dispatch(watchlaterThunk(user?.providerData[0].uid));
-
       }
     });
     return () => AuthCheck();
   }, [auth]);
 
   return (
-    <div className={`App ${authStatus === "pending" && "pos-rel"}`}>
-      <RouterProvider router={router} />
-      {authStatus === "pending" && (
-        <div
-          style={{
-            margin: "auto",
-            background: "#d3d3d333",
-            position: "fixed",
-            height: "100%",
-            width: "100%",
-            zIndex: "1400",
-            top: " 0",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Box sx={{}}>
-            <img
-              src={LoadingImage}
-              alt="loading logo"
-              style={{ height: "8rem" }}
-            />
-          </Box>
-        </div>
-      )}
-    </div>
+    <ThemeProvider theme={baseTheme}>
+      <div className={`App ${authStatus === "pending" && "pos-rel"}`}>
+        <RouterProvider router={router} />
+        {authStatus === "pending" && (
+          <div
+            style={{
+              margin: "auto",
+              background: "#d3d3d333",
+              position: "fixed",
+              height: "100%",
+              width: "100%",
+              zIndex: "1400",
+              top: " 0",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{}}>
+              <img
+                src={LoadingImage}
+                alt="loading logo"
+                style={{ height: "8rem" }}
+              />
+            </Box>
+          </div>
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 
