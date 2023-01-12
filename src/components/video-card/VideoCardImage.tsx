@@ -88,6 +88,7 @@ export const VideoCardImage = (props: IVideoCardImageProps) => {
             color: "black",
             background: "#f0f0f0cc",
             right: "1%",
+            zIndex:"1000",
             "&:hover": {
               background: "#efefef",
             },
