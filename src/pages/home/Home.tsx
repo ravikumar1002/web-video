@@ -1,11 +1,12 @@
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { videosThunk } from "../../thunk/VideosThunk";
-import { Box, Grid } from "@mui/material";
+import { Box, Chip, Grid, Stack, Tab, Tabs } from "@mui/material";
 import { CardSceleton } from "../../components/sceleton/CardSceleton";
+import { categoriesThunk } from "../../thunk/categoriesThunk";
 
 export interface IVideoData {
   id: string;
@@ -19,17 +20,64 @@ export interface IVideoData {
 }
 
 export const HomePage = () => {
+  const [value, setValue] = useState(0);
   const dispatch = useAppDispatch();
-  const { videos, videosStatus } = useAppSelector((state) => state.videos);
+  const { videos, videosStatus,categories } = useAppSelector((state) => state.videos);
   const navigate = useNavigate();
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    // console.log(event.getBoundingClientRect(), newValue )
+    setValue(newValue);
+  };
 
   useEffect(() => {
     dispatch(videosThunk());
+    dispatch(categoriesThunk());
   }, []);
 
   return (
     <div>
-      <Box>
+      <Box sx={{ width: "100%"}}>
+        <Box sx={{ paddingBottom: "1rem", width: "100%" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
+          >
+            {/* {categories.map((categroy) => {
+              return (
+                <Tab label={
+                  `${categroy.snippet.title}`
+                } />
+              )
+            })} */}
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item One" />
+            <Tab label="Item Two" />
+            <Tab label="Item Three" />
+            <Tab label="Item Four" />
+            <Tab label="Item Five" />
+            <Tab label="Item Six" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+            <Tab label="Item Seven" />
+          </Tabs>
+        </Box>
         <Grid
           container
           spacing={{ xs: 2, md: 2 }}

@@ -1,17 +1,19 @@
 import { GetYoutubeDataAsJSON } from "../services/GetAsJSON";
 import { IVideosDto } from "../dto/videos";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ICategoriesDto } from "../dto/categories";
 
-export const videosThunk = createAsyncThunk(
-    "/videos/getVideos", async (_, { rejectWithValue }) => {
+
+export const categoriesThunk = createAsyncThunk(
+    "/videos/categories", async (_, { rejectWithValue }) => {
         try {
-            const response = await GetYoutubeDataAsJSON<IVideosDto>("/videos", {
+            const response = await GetYoutubeDataAsJSON<ICategoriesDto>("/videoCategories", {
                 params: {
-                    part: "snippet, contentDetails,statistics",
-                    chart: "mostPopular",
-                    maxResults: 20,
+                    part: "snippet",
+                    regionCode:"IN",
                 },
             });
+            console.log(response)
             return response;
         } catch (error: any) {
             const errorCode = error.code;
@@ -21,7 +23,3 @@ export const videosThunk = createAsyncThunk(
         }
     }
 );
-
-
-
-

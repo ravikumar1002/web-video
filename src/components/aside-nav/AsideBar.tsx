@@ -185,7 +185,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           })}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: "100vh" }}>
         <DrawerHeader />
         {children}
       </Box>

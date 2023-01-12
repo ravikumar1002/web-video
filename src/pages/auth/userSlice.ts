@@ -37,7 +37,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        removeUserData: (state, action) => {
+        removeUserData: (state) => {
             state.playlists = [],
                 state.watchlater = [],
                 state.likedVideos = [],

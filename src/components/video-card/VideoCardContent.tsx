@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 interface IVideoContentData {
   videoContentData: IVideoCardData;
   videoDetails: IVideoDto;
-  typeOfCard : string;
+  typeOfCard: string;
 }
 
 export const VideoCardContent = (props: IVideoContentData) => {
@@ -46,13 +46,16 @@ export const VideoCardContent = (props: IVideoContentData) => {
         }}
       >
         <div>
-          <Link
-            to={`${id}`}
+          <a
+            href={`https://www.youtube.com/@${props?.videoDetails?.snippet?.channelTitle}`}
             style={{
               padding: "0.5rem 0.25rem",
               textDecoration: "none",
               color: "inherit",
               display: "inline-block",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
             }}
           >
             <Avatar
@@ -60,7 +63,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
               src={creatorDetails?.snippet.thumbnails.default.url}
               sx={{ width: 36, height: 36 }}
             />
-          </Link>
+          </a>
         </div>
         <div style={{ width: "100%" }}>
           <Box
@@ -72,7 +75,7 @@ export const VideoCardContent = (props: IVideoContentData) => {
             }}
           >
             <Link
-              to={"/history"}
+              to={`${id}`}
               style={{
                 textDecoration: "none",
                 color: "inherit",
@@ -91,7 +94,10 @@ export const VideoCardContent = (props: IVideoContentData) => {
                 {getLimitWordTitle(title)}
               </Typography>
             </Link>
-            <VideoMenu videoDetails={props.videoDetails} typeOfCard={props.typeOfCard}/>
+            <VideoMenu
+              videoDetails={props.videoDetails}
+              typeOfCard={props.typeOfCard}
+            />
           </Box>
 
           <div>

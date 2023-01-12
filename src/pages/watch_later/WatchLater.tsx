@@ -54,7 +54,7 @@ export const WatchLaterPage = () => {
           }}
         >
           <Typography variant="h4" component={"div"} gutterBottom>
-            watch Later ({history.length})
+            watch Later ({watchlater.length})
           </Typography>
           <Typography
             variant="h5"
