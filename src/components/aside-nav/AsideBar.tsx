@@ -113,7 +113,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             <Button
               color="inherit"
               onClick={() => {
-                navigate("/login")
+                navigate("/login");
               }}
             >
               Login
@@ -185,7 +185,10 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           })}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: "100vh" }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, minHeight: "100vh", maxWidth: " 93.5vw" }}
+      >
         <DrawerHeader />
         {children}
       </Box>

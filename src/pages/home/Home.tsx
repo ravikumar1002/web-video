@@ -22,7 +22,9 @@ export interface IVideoData {
 export const HomePage = () => {
   const [value, setValue] = useState(0);
   const dispatch = useAppDispatch();
-  const { videos, videosStatus,categories } = useAppSelector((state) => state.videos);
+  const { videos, videosStatus, categories } = useAppSelector(
+    (state) => state.videos
+  );
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -37,45 +39,27 @@ export const HomePage = () => {
 
   return (
     <div>
-      <Box sx={{ width: "100%"}}>
+      <Box sx={{ width: "100%" }}>
         <Box sx={{ paddingBottom: "1rem", width: "100%" }}>
           <Tabs
             value={value}
             onChange={handleChange}
             variant="scrollable"
-            
             scrollButtons="auto"
-            aria-label="scrollable auto tabs example"
+            aria-label="categories"
           >
-            {/* {categories.map((categroy) => {
+            {categories.map((categroy, index) => {
               return (
-                <Tab label={
-                  `${categroy.snippet.title}`
-                } />
-              )
-            })} */}
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
-            <Tab label="Item Four" />
-            <Tab label="Item Five" />
-            <Tab label="Item Six" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
-            <Tab label="Item Seven" />
+                <Tab
+                  value={index}
+                  label={`${categroy.snippet.title}`}
+                  sx={{
+                    padding: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                />
+              );
+            })}
           </Tabs>
         </Box>
         <Grid
