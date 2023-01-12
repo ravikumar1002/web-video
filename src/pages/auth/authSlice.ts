@@ -30,7 +30,7 @@ const authSlice = createSlice({
         addUserData: (state, action) => {
             state.authUser = <IAuthUser>action.payload
         },
-        logoutUserProfile: (state, action) => {
+        logoutUserProfile: (state) => {
             state.authUser = {}
         }
     },

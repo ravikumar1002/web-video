@@ -1,11 +1,12 @@
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
-import { videosThunk } from "../../thunk/VideosThunk";
-import { Box, Grid } from "@mui/material";
+import { categoriesVideosThunk, videosThunk } from "../../thunk/VideosThunk";
+import { Box, Chip, Grid, Stack, Tab, Tabs } from "@mui/material";
 import { CardSceleton } from "../../components/sceleton/CardSceleton";
+import { categoriesThunk } from "../../thunk/categoriesThunk";
 
 export interface IVideoData {
   id: string;
@@ -19,17 +20,62 @@ export interface IVideoData {
 }
 
 export const HomePage = () => {
+  const [value, setValue] = useState(0);
   const dispatch = useAppDispatch();
-  const { videos, videosStatus } = useAppSelector((state) => state.videos);
+  const { videos, videosStatus, categories } = useAppSelector(
+    (state) => state.videos
+  );
   const navigate = useNavigate();
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    // console.log(event.getBoundingClientRect(), newValue )
+    setValue(newValue);
+  };
 
   useEffect(() => {
     dispatch(videosThunk());
+    dispatch(categoriesThunk());
   }, []);
 
   return (
     <div>
-      <Box>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ paddingBottom: "1rem", width: "100%" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="categories"
+          >
+            <Tab
+              label="All"
+              sx={{
+                padding: "0.5rem",
+                fontWeight: "600",
+              }}
+              onClick={() => {
+                dispatch(videosThunk());
+              }}
+            />
+            {categories.map((categroy, i) => {
+              return (
+                <Tab
+                  key={i}
+                  label={`${categroy.snippet.title}`}
+                  sx={{
+                    padding: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                  onClick={(e) => {
+                    // e.stopPropagation()
+                    dispatch(categoriesVideosThunk(categroy.id));
+                  }}
+                />
+              );
+            })}
+          </Tabs>
+        </Box>
         <Grid
           container
           spacing={{ xs: 2, md: 2 }}

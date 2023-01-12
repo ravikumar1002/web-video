@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import { IVideoDto } from "../../dto/videos";
 import { VideoCardContent } from "./VideoCardContent";
 import { VideoCardImage } from "./VideoCardImage";
-
+import "./video_card.css";
 export interface IVideoCardData {
   id: string;
   title: string;
@@ -24,7 +24,7 @@ export const VideoCard = (props: IVideoCardProps) => {
   const { id, title } = props.video;
 
   return (
-    <Card>
+    <Card className="img-hover-zoom--colorize">
       <div>
         <VideoCardImage
           imgHeight={190}
