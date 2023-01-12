@@ -13,6 +13,7 @@ import {
   ListItemText,
   Button,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { MenuLogo, BackArrow } from "../../assets";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navigationLinks } from "./navigation-link";
@@ -34,7 +35,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
   const dispatch = useAppDispatch();
   const { authUser } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -187,7 +188,17 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, minHeight: "100vh", maxWidth: " 93.5vw" }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          minHeight: "100vh",
+          maxWidth: open
+            ? `calc(100% - ${theme.mixins.drawerWidth.expanded.xs}px)`
+            : {
+                xs: `calc(100% - ${theme.mixins.drawerWidth.collapsed.xs}px)`,
+                sm: `calc(100% - ${theme.mixins.drawerWidth.collapsed.sm}px)`,
+              },
+        }}
       >
         <DrawerHeader />
         {children}

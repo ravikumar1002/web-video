@@ -2,10 +2,11 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 
-export const drawerWidth = 200;
+// export const drawerWidth = (theme: Theme) =>
+//   `${theme.mixins.drawerWidth.expanded.xs}px`;
 
 export const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: theme.mixins.drawerWidth.expanded.xs,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -19,9 +20,9 @@ export const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.mixins.drawerWidth.collapsed.xs}px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(10)} + 1px)`,
+    width: `calc(${theme.mixins.drawerWidth.collapsed.sm}px)`,
   },
 });
 
@@ -47,8 +48,8 @@ export const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: theme.mixins.drawerWidth.expanded.xs,
+    width: `calc(100% - ${theme.mixins.drawerWidth.expanded.xs}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -59,7 +60,7 @@ export const AppBar = styled(MuiAppBar, {
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: theme.mixins.drawerWidth.expanded.xs,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
