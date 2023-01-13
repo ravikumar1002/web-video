@@ -33,7 +33,6 @@ export const categoriesVideosThunk = createAsyncThunk(
                     videoCategoryId: id,
                 },
             });
-            console.log(response)
             return response;
         } catch (error: any) {
             const errorCode = error.code;

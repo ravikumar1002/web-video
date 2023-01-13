@@ -28,7 +28,6 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    // console.log(event.getBoundingClientRect(), newValue )
     setValue(newValue);
   };
 

@@ -13,7 +13,6 @@ export const categoriesThunk = createAsyncThunk(
                     regionCode:"IN",
                 },
             });
-            console.log(response)
             return response;
         } catch (error: any) {
             const errorCode = error.code;
