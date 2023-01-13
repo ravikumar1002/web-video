@@ -16,7 +16,7 @@ const AuthRoute = (props: IAuthRouteProps) => {
       if (user) {
         setLoading(false);
       } else {
-        navigate("/login");
+        navigate("/login", { replace: true });
         console.log("unauthorized");
       }
     });

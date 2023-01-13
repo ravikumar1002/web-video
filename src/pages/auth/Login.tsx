@@ -118,7 +118,7 @@ export const LoginPage: FC = () => {
               <Grid
                 item
                 container
-                justifyContent="space-between"
+                justifyContent="center"
                 rowSpacing={5}
                 sx={{
                   maxWidth: { sm: "45rem" },
@@ -129,7 +129,6 @@ export const LoginPage: FC = () => {
                   item
                   xs={12}
                   sm={6}
-                  sx={{ borderRight: { sm: "1px solid #ddd" } }}
                 >
                   <Box
                     display="flex"
