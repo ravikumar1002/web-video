@@ -26,10 +26,11 @@ import { watchlaterThunk } from "./thunk/watchlaterThunk";
 import { ThemeProvider } from "@mui/material";
 import baseTheme from "./config/theme";
 
+// @ts-ignore
 const app = initializeApp(firebaseConfigs);
 
+// @ts-ignore
 export const db = getFirestore(app);
-
 
 const App = () => {
   const router = createBrowserRouter([
