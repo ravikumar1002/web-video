@@ -23,6 +23,7 @@ export const VideoCardImage = (props: IVideoCardImageProps) => {
   const dispatch = useAppDispatch();
 
   const deleteVideoFromHistory = async (videoId: string, ...arg: any[]) => {
+      // @ts-ignore
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
       [videoId]: deleteField(),
@@ -31,6 +32,7 @@ export const VideoCardImage = (props: IVideoCardImageProps) => {
   };
 
   const deleteVideoFromLiked = async (videoId: string, ...arg: any[]) => {
+      // @ts-ignore
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
       [videoId]: deleteField(),

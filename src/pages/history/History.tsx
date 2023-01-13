@@ -38,6 +38,7 @@ export const HistoryPage = (props: HistoryPageProps) => {
   };
 
   const deleteAllVideoFromHistory = async (...arg: any[]) => {
+    // @ts-ignore
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(historyThunk(user?.providerData[0].uid));
   };

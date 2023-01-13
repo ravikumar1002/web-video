@@ -8,7 +8,7 @@ import { HistoryPage } from "./pages/history";
 import { LikedPage } from "./pages/liked";
 import { WatchLaterPage } from "./pages/watch_later";
 import { PlaylistsPage } from "./pages/playlists";
-import { Firestore, getFirestore } from "firebase/firestore";
+import { DocumentData, Firestore, getFirestore } from "firebase/firestore";
 import { SideNavDrawer } from "./components/aside-nav/AsideBar";
 import firebaseConfigs from "./config/firebase";
 import { VideoPlayPage } from "./pages/singleVideo/VideoPlayPage";
@@ -19,7 +19,6 @@ import { playlistsThunk } from "./thunk/playliststhunk";
 import { useAppDispatch, useAppSelector } from "./store/reduxHook";
 import { historyThunk } from "./thunk/historyThunk";
 import { addUserData } from "./pages/auth/authSlice";
-import { BasicModal } from "./components/modal/Modal";
 import { LoadingImage } from "./assets";
 import { Box } from "@mui/system";
 import { likedThunk } from "./thunk/likedThunk";
@@ -30,6 +29,7 @@ import baseTheme from "./config/theme";
 const app = initializeApp(firebaseConfigs);
 
 export const db = getFirestore(app);
+
 
 const App = () => {
   const router = createBrowserRouter([
