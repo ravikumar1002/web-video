@@ -31,6 +31,7 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
       console.error("Error adding document: ", e);
     }
   };
+  
 
   return (
     <>
