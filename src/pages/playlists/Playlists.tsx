@@ -1,5 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { LoadingImage } from "../../assets";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useAppSelector } from "../../store/reduxHook";
 import { PlaylistsFolderCard } from "./components/playlitsFolder/PlaylistsFolder";
 
@@ -7,6 +9,10 @@ export const PlaylistsPage = () => {
   const { playlists, playlitsStatus } = useAppSelector(
     (state) => state.userData
   );
+
+  useEffect(() => {
+    useDocumentTitle("Playlists");
+  }, []);
 
   return (
     <>

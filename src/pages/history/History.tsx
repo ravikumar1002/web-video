@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { db } from "../../App";
 import { Box } from "@mui/system";
 import { LoadingImage } from "../../assets";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 interface HistoryPageProps {}
 
@@ -46,6 +47,10 @@ export const HistoryPage = (props: HistoryPageProps) => {
   useEffect(() => {
     getHistoryVideos(history);
   }, [history]);
+
+  useEffect(() => {
+    useDocumentTitle("History");
+  }, []);
 
   return (
     <>

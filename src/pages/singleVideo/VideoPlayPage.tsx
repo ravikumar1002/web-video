@@ -5,6 +5,7 @@ import { IChannelDto, IChannelsDto } from "../../dto/channels";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { VideoPlayerContent } from "./components/VideoContent";
 import { VideoPlayer } from "./components/VideoPlayer";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 export const VideoPlayPage = () => {
   const [currentVideo, setCurrentVideo] = useState<IVideoDto>();
@@ -24,6 +25,7 @@ export const VideoPlayPage = () => {
         id: videoData.items[0].snippet.channelId,
       },
     });
+    useDocumentTitle(`${videoData?.items[0].snippet.title}`);
     setCurrentVideo(videoData.items[0]);
     setCurrentCreator(creatorData.items[0]);
   };
@@ -33,8 +35,7 @@ export const VideoPlayPage = () => {
   }, []);
 
   return (
-    <div
-    >
+    <div>
       {currentVideo && currentCreator && (
         <>
           <VideoPlayer videoId={currentVideo.id} />

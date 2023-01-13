@@ -1,6 +1,6 @@
 import { Container, Grid, Box, Typography, Stack } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { LinkItem, OauthMuiLink } from "./Login";
 import { useNavigate, useLocation } from "react-router-dom";
 import { signupThunk } from "../../thunk/authThunk";
 import { useAppDispatch } from "../../store/reduxHook";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const signupSchema = object({
   name: string().min(1, "Name is required").max(70),
@@ -49,6 +50,10 @@ export const SignupPage: FC = () => {
     dispatch(signupThunk(values));
     navigate(location?.state?.from?.pathname || "/", { replace: true });
   };
+
+  useEffect(() => {
+    useDocumentTitle("SignUP");
+  }, []);
 
   return (
     <Container
