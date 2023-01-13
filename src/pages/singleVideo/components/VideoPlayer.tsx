@@ -18,10 +18,12 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const addVideoInHistory = async (data: string, ...args: any) => {
     try {
       if (history.length > 0) {
+        // @ts-ignore
         const docRef = await updateDoc(doc(db, ...args), {
           [data]: data,
         });
       } else {
+        // @ts-ignore
         const setHistoryPath = setDoc(doc(db, ...args), { [data]: data });
       }
       dispatch(historyThunk(user?.providerData[0].uid));

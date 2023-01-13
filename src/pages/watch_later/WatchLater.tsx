@@ -38,6 +38,7 @@ export const WatchLaterPage = () => {
   };
 
   const deleteAllVideoFromWatchLater = async (...arg: any[]) => {
+    // @ts-ignore
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(watchlaterThunk(user?.providerData[0].uid));
   };
