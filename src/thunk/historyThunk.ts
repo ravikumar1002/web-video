@@ -9,6 +9,7 @@ export const historyThunk = createAsyncThunk(
     "/user/history", async (userID: string | undefined, { rejectWithValue }) => {
         try {
             const response = await getDocs(
+                // @ts-ignore
                 collection(db, "User", `${userID}`, "history")
             );
             let dataAarrange;

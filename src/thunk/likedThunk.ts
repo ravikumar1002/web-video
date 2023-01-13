@@ -9,6 +9,7 @@ export const likedThunk = createAsyncThunk(
     "/user/liked", async (userID: string | undefined, { rejectWithValue }) => {
         try {
             const response = await getDocs(
+                // @ts-ignore
                 collection(db, "User", `${userID}`, "liked")
             );
             let dataAarrange;

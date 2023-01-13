@@ -12,11 +12,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
-import {
-  doc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../App";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";
@@ -46,6 +42,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
 
   const addDataInFirebase = async (data: string, ...args: any) => {
     try {
+      // @ts-ignore
       const docRef = await setDoc(doc(db, ...args), { [data]: data });
       dispatch(playlistsThunk(user?.providerData[0].uid));
     } catch (e) {
@@ -55,6 +52,7 @@ export const PlaylistMenuModal = (props: IPlaylistModalProps) => {
 
   const addVideoInFirebase = async (data: string, ...args: any) => {
     try {
+      // @ts-ignore
       const docRef = await updateDoc(doc(db, ...args), { [data]: data });
       dispatch(playlistsThunk(user?.providerData[0].uid));
     } catch (e) {

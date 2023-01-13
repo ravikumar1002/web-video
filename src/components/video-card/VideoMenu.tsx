@@ -74,6 +74,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
   }, [openMenu]);
 
   const deleteVideoFromPlaylist = async (videoId: string, ...arg: any[]) => {
+    // @ts-ignore
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
       [videoId]: deleteField(),
@@ -82,6 +83,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
   };
 
   const deleteVideoFromWatchlater = async (videoId: string, ...arg: any[]) => {
+    // @ts-ignore
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
       [videoId]: deleteField(),
@@ -92,10 +94,12 @@ export const VideoMenu = (props: ICardMenuProps) => {
   const addVideoInWatchlater = async (data: string, ...args: any) => {
     try {
       if (watchlater.length > 0) {
+        // @ts-ignore
         const docRef = await updateDoc(doc(db, ...args), {
           [data]: data,
         });
       } else {
+        // @ts-ignore
         const setWatchlaterPath = setDoc(doc(db, ...args), { [data]: data });
       }
       dispatch(watchlaterThunk(user?.providerData[0].uid));

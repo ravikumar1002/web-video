@@ -9,6 +9,7 @@ export const watchlaterThunk = createAsyncThunk(
     "/user/watchlater", async (userID: string | undefined, { rejectWithValue }) => {
         try {
             const response = await getDocs(
+                // @ts-ignore
                 collection(db, "User", `${userID}`, "watchlater")
             );
             let dataAarrange;

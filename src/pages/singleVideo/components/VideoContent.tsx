@@ -36,10 +36,12 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
   const addVideoInLiked = async (data: string, ...args: any) => {
     try {
       if (likedVideos.length > 0) {
+        // @ts-ignore
         const docRef = await updateDoc(doc(db, ...args), {
           [data]: data,
         });
       } else {
+        // @ts-ignore
         const setLikedPath = setDoc(doc(db, ...args), { [data]: data });
       }
       dispatch(likedThunk(user?.providerData[0].uid));
@@ -49,6 +51,7 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
   };
 
   const deleteVideoFromLiked = async (videoId: string, ...arg: any[]) => {
+    // @ts-ignore
     const videoDoc = doc(db, ...arg);
     const deleteData = await updateDoc(videoDoc, {
       [videoId]: deleteField(),

@@ -30,6 +30,7 @@ export const PlaylistsFolderCard = (props: IPlaylistsFolderCardProps) => {
   const dispatch = useAppDispatch();
 
   const deletePlaylist = async (...arg:any[]) => {
+    // @ts-ignore
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(playlistsThunk(user?.providerData[0].uid));
   };
