@@ -9,6 +9,7 @@ export const playlistsThunk = createAsyncThunk(
     "/user/playlists", async (userID: string| undefined, { rejectWithValue }) => {
         try {
             const response = await getDocs(
+                // @ts-ignore
                 collection(db, "User", `${userID}`, "playlists")
             );
             const dataAarrange = response.docs.map(i => {
