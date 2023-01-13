@@ -12,13 +12,20 @@ interface IAuthUser {
 }
 
 interface IUsersState {
-    authUser: {},
+    authUser: IAuthUser,
     authStatus: string,
     authError: string | null,
 }
 
 const initialState: IUsersState = {
-    authUser: {},
+    authUser: {
+        providerId: "",
+        uid: "",
+        displayName: null,
+        email: "",
+        phoneNumber: null,
+        photoURL: null,
+    },
     authStatus: "idle",
     authError: null,
 }
@@ -28,10 +35,17 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         addUserData: (state, action) => {
-            state.authUser = <IAuthUser>action.payload
+            state.authUser = action.payload
         },
         logoutUserProfile: (state) => {
-            state.authUser = {}
+            state.authUser = {
+                providerId: "",
+                uid: "",
+                displayName: null,
+                email: "",
+                phoneNumber: null,
+                photoURL: null,
+            }
         }
     },
     extraReducers: (builder) => {

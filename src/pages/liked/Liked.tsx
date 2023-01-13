@@ -40,6 +40,7 @@ export const LikedPage = (props: ILikedVideoPage) => {
   };
 
   const deleteAllVideoFromLiked = async (...arg: any[]) => {
+    // @ts-ignore
     const deleteData = await deleteDoc(doc(db, ...arg));
     dispatch(likedThunk(user?.providerData[0].uid));
   };
