@@ -4,7 +4,17 @@ import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { categoriesVideosThunk, videosThunk } from "../../thunk/VideosThunk";
-import { Box, Chip, Grid, Stack, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Grid,
+  Stack,
+  Tab,
+  tabClasses,
+  Tabs,
+  tabsClasses,
+  tabScrollButtonClasses,
+} from "@mui/material";
 import { CardSceleton } from "../../components/sceleton/CardSceleton";
 import { categoriesThunk } from "../../thunk/categoriesThunk";
 
@@ -28,6 +38,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(event);
     setValue(newValue);
   };
 
@@ -46,6 +57,23 @@ export const HomePage = () => {
             variant="scrollable"
             scrollButtons="auto"
             aria-label="categories"
+            onScroll={(e) => {
+              console.log(e);
+            }}
+            sx={{
+              [`& .${tabsClasses.scroller}`]: {
+                marginLeft: "-40px",
+                marginRight: "-40px",
+              },
+              [`& .${tabsClasses.scrollButtons}`]: {
+                backgroundColor: "#c9d9e7",
+                [`&:not(.${tabScrollButtonClasses.disabled})`]: {
+                  zIndex: 10,
+                  backgroundColor: "#c9d9e7",
+                  opacity: '1',
+                },
+              },
+            }}
           >
             <Tab
               label="All"
@@ -67,7 +95,6 @@ export const HomePage = () => {
                     fontWeight: "600",
                   }}
                   onClick={(e) => {
-                    // e.stopPropagation()
                     dispatch(categoriesVideosThunk(categroy.id));
                   }}
                 />

@@ -2,9 +2,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 
-// export const drawerWidth = (theme: Theme) =>
-//   `${theme.mixins.drawerWidth.expanded.xs}px`;
-
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.mixins.drawerWidth.expanded.xs,
   transition: theme.transitions.create("width", {
@@ -31,7 +28,6 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
