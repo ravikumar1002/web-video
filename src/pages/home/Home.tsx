@@ -57,9 +57,6 @@ export const HomePage = () => {
             variant="scrollable"
             scrollButtons="auto"
             aria-label="categories"
-            onScroll={(e) => {
-              console.log(e);
-            }}
             sx={{
               [`& .${tabsClasses.scroller}`]: {
                 marginLeft: "-40px",
