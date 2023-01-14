@@ -15,6 +15,7 @@ import { db } from "../../App";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
 import { Box } from "@mui/material";
 import { LoadingImage } from "../../assets";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 export const WatchLaterPage = () => {
   const { watchlater, watchlaterStatus } = useAppSelector(
@@ -46,6 +47,11 @@ export const WatchLaterPage = () => {
   useEffect(() => {
     getWatchlaterVideos(watchlater);
   }, [watchlater]);
+
+  useEffect(() => {
+    useDocumentTitle("Watch Later");
+  }, []);
+
   return (
     <>
       {watchlaterStatus === "fulfilled" && watchlater.length === 0 && (

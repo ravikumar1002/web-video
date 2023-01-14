@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { LoadingImage } from "../../assets";
 import { VideoCard } from "../../components/video-card/VIdeoCard";
 import { IVideoDto, IVideosDto } from "../../dto/videos";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { useAppSelector } from "../../store/reduxHook";
 
@@ -49,6 +50,10 @@ export const SinglePlayListPage = (props: SinglePlaylistPage) => {
   useEffect(() => {
     getPlaylistData(playlistid);
   }, [playlistid, playlists]);
+
+  useEffect(() => {
+    useDocumentTitle(`${playlistid}`);
+  }, []);
 
   return (
     <>

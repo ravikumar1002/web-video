@@ -5,20 +5,18 @@ import {
   Typography,
   Stack,
   Link as MuiLink,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { literal, object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
 import FormInput from "../../components/FormInput";
-import { GoogleLogo, GitHubLogo } from "../../assets";
 import { loginThunk } from "../../thunk/authThunk";
 import { useAppDispatch } from "../../store/reduxHook";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 export const LinkItem = styled(Link)`
   text-decoration: none;
@@ -78,6 +76,10 @@ export const LoginPage: FC = () => {
     navigate(location?.state?.from?.pathname || "/", { replace: true });
   };
 
+  useEffect(() => {
+    useDocumentTitle("Login");
+  }, []);
+
   return (
     <Container
       maxWidth={false}
@@ -118,19 +120,14 @@ export const LoginPage: FC = () => {
               <Grid
                 item
                 container
-                justifyContent="space-between"
+                justifyContent="center"
                 rowSpacing={5}
                 sx={{
                   maxWidth: { sm: "45rem" },
                   marginInline: "auto",
                 }}
               >
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ borderRight: { sm: "1px solid #ddd" } }}
-                >
+                <Grid item xs={12} sm={6}>
                   <Box
                     display="flex"
                     flexDirection="column"

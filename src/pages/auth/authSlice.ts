@@ -66,7 +66,6 @@ const authSlice = createSlice({
             })
             .addCase(signupThunk.fulfilled, (state, action) => {
                 state.authStatus = "fulfilled";
-                console.log(action.payload)
                 state.authUser = <IAuthUser>action.payload?.providerData[0];
                 localStorage.setItem("authUser", JSON.stringify(state?.authUser));
             })

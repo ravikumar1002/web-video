@@ -15,6 +15,7 @@ import { db } from "../../App";
 import { likedThunk } from "../../thunk/likedThunk";
 import { Box } from "@mui/material";
 import { LoadingImage } from "../../assets";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 interface ILikedVideoPage {}
 
@@ -48,6 +49,10 @@ export const LikedPage = (props: ILikedVideoPage) => {
   useEffect(() => {
     getLikesVideos(likedVideos);
   }, [likedVideos]);
+
+  useEffect(() => {
+    useDocumentTitle("Likes");
+  }, []);
   return (
     <>
       {likedStatus === "fulfilled" && likedVideos.length === 0 && (
