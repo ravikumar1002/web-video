@@ -95,7 +95,7 @@ export const LoginPage: FC = () => {
           height: "100vh",
         }}
       >
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <FormProvider {...methods}>
             <Typography
               variant="h4"
