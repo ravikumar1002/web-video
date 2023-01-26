@@ -59,15 +59,21 @@ export const HomePage = () => {
             aria-label="categories"
             sx={{
               [`& .${tabsClasses.scroller}`]: {
-                marginLeft: "-40px",
-                marginRight: "-40px",
+                marginLeft: {
+                  xs: "0",
+                  sm: "-40px",
+                },
+                marginRight: {
+                  xs: "0",
+                  sm: "-40px"
+                },
               },
               [`& .${tabsClasses.scrollButtons}`]: {
                 backgroundColor: "#c9d9e7",
                 [`&:not(.${tabScrollButtonClasses.disabled})`]: {
                   zIndex: 10,
                   backgroundColor: "#c9d9e7",
-                  opacity: '1',
+                  opacity: "1",
                 },
               },
             }}

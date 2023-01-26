@@ -1,4 +1,3 @@
-
 @media screen and (max-width: 600px) {
   .responsive-bar-list.MuiDrawer-docked {
     position: fixed;
@@ -11,11 +10,11 @@
     z-index: 1500;
   }
 
-  .hide-element{
+  .hide-element {
     display: none;
   }
 
-  .align-aside-ul.MuiList-root{
+  .align-aside-ul.MuiList-root {
     display: flex;
     width: 100%;
     position: fixed;
@@ -23,8 +22,8 @@
     background-color: inherit;
   }
 
- .align-aside-ul.MuiList-root{
+  .align-aside-ul.MuiList-root {
     padding-top: 0;
     padding-bottom: 0;
- } 
+  }
 }

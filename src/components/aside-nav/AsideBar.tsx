@@ -218,6 +218,13 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
       >
         <DrawerHeader />
         {children}
+        <Box
+          sx={{
+            padding: {
+              xs: "2.5rem",
+            },
+          }}
+        ></Box>
       </Box>
     </Box>
   );
