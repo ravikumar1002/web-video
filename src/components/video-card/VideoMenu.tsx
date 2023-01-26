@@ -24,7 +24,7 @@ import { getAuth } from "firebase/auth";
 import { PlaylistMenuModal } from "./PlaylistMenu";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
 
 interface ICardMenuProps {
@@ -42,7 +42,8 @@ export const VideoMenu = (props: ICardMenuProps) => {
   const dispatch = useAppDispatch();
   const { playlistid } = useParams();
   const { watchlater } = useAppSelector((state) => state.userData);
-
+  const { authUser } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
   const handleMenuToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
@@ -169,13 +170,17 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   ) : (
                     <MenuItem
                       onClick={(e) => {
-                        addVideoInWatchlater(
-                          props.videoDetails.id,
-                          "User",
-                          `${user?.providerData[0].uid}`,
-                          "watchlater",
-                          "watchlater"
-                        );
+                        if (authUser.uid) {
+                          addVideoInWatchlater(
+                            props.videoDetails.id,
+                            "User",
+                            `${user?.providerData[0].uid}`,
+                            "watchlater",
+                            "watchlater"
+                          );
+                        } else {
+                          navigate("/login");
+                        }
                         handleMenuClose(e);
                       }}
                     >
@@ -184,7 +189,11 @@ export const VideoMenu = (props: ICardMenuProps) => {
                   )}
                   <MenuItem
                     onClick={(e) => {
-                      openPlaylistModal();
+                      if (authUser.uid) {
+                        openPlaylistModal();
+                      } else {
+                        navigate("/login");
+                      }
                       handleMenuClose(e);
                     }}
                   >

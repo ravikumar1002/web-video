@@ -1,7 +1,7 @@
 import { IVideoDto } from "../../../dto/videos";
 import { Typography, Avatar, Paper } from "@mui/material";
 import { useDateFormat } from "../../../hooks/useDateFormat";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IChannelDto } from "../../../dto/channels";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -33,6 +33,8 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
   const user = auth.currentUser;
   const dispatch = useAppDispatch();
   const { likedVideos } = useAppSelector((state) => state.userData);
+  const { authUser } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const addVideoInLiked = async (data: string, ...args: any) => {
     try {
@@ -106,13 +108,17 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
             <Tooltip title="liked">
               <IconButton
                 onClick={(e) => {
-                  addVideoInLiked(
-                    id,
-                    "User",
-                    `${user?.providerData[0].uid}`,
-                    "liked",
-                    "liked"
-                  );
+                  if (authUser.uid) {
+                    addVideoInLiked(
+                      id,
+                      "User",
+                      `${user?.providerData[0].uid}`,
+                      "liked",
+                      "liked"
+                    );
+                  } else {
+                    navigate("/login");
+                  }
                 }}
               >
                 <ThumbUpOutlinedIcon />
