@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import ReactPlayer from "react-player/youtube";
@@ -31,15 +32,22 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
       console.error("Error adding document: ", e);
     }
   };
-  
 
   return (
-    <>
+    <Box
+      sx={{
+        height: {
+          xs: "19rem",
+          sm: "27rem",
+          md: "35rem",
+        },
+      }}
+    >
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${props.videoId}`}
         controls
         width="100%"
-        height="35rem"
+        height="inherit"
         playing={true}
         onStart={() => {
           const AuthCheck = onAuthStateChanged(auth, (user) => {
@@ -54,6 +62,6 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
           });
         }}
       />
-    </>
+    </Box>
   );
 };

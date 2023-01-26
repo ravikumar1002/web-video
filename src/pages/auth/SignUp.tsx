@@ -168,7 +168,9 @@ export const SignupPage: FC = () => {
                 <Stack sx={{ mt: "3rem", textAlign: "center" }}>
                   <Typography sx={{ fontSize: "0.9rem", mb: "1rem" }}>
                     Already have an account?{" "}
-                    <LinkItem to="/login">Login</LinkItem>
+                    <LinkItem to="/login" replace={true}>
+                      Login
+                    </LinkItem>
                   </Typography>
                 </Stack>
               </Grid>

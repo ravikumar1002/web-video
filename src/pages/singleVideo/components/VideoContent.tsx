@@ -72,7 +72,11 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
           component="div"
           sx={{
             fontWeight: "700",
-            maxHeight: "4rem",
+            maxHeight: {
+              xs: "auto",
+              sm: "5rem",
+              md: "4rem"
+            },
             flexGrow: 1,
             padding: "1rem 0",
           }}
