@@ -21,6 +21,10 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.mixins.drawerWidth.collapsed.sm}px)`,
   },
+  [theme.breakpoints.down("sm")]: {
+    width: `100vw`,
+    height: "min-content"
+  },
 });
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
