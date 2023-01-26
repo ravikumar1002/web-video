@@ -13,6 +13,7 @@ import { deleteField, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../App";
 import { likedThunk } from "../../../thunk/likedThunk";
 import { VideoMenu } from "../../../components/video-card/VideoMenu";
+import { useNumberFormat } from "../../../hooks/useNumberFormat";
 
 interface IVideoPlayerContent {
   videoDetails: IVideoDto;
@@ -75,7 +76,7 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
             maxHeight: {
               xs: "auto",
               sm: "5rem",
-              md: "4rem"
+              md: "4rem",
             },
             flexGrow: 1,
             padding: "1rem 0",
@@ -154,7 +155,7 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
               component="div"
               sx={{ fontWeight: "600", color: "#6d6d6d" }}
             >
-              {statistics.subscriberCount} subscribers
+              {useNumberFormat(Number(statistics.subscriberCount))} subscribers
             </Typography>
           </div>
         </Link>
@@ -177,7 +178,7 @@ export const VideoPlayerContent = (props: IVideoPlayerContent) => {
               component="span"
               sx={{ cursor: "default", fontWeight: "600" }}
             >
-              {videoStatistics.viewCount} views
+              {useNumberFormat(Number(videoStatistics.viewCount))} views
             </Typography>
             <Typography
               gutterBottom
