@@ -1,0 +1,29 @@
+@media screen and (max-width: 600px) {
+  .responsive-bar-list.MuiDrawer-docked {
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    /* background: antiquewhite; */
+    bottom: 0;
+    height: max-content;
+    left: 0;
+    z-index: 1500;
+  }
+
+  .hide-element {
+    display: none;
+  }
+
+  .align-aside-ul.MuiList-root {
+    display: flex;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: inherit;
+  }
+
+  .align-aside-ul.MuiList-root {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

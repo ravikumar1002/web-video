@@ -95,7 +95,7 @@ export const LoginPage: FC = () => {
           height: "100vh",
         }}
       >
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <FormProvider {...methods}>
             <Typography
               variant="h4"
@@ -180,7 +180,9 @@ export const LoginPage: FC = () => {
               <Stack sx={{ mt: "3rem", textAlign: "center" }}>
                 <Typography sx={{ fontSize: "0.9rem", mb: "1rem" }}>
                   Need an account?
-                  <LinkItem to="/signup">Sign up here</LinkItem>
+                  <LinkItem to="/signup" replace={true}>
+                    Sign up here
+                  </LinkItem>
                 </Typography>
               </Stack>
             </Grid>

@@ -23,6 +23,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { logoutUserProfile } from "../../pages/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { removeUserData } from "../../pages/auth/userSlice";
+import "./aside-bar.css";
 interface ISideNavDrawerProps {
   children: React.ReactNode;
 }
@@ -73,6 +74,10 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             sx={{
               marginRight: 5,
               ...(open && { display: "none" }),
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
             }}
           >
             <MenuIcon />
@@ -114,7 +119,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             <Button
               color="inherit"
               onClick={() => {
-                navigate("/login");
+                navigate("/login", { replace: true });
               }}
             >
               Login
@@ -122,8 +127,15 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           )}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+      <Drawer variant="permanent" className="responsive-bar-list" open={open}>
+        <DrawerHeader
+          sx={{
+            display: {
+              xs: "none",
+              sm: "flex",
+            },
+          }}
+        >
           <IconButton onClick={handleDrawerClose}>
             <img
               src={BackArrow}
@@ -133,7 +145,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List className="align-aside-ul">
           {navigationLinks.map((item) => {
             return (
               <ListItem key={item.id} disablePadding sx={{ display: "block" }}>
@@ -150,6 +162,11 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                       px: 2.5,
                       "& .MuiListItemIcon-root": {
                         marginRight: "inherit",
+                      },
+                      gap: open ? "1rem" : "",
+                      padding: {
+                        xs: "8px",
+                        sm: "1rem 0rem",
                       },
                     }}
                   >
@@ -190,18 +207,31 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: {
+            xs: 1,
+            sm: 3,
+          },
           minHeight: "100vh",
           maxWidth: open
-            ? `calc(100% - ${theme.mixins.drawerWidth.expanded.xs}px)`
+            ? {
+                xs: `calc(100% - 0px)`,
+                sm: `calc(100% - ${theme.mixins.drawerWidth.expanded.xs}px)`,
+              }
             : {
-                xs: `calc(100% - ${theme.mixins.drawerWidth.collapsed.xs}px)`,
+                xs: `calc(100% - 0px)`,
                 sm: `calc(100% - ${theme.mixins.drawerWidth.collapsed.sm}px)`,
               },
         }}
       >
         <DrawerHeader />
         {children}
+        <Box
+          sx={{
+            padding: {
+              xs: "2.5rem",
+            },
+          }}
+        ></Box>
       </Box>
     </Box>
   );

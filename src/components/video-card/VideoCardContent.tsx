@@ -8,6 +8,7 @@ import { IVideoDto } from "../../dto/videos";
 import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { IChannelDto, IChannelsDto } from "../../dto/channels";
 import { useEffect, useState } from "react";
+import { useNumberFormat } from "../../hooks/useNumberFormat";
 
 interface IVideoContentData {
   videoContentData: IVideoCardData;
@@ -54,8 +55,8 @@ export const VideoCardContent = (props: IVideoContentData) => {
               color: "inherit",
               display: "inline-block",
             }}
-            onClick={(e)=>{
-              e.stopPropagation()
+            onClick={(e) => {
+              e.stopPropagation();
             }}
           >
             <Avatar
@@ -119,7 +120,10 @@ export const VideoCardContent = (props: IVideoContentData) => {
                 component="span"
                 sx={{ cursor: "default", fontWeight: "500" }}
               >
-                {props.videoDetails.statistics.viewCount} views
+                {useNumberFormat(
+                  Number(props.videoDetails.statistics.viewCount)
+                )}
+                views
               </Typography>
               <Typography
                 gutterBottom
