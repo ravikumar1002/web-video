@@ -11,8 +11,6 @@ import {
   ClickAwayListener,
 } from "@mui/material";
 import {
-  collection,
-  addDoc,
   doc,
   deleteField,
   updateDoc,
@@ -24,9 +22,12 @@ import { getAuth } from "firebase/auth";
 import { PlaylistMenuModal } from "./PlaylistMenu";
 import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
-
+import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
 interface ICardMenuProps {
   videoDetails: IVideoDto;
   typeOfCard: string;
@@ -42,7 +43,8 @@ export const VideoMenu = (props: ICardMenuProps) => {
   const dispatch = useAppDispatch();
   const { playlistid } = useParams();
   const { watchlater } = useAppSelector((state) => state.userData);
-
+  const { authUser } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
   const handleMenuToggle = (event: React.MouseEvent<HTMLElement>) => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
@@ -164,30 +166,41 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         handleMenuClose(e);
                       }}
                     >
+                      <WatchLaterIcon sx={{ marginRight: "0.5rem" }} />
                       Remove from watch later
                     </MenuItem>
                   ) : (
                     <MenuItem
                       onClick={(e) => {
-                        addVideoInWatchlater(
-                          props.videoDetails.id,
-                          "User",
-                          `${user?.providerData[0].uid}`,
-                          "watchlater",
-                          "watchlater"
-                        );
+                        if (authUser.uid) {
+                          addVideoInWatchlater(
+                            props.videoDetails.id,
+                            "User",
+                            `${user?.providerData[0].uid}`,
+                            "watchlater",
+                            "watchlater"
+                          );
+                        } else {
+                          navigate("/login");
+                        }
                         handleMenuClose(e);
                       }}
                     >
+                      <WatchLaterOutlinedIcon sx={{ marginRight: "0.5rem" }} />
                       Add watch later
                     </MenuItem>
                   )}
                   <MenuItem
                     onClick={(e) => {
-                      openPlaylistModal();
+                      if (authUser.uid) {
+                        openPlaylistModal();
+                      } else {
+                        navigate("/login");
+                      }
                       handleMenuClose(e);
                     }}
                   >
+                    <PlaylistAddOutlinedIcon sx={{ marginRight: "0.5rem" }} />
                     Add to Playlist
                   </MenuItem>
                   {props.typeOfCard === "playlist" && (
@@ -202,6 +215,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         );
                       }}
                     >
+                      <PlaylistRemoveIcon sx={{ marginRight: "0.5rem" }} />
                       Remove from playlist
                     </MenuItem>
                   )}
