@@ -11,8 +11,6 @@ import {
   ClickAwayListener,
 } from "@mui/material";
 import {
-  collection,
-  addDoc,
   doc,
   deleteField,
   updateDoc,
@@ -26,7 +24,10 @@ import { useAppDispatch, useAppSelector } from "../../store/reduxHook";
 import { playlistsThunk } from "../../thunk/playliststhunk";
 import { useNavigate, useParams } from "react-router";
 import { watchlaterThunk } from "../../thunk/watchlaterThunk";
-
+import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
 interface ICardMenuProps {
   videoDetails: IVideoDto;
   typeOfCard: string;
@@ -165,6 +166,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         handleMenuClose(e);
                       }}
                     >
+                      <WatchLaterIcon sx={{ marginRight: "0.5rem" }} />
                       Remove from watch later
                     </MenuItem>
                   ) : (
@@ -184,6 +186,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         handleMenuClose(e);
                       }}
                     >
+                      <WatchLaterOutlinedIcon sx={{ marginRight: "0.5rem" }} />
                       Add watch later
                     </MenuItem>
                   )}
@@ -197,6 +200,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                       handleMenuClose(e);
                     }}
                   >
+                    <PlaylistAddOutlinedIcon sx={{ marginRight: "0.5rem" }} />
                     Add to Playlist
                   </MenuItem>
                   {props.typeOfCard === "playlist" && (
@@ -211,6 +215,7 @@ export const VideoMenu = (props: ICardMenuProps) => {
                         );
                       }}
                     >
+                      <PlaylistRemoveIcon sx={{ marginRight: "0.5rem" }} />
                       Remove from playlist
                     </MenuItem>
                   )}
