@@ -74,6 +74,10 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             sx={{
               marginRight: 5,
               ...(open && { display: "none" }),
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
             }}
           >
             <MenuIcon />
@@ -203,7 +207,10 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: {
+            xs: 1,
+            sm: 3,
+          },
           minHeight: "100vh",
           maxWidth: open
             ? {
