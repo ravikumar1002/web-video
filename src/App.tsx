@@ -25,6 +25,7 @@ import { likedThunk } from "./thunk/likedThunk";
 import { watchlaterThunk } from "./thunk/watchlaterThunk";
 import { ThemeProvider } from "@mui/material";
 import baseTheme from "./config/theme";
+import { Page404 } from "./pages/error";
 
 // @ts-ignore
 const app = initializeApp(firebaseConfigs);
@@ -34,14 +35,6 @@ export const db = getFirestore(app);
 
 const App = () => {
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <SideNavDrawer>
-          <HomePage />
-        </SideNavDrawer>
-      ),
-    },
     {
       path: "/",
       element: (
@@ -112,6 +105,16 @@ const App = () => {
         <AuthRoute>
           <SideNavDrawer>
             <WatchLaterPage />
+          </SideNavDrawer>
+        </AuthRoute>
+      ),
+    },
+    {
+      path: "*",
+      element: (
+        <AuthRoute>
+          <SideNavDrawer>
+            <Page404 />
           </SideNavDrawer>
         </AuthRoute>
       ),

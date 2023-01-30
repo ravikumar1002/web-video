@@ -1,10 +1,8 @@
 import { Box, Button, CardMedia, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
-import { Error404 } from "../../assets";
-
-export const Page404 = () => {
+import { UnavialableImg } from "../../assets";
+export const VideoNotFound = () => {
   const navigate = useNavigate();
-
   return (
     <Box
       sx={{
@@ -21,17 +19,14 @@ export const Page404 = () => {
         alt="green iguana"
         sx={{
           width: {
-            xs: "12rem",
-            sm: "18rem",
-            md: "23rem",
+            xs: "13rem",
+            sm: "19rem",
+            md: "25rem",
           },
         }}
-        image={Error404}
+        image={UnavialableImg}
       />
-      <Typography variant="h5">
-        This page isn't available. Sorry about that. Try searching for something
-        else.
-      </Typography>
+      <Typography variant="h4">This video isn't available any more</Typography>
       <Button
         onClick={() => {
           navigate("/", { replace: true });
