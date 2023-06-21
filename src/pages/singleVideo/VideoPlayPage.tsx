@@ -6,6 +6,7 @@ import { GetYoutubeDataAsJSON } from "../../services/GetAsJSON";
 import { VideoPlayerContent } from "./components/VideoContent";
 import { VideoPlayer } from "./components/VideoPlayer";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { VideoNotFound } from "../error";
 
 export const VideoPlayPage = () => {
   const [currentVideo, setCurrentVideo] = useState<IVideoDto>();
@@ -19,6 +20,7 @@ export const VideoPlayPage = () => {
         id: videoid,
       },
     });
+    console.log(videoData);
     const creatorData = await GetYoutubeDataAsJSON<IChannelsDto>("/channels", {
       params: {
         part: "snippet,statistics,contentDetails",
@@ -45,6 +47,8 @@ export const VideoPlayPage = () => {
           />
         </>
       )}
+
+      {!currentVideo && !currentCreator && <VideoNotFound />}
     </div>
   );
 };

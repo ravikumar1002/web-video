@@ -166,7 +166,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
                       gap: open ? "1rem" : "",
                       padding: {
                         xs: "8px",
-                        sm: "1rem 0rem",
+                        sm: "1rem 1rem",
                       },
                     }}
                   >
