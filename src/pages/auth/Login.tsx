@@ -10,7 +10,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { FC, useEffect } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { literal, object, string, TypeOf } from "zod";
+import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "@emotion/styled";
 import FormInput from "../../components/FormInput";
