@@ -119,7 +119,7 @@ export const SideNavDrawer = (props: ISideNavDrawerProps) => {
             <Button
               color="inherit"
               onClick={() => {
-                navigate("/login", { replace: true });
+                navigate("/login");
               }}
             >
               Login

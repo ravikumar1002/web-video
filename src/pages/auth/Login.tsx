@@ -172,6 +172,21 @@ export const LoginPage: FC = () => {
                     >
                       Login
                     </LoadingButton>
+                    <LoadingButton
+                      loading={false}
+                      variant="contained"
+                      sx={{
+                        py: "0.8rem",
+                        mt: 2,
+                        width: "80%",
+                        marginInline: "auto",
+                      }}
+                      onClick={() => {
+                        onSubmitHandler({ email: "testuser@gmail.com", password: "testuser" })
+                      }}
+                    >
+                      Login As Guest
+                    </LoadingButton>
                   </Box>
                 </Grid>
               </Grid>
